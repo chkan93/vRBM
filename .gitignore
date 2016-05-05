@@ -5,6 +5,10 @@
 *.bak
 *.lso
 *.elf
+/build/*
+!/build/scripts/*
+!/build/Makefile
+!/build/*.yml
 *.ace
 *~
 *#

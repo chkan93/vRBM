@@ -1,0 +1,11 @@
+prepare:
+  summary: Preparation for building
+  command: mkdir -p output
+
+
+RandomGenerator:
+  summary: Build RandomGenerator and Test Bench.
+  command: |
+            robo prepare
+            iverilog -o design_RandomGenerator   ../test_bench/RandomGenerator_tb.v
+            vvp design_RandomGenerator
