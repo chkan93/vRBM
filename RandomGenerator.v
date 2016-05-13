@@ -2,18 +2,23 @@
 	`include "config.v"
 `endif
 
+`ifndef RandomGenerator
+`define RandomGenerator
 
 module RandomGenerator
   #(parameter bitlength = 8)
-	(reset, clk, seed, dataOut);
+	(
+		input reset,
+		input clk,
+		input [bitlength-1: 0]	seed,
+		output [bitlength-1: 0] dataOut
+		);
 /*
 this implementation is very simple, contains small bias
 to avoid bias, a more complex implementation is needed, like 'Tkacik LFSR'.
 */
 
-	input reset, clk;
-	input [bitlength-1: 0] seed;
-	output  [bitlength-1: 0] dataOut;
+
 	reg [bitlength-1: 0] shiftReg = 0;
 	wire shiftIn, xorOut, zeroDetector;
 	reg start = 1;
@@ -58,3 +63,5 @@ to avoid bias, a more complex implementation is needed, like 'Tkacik LFSR'.
 
 
 endmodule
+
+`endif

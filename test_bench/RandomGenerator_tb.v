@@ -17,8 +17,7 @@ integer clock_period = 5;
 integer reset_begin = 40;
 integer reset_perid = 10;
 
-
-RandomGenerator #(8) rand(reset, clock, seed, rvalue);
+RandomGenerator #(8) rnd(reset, clock, seed, rvalue);
 
 initial begin
   clock = 0;

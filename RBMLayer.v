@@ -12,56 +12,76 @@
 `endif
 
 
+`ifndef RBMLayer
+`define RBMLayer
 
-`define IN `RBM_INPUT_DIMENSION  //784
-`define OUT `RBM_OUTPUT_DIMENSION //441
-
-module RBMLayer(
+module RBMLayer
+#(parameter  input_bitlength = 12,
+	parameter  sg_bitlength = 8,
+	parameter  output_bitlength = 12,
+	parameter  in_dim = 6,
+	parameter  out_dim = 5,
+	parameter  random_seed_file = "./data/seed1x5.txt"
+)
+(
   input clock,
-  input wire[`PORT_1D(`IN, `BITN)] ImageI,
-  input wire[`PORT_2D(`IN, `OUT, `BITN)] WeightI,
-  input wire[`PORT_1D(`OUT, `BITN)] BiasI,
-  output reg[`PORT_1D(`OUT, `BITN)] HoutputO
+	input reset,
+  input wire[`PORT_1D(in_dim, input_bitlength)] ImageI,
+  input wire[`PORT_2D(in_dim, out_dim, input_bitlength)] WeightI,
+  input wire[`PORT_1D(out_dim, input_bitlength)] BiasI,
+  output [`PORT_1D(out_dim, output_bitlength)] HoutputO
   );
 
-  wire[`PORT_1D(`OUT, `BITN)] temp_mul;
-  wire[`PORT_1D(`OUT, `BITN)] temp_add;
+  wire[`PORT_1D(out_dim, input_bitlength)] temp_mul;
+  wire[`PORT_1D(out_dim, input_bitlength)] temp_add;
 
 
-  // wire[`BITN_RANGE] Image[1:`IN];
-  // wire[`BITN_RANGE] Weight[1:`IN][1:`OUT];
-  // wire[`BITN_RANGE] Bias[1:`OUT];
-  // wire[`BITN_RANGE] Houtput[1:`OUT];
-  //
-  // `DEFINE_PACK_VAR;
-  // `UNPACK_2D_ARRAY(`IN, `OUT, `BITN, WeightI, Weight)
-  // `UNPACK_1D_ARRAY(`IN, `BITN, ImageI, Image)
-  // `UNPACK_1D_ARRAY(`OUT, `BITN, BiasI, Bias)
-  // `PACK_1D_ARRAY(`OUT, `BITN, Houtput, HoutputO)
 
-
-  MatrixMul mm(ImageI, WeightI, temp_mul); // V * W
-  MatrixAdd ma(temp_mul, BiasI, temp_add); // V * W + b
-	wire[`BITN_RANGE] temp[1:`OUT], Houtput[1:`OUT];
+  MatrixMul #(input_bitlength, 1, in_dim, out_dim) mm(ImageI, WeightI, temp_mul); // V * W
+  MatrixAdd #(input_bitlength, 1, out_dim) ma(temp_mul, BiasI, temp_add); // V * W + b
+	wire[input_bitlength-1:0] temp[1:out_dim];
+	reg[output_bitlength-1:0] Houtput[1:out_dim];
   `DEFINE_PACK_VAR;
-  `UNPACK_1D_ARRAY( `OUT, `BITN, temp_add, temp) //temp[i]
+  `UNPACK_1D_ARRAY( out_dim, input_bitlength, temp_add, temp) //temp[i]
+	`PACK_1D_ARRAY( out_dim, output_bitlength, Houtput, HoutputO)
 
-	reg[`SIGMOID_OUTPUT_BITN-1:0] sg_output[1:`OUT];
+
+	reg[sg_bitlength-1:0] sg_output[1:out_dim];
 
   genvar i;
   generate
-    for(i=1;i<`OUT;i=i+1) begin
-			sigmoid sg(temp[i], sg_output[i]);
+    for(i=1;i<out_dim;i=i+1) begin
+			sigmoid #(input_bitlength,sg_bitlength) sg(temp[i], sg_output[i]);
     end
   endgenerate
 
-	
+
+	wire[sg_bitlength-1:0] random_vector[1:out_dim];
+	reg[sg_bitlength-1:0]  seed[1:out_dim];
+	wire[7:0] rvalue;
+
+	generate
+		for(i=1;i<out_dim;i=i+1) begin
+			RandomGenerator #(sg_bitlength) rnd(reset, clock, seed[i], random_vector[i]);
+		end
+	endgenerate
+
+
+	integer ci;
 	always @(posedge clock)
 	begin
-	// statements
+		for(ci=1;ci<out_dim;ci=ci+1) begin
+			if(sg_output[ci] > random_vector[ci])
+				Houtput[ci] = 1;
+			else
+			  Houtput[ci] = 0;
+		end
 	end
 
 
+initial begin
+	$readmemh(random_seed_file, seed);
+end
 
   // 1. matrix Multiplication         [x]
   // 2. Add Bias                      [x]
@@ -73,7 +93,7 @@ module RBMLayer(
 
 endmodule
 
-
+`endif
 /*
 目前计算是8bit计算， 如何输入到12bit的sigmoid里面？ 难道是每个都要扩bit？ 还是说加法和乘法需要用12bit，考虑到8bit的溢出？
 

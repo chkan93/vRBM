@@ -2,6 +2,9 @@
   `include "config.v"
 `endif
 
+`ifndef sigmoid
+`define sigmoid
+
 module sigmoid
   #(parameter input_bitlength = 12, parameter bitlength = 8)
   (
@@ -32,6 +35,8 @@ module sigmoid
       s = 8'b10000000 - s;
   end
 endmodule
+
+`endif
 
 /*
 

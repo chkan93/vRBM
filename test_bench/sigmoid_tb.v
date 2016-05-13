@@ -18,6 +18,6 @@ module test_sigmoid;
     #10 sum=12'h60;
     for(i=1;i<197;i=i+1)
      #10 sum=sum-1;
-     
+
   end
 endmodule

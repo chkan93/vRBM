@@ -3,6 +3,8 @@
 `endif
 
 
+`ifndef  MatrixAdd
+`define MatrixAdd
 
 module MatrixAdd
 #(parameter bitlength = 8, parameter H = 3, parameter  W = 4)
@@ -34,3 +36,5 @@ generate
 endgenerate
 
 endmodule
+
+`endif

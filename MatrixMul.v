@@ -2,6 +2,9 @@
 	`include "config.v"
 `endif
 
+`ifndef  MatrixMul
+`define MatrixMul
+
 
 module MatrixMul
 #(parameter bitlength = 8, parameter M1_D1 = 3, parameter  M1_D2 = 4, parameter  M2_D2 = 2)
@@ -45,7 +48,7 @@ endgenerate
 endmodule
 
 
-
+`endif
 
 
 // `ifndef  TEST_BENCH

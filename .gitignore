@@ -9,6 +9,8 @@
 !/build/scripts/*
 !/build/Makefile
 !/build/*.yml
+!/build/data/*
+!/build/scripts/*
 *.ace
 *~
 *#
