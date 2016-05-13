@@ -9,8 +9,8 @@ module test_RandomGenerator;
 
 reg reset = 0;
 reg clock;
-reg[`BITN-1:0] seed;
-wire[`BITN-1:0] rvalue;
+reg[7:0] seed;
+wire[7:0] rvalue;
 
 integer clock_counter = 0;
 integer clock_period = 5;
@@ -18,7 +18,7 @@ integer reset_begin = 40;
 integer reset_perid = 10;
 
 
-RandomGenerator rand(reset, clock, seed, rvalue);
+RandomGenerator #(8) rand(reset, clock, seed, rvalue);
 
 initial begin
   clock = 0;

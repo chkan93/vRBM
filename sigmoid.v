@@ -3,16 +3,18 @@
 `endif
 
 module sigmoid
-  #(parameter bitlength = `BITN)
+  #(parameter input_bitlength = 12, parameter bitlength = 8)
   (
-    output reg[bitlength-1:0] s,
-    input [`SIGMOID_INPUT_BITN-1:0] sum
+    input [input_bitlength-1:0] sum,
+    output reg[bitlength-1:0] s
+
     );
 
-  reg sign;
-  reg[`SIGMOID_INPUT_BITN-1:0] z;
+  wire sign;
+  reg[input_bitlength-1:0] z;
+  assign   sign = sum[11]; //the sign bit
   always @(sum) begin
-    sign = sum[11]; //the sign bit
+
     if (sign==1)
       z = ~sum+1; //negligate and plus one, 如果输入是负数
     else
@@ -66,4 +68,7 @@ Email 回复：
 4. 写一次iteration
 5. 写一次iteration的test bench
 6. 把iteration组成loop
+
+http://epwave.readthedocs.io/, gtkwave
+
 */

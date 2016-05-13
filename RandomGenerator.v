@@ -3,21 +3,23 @@
 `endif
 
 
-module RandomGenerator(reset, clk, seed, dataOut);
+module RandomGenerator
+  #(parameter bitlength = 8)
+	(reset, clk, seed, dataOut);
 /*
 this implementation is very simple, contains small bias
 to avoid bias, a more complex implementation is needed, like 'Tkacik LFSR'.
 */
 
 	input reset, clk;
-	input [`BITN-1: 0] seed;
-	output  [`BITN-1: 0] dataOut;
-	reg [`BITN-1: 0] shiftReg = 0;
+	input [bitlength-1: 0] seed;
+	output  [bitlength-1: 0] dataOut;
+	reg [bitlength-1: 0] shiftReg = 0;
 	wire shiftIn, xorOut, zeroDetector;
 	reg start = 1;
 
 	assign xorOut = shiftReg[`R_1] ^ shiftReg[`R_2] ^ shiftReg[`R_3] ^ shiftReg[`R_4];
-	assign zeroDetector = ~(|(shiftReg[`BITN-1: 0])); // all together, avoid fall into all zero case and stuck!
+	assign zeroDetector = ~(|(shiftReg[bitlength-1: 0])); // all together, avoid fall into all zero case and stuck!
 	assign shiftIn = xorOut ^ zeroDetector;
 	assign dataOut = shiftReg;
 
@@ -26,7 +28,7 @@ to avoid bias, a more complex implementation is needed, like 'Tkacik LFSR'.
 	// 	$display("[Before Initial RandomGenerator.shiftIn = %d]", shiftIn);
 	// 	$display("[Before Initial RandomGenerator.zeroDetector = %d]", zeroDetector);
 	// 	$display("[Before Initial RandomGenerator.xorOut = %d]", xorOut);
-	// 	// shiftReg = `BITN'b0000010;
+	// 	// shiftReg = bitlength'b0000010;
 	// 	$display("[After Initial RandomGenerator.shiftReg = %d]", shiftReg); // ok
 	// 	$display("[After Initial RandomGenerator.shiftIn = %d]", shiftIn);
 	// 	$display("[After Initial RandomGenerator.zeroDetector = %d]", zeroDetector);
@@ -46,9 +48,9 @@ to avoid bias, a more complex implementation is needed, like 'Tkacik LFSR'.
 		else
 			begin
 				// $display("[RandomGenerator.shiftIn = %d]", shiftIn); // problem! shiftIn = x
-				// $display("[RandomGenerator.shiftReg[`BITN-2: 0] = %d]", shiftReg[`BITN-2: 0]); // ok
-				// $display("[RandomGenerator.shiftReg = %d]",{shiftReg[`BITN-2: 0], shiftIn}); // ok
-				shiftReg <= {shiftReg[`BITN-2: 0], shiftIn};
+				// $display("[RandomGenerator.shiftReg[bitlength-2: 0] = %d]", shiftReg[bitlength-2: 0]); // ok
+				// $display("[RandomGenerator.shiftReg = %d]",{shiftReg[bitlength-2: 0], shiftIn}); // ok
+				shiftReg <= {shiftReg[bitlength-2: 0], shiftIn};
 			end
 	end
 
