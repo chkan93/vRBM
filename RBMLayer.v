@@ -39,38 +39,39 @@ module RBMLayer
 
   MatrixMul #(input_bitlength, 1, in_dim, out_dim) mm(ImageI, WeightI, temp_mul); // V * W
   MatrixAdd #(input_bitlength, 1, out_dim) ma(temp_mul, BiasI, temp_add); // V * W + b
-	wire[input_bitlength-1:0] temp[1:out_dim];
-	reg[output_bitlength-1:0] Houtput[1:out_dim];
+	wire[input_bitlength-1:0] temp`DIM_1D(out_dim);
+	reg[output_bitlength-1:0] Houtput`DIM_1D(out_dim);
   `DEFINE_PACK_VAR;
   `UNPACK_1D_ARRAY( out_dim, input_bitlength, temp_add, temp) //temp[i]
 	`PACK_1D_ARRAY( out_dim, output_bitlength, Houtput, HoutputO)
 
 
-	reg[sg_bitlength-1:0] sg_output[1:out_dim];
+	wire[sg_bitlength-1:0] sg_output`DIM_1D(out_dim);
 
   genvar i;
   generate
-    for(i=1;i<out_dim;i=i+1) begin
+    for(i=0;i<out_dim;i=i+1) begin
 			sigmoid #(input_bitlength,sg_bitlength) sg(temp[i], sg_output[i]);
     end
   endgenerate
 
 
-	wire[sg_bitlength-1:0] random_vector[1:out_dim];
-	reg[sg_bitlength-1:0]  seed[1:out_dim];
+	wire[sg_bitlength-1:0] random_vector`DIM_1D(out_dim);
+	reg[sg_bitlength-1:0]  seed`DIM_1D(out_dim);
 	wire[7:0] rvalue;
 
 	generate
-		for(i=1;i<out_dim;i=i+1) begin
+		for(i=0;i<out_dim;i=i+1) begin
 			RandomGenerator #(sg_bitlength) rnd(reset, clock, seed[i], random_vector[i]);
 		end
 	endgenerate
 
 
+
 	integer ci;
 	always @(posedge clock)
 	begin
-		for(ci=1;ci<out_dim;ci=ci+1) begin
+		for(ci=0;ci<out_dim;ci=ci+1) begin
 			if(sg_output[ci] > random_vector[ci])
 				Houtput[ci] = 1;
 			else

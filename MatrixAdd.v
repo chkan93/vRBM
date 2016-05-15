@@ -15,9 +15,9 @@ module MatrixAdd
   );
 /* Matrix Multiplication Unit, the dimensions of A,B,C should
 be defined in the config.v*/
-  wire[bitlength-1:0] A[1:H][1:W];
-  wire[bitlength-1:0] B[1:H][1:W];
-  wire[bitlength-1:0] C[1:H][1:W];
+  wire[bitlength-1:0] A`DIM_2D(H,W);
+  wire[bitlength-1:0] B`DIM_2D(H,W);
+  wire[bitlength-1:0] C`DIM_2D(H,W);
 
 
 //Initialization
@@ -30,8 +30,8 @@ be defined in the config.v*/
 // Computing
 genvar i,j,k;
 generate
-   for(i=1; i<=H; i=i+1)
-      for(j=1; j<=W; j=j+1)
+   for(i=0; i<H; i=i+1)
+      for(j=0; j<W; j=j+1)
           assign C[i][j] =  A[i][j] + B[i][j];
 endgenerate
 

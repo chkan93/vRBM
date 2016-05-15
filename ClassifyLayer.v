@@ -30,16 +30,16 @@ module ClassifyLayer#(
 
   MatrixMul #(input_bitlength, 1, in_dim, out_dim) mm(Input, WeightI, temp_mul); // V * W
   MatrixAdd #(input_bitlength, 1, out_dim) ma(temp_mul, BiasI, temp_add); // V * W + b
-	wire[input_bitlength-1:0] temp[1:out_dim];
+	wire[input_bitlength-1:0] temp`DIM_1D(out_dim);
 	`DEFINE_PACK_VAR;
   `UNPACK_1D_ARRAY( out_dim, input_bitlength, temp_add, temp) //temp[i]
 
-	wire[output_bitlength-1:0] sg_output[1:out_dim];
+	wire[output_bitlength-1:0] sg_output`DIM_1D(out_dim);
 	`PACK_1D_ARRAY( out_dim, output_bitlength, sg_output, HoutputO)
 
 	genvar i;
   generate
-    for(i=1;i<out_dim;i=i+1) begin
+    for(i=0;i<out_dim;i=i+1) begin
 			sigmoid #(input_bitlength, output_bitlength) sg(temp[i], sg_output[i]);
     end
   endgenerate

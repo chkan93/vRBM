@@ -3,7 +3,12 @@
 `include "../RBMLayer.v"
 
 
-module test_RBMLayer;
+module test_RBMLayer
+#(
+  parameter  input_bitlength = 12
+
+
+  );
 
 
 

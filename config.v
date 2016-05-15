@@ -17,7 +17,7 @@
 `define R_3 5-1
 `define R_4 4-1
 `define TB_SEED 4
-`define TB_RG_DUMPFILE "../dumpFolder/RG.vcd"
+`define TB_RG_DUMPFILE "./dumpFolder/RG.vcd"
 
 
 
@@ -28,64 +28,81 @@ Utility
 */
 `define PORT_2D(D1,D2,BL)  (BL*D1*D2)-1:0
 `define PORT_1D(D,BL) (BL*D)-1:0
-`define DIM_2D(D1,D2) [1:D1][1:D2]
-`define DIM_1D(D1) [1:D1]
+`define DIM_3D(D1,D2,D3) [0:D1-1][0:D2-1][0:D3-1]
+`define DIM_2D(D1,D2) [0:D1-1][0:D2-1]
+`define DIM_1D(D1) [0:D1-1]
 `define DEFINE_PACK_VAR  genvar pk_i,pk_j
 
 `define PACK_2D_ARRAY(D1,D2, BL,src,dst)   \
       generate                              \
         for(pk_i=1; pk_i<=D1; pk_i=pk_i+1)  \
           for(pk_j=1; pk_j<=D2; pk_j=pk_j+1)  \
-            assign dst[(((pk_i-1)*D1 + (pk_j-1))*BL)+BL-1 -: BL] = src[pk_i][pk_j]; \
+            assign dst[(((pk_i-1)*D2 + (pk_j-1))*BL)+BL-1 -: BL] = src[pk_i-1][pk_j-1]; \
       endgenerate
 
 `define UNPACK_2D_ARRAY(D1,D2, BL,src,dst)   \
       generate                              \
         for(pk_i=1; pk_i<=D1; pk_i=pk_i+1)  \
           for(pk_j=1; pk_j<=D2; pk_j=pk_j+1)  \
-            assign dst[pk_i][pk_j] = src[(((pk_i-1)*D1 + (pk_j-1))*BL)+BL-1 -: BL]; \
+            assign dst[pk_i-1][pk_j-1] = src[(((pk_i-1)*D2 + (pk_j-1))*BL)+BL-1 -: BL]; \
       endgenerate
 
 `define PACK_1D_ARRAY(D1, BL,src,dst)   \
       generate                              \
         for(pk_i=1; pk_i<=D1; pk_i=pk_i+1)  \
-            assign dst[((pk_i-1)*BL)+BL-1 -: BL] = src[pk_i]; \
+            assign dst[((pk_i-1)*BL)+BL-1 -: BL] = src[pk_i-1]; \
       endgenerate
 
 `define UNPACK_1D_ARRAY(D1,BL,src,dst)   \
       generate                              \
         for(pk_i=1; pk_i<=D1; pk_i=pk_i+1)  \
-            assign dst[pk_i] = src[((pk_i-1)*BL)+BL-1 -: BL]; \
+            assign dst[pk_i-1] = src[((pk_i-1)*BL)+BL-1 -: BL]; \
       endgenerate
 
+`define D1_TO_D2_ARRAY(D1, D2, d1array, d2array) \
+  generate                                       \
+    for(pk_i=0;pk_i<D1;pk_i=pk_i+1)          \
+      for(pk_j=0;pk_j<D2;pk_j=pk_j+1)       \
+        assign d2array[pk_i][pk_j] = d1array[pk_i*D2+pk_j];  \
+  endgenerate
 
-// reg version
 
-`define PACK_2D_REG_ARRAY(D1,D2, BL,src,dst)   \
-      generate                              \
-        for(pk_i=1; pk_i<=D1; pk_i=pk_i+1)  \
-          for(pk_j=1; pk_j<=D2; pk_j=pk_j+1)  \
-            dst[(((pk_i-1)*D1 + (pk_j-1))*BL)+BL-1 -: BL] = src[pk_i][pk_j]; \
-      endgenerate
 
-`define UNPACK_2D_REG_ARRAY(D1,D2, BL,src,dst)   \
-      generate                              \
-        for(pk_i=1; pk_i<=D1; pk_i=pk_i+1)  \
-          for(pk_j=1; pk_j<=D2; pk_j=pk_j+1)  \
-            dst[pk_i][pk_j] = src[(((pk_i-1)*D1 + (pk_j-1))*BL)+BL-1 -: BL]; \
-      endgenerate
+//  array printing
+`define DEFINE_PRINTING_VAR  integer pt_i, pt_j
+`define DISPLAY_1D_ARRAY(D1,msg, array)    \
+      $display("%s", msg);                               \
+      for(pt_i = 0; pt_i < D1; pt_i=pt_i+1) begin       \
+          $display("%d ", array[pt_i]);                 \
+      end                                               \
+      $display("\n");
 
-`define PACK_1D_REG_ARRAY(D1, BL,src,dst)   \
-      generate                              \
-        for(pk_i=1; pk_i<=D1; pk_i=pk_i+1)  \
-            dst[((pk_i-1)*BL)+BL-1 -: BL] = src[pk_i]; \
-      endgenerate
 
-`define UNPACK_1D_REG_ARRAY(D1,BL,src,dst)   \
-      generate                              \
-          for(pk_i=1; pk_i<=D1; pk_i=pk_i+1)  \
-              dst[pk_i] = src[((pk_i-1)*BL)+BL-1 -: BL]; \
-      endgenerate
+`define DISPLAY_2D_ARRAY(D1, D2,msg, array)           \
+$display("%s", msg);   \
+for(pt_i = 0; pt_i < D1; pt_i=pt_i+1)  begin      \
+  for(pt_j = 0; pt_j < D2; pt_j=pt_j+1)   begin   \
+      $display("%d ", array[pt_i][pt_j]);         \
+      end                                         \
+    $display("\n");                                \
+  end                                             \
+$display("\n");
 
+
+`define DISPLAY_1D_BIT_ARRAY(D1, BL, msg, array)  \
+    $display("%s", msg);                   \
+    for(pt_i = 0 ;pt_i < D1; pt_i=pt_i+1) begin \
+          $display("%d ", array[((pt_i-1)*BL)+BL-1 -: BL]);                  \
+    end                     \
+    $display("\n");
+
+
+`define DISPLAY_2D_BIT_ARRAY(D1,D2, BL, msg, array)  \
+    $display("%s", msg);                   \
+    for(pt_i = 1 ;pt_i <= D1; pt_i=pt_i+1)  \
+        for(pt_j = 1; pt_j <= D2; pt_j=pt_j+1)  begin \
+          $display("%d ", array[(((pt_i-1)*D2 + (pt_j-1))*BL)+BL-1 -: BL]);                  \
+        end                     \
+        $display("\n");
 
 `endif
