@@ -9,9 +9,9 @@ module test_Main
   parameter  input_bitlength = 12,
   parameter  sigmoid_bitlength = 8,
   parameter  output_bitlength = 8,
-  parameter  in_dim = 15,
-  parameter  h_dim = 5,
-  parameter  out_dim = 2,
+  parameter  in_dim = 784,
+  parameter  h_dim = 441,
+  parameter  out_dim = 10,
   parameter  clock_period = 10
 );
 
@@ -49,12 +49,12 @@ reg[input_bitlength-1:0] H_WeightIm_1d`DIM_1D(in_dim*h_dim);
 initial begin
   reset = 0;
   clock = 1;
-  $readmemh("./data/Cbias1x2.txt", C_BiasIm);
-  $readmemh("./data/Cweight5x2.txt", C_WeightIm_1d);
-  $readmemh("./data/Hbias1x5.txt", H_BiasIm);
-  $readmemh("./data/Hweight15x5.txt", H_WeightIm_1d);
-  $readmemh("./data/image1x15.txt", ImageIm);
-  $dumpfile ("./dumpFolder/Main.vcd");
+  $readmemh("./data/mnist/verilog/mnist_rbm_model_cbias.txt", C_BiasIm);
+  $readmemh("./data/model/verilog/mnist_rbm_model_cweight.txt", C_WeightIm_1d);
+  $readmemh("./data/model/verilog/mnist_rbm_model_hbias.txt", H_BiasIm);
+  $readmemh("./data/model/verilog/mnist_rbm_model_hweight.txt", H_WeightIm_1d);
+  $readmemh("./data/mnist/verilog/mnist_testdata0.txt", ImageIm);
+  $dumpfile ("./dumpFolder/Main_Real.vcd");
   $dumpvars;
   #100 $finish;
 end

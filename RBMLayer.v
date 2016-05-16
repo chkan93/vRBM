@@ -73,9 +73,9 @@ module RBMLayer
 	begin
 		for(ci=0;ci<out_dim;ci=ci+1) begin
 			if(sg_output[ci] > random_vector[ci])
-				Houtput[ci] = 1;
+				Houtput[ci] <= 1;
 			else
-			  Houtput[ci] = 0;
+			  Houtput[ci] <= 0;
 		end
 	end
 

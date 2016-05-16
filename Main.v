@@ -17,7 +17,8 @@ module Main #(
   parameter  output_bitlength = 8,
   parameter  in_dim = 15,
   parameter  h_dim = 5,
-  parameter  out_dim = 2
+  parameter  out_dim = 2,
+	parameter seed_path="./data/seed1x5.txt"
 )(
   input clock,
 	input reset,
@@ -33,8 +34,9 @@ module Main #(
 wire [`PORT_1D(h_dim, input_bitlength)] H_Output;
 RBMLayer #(input_bitlength,
           sigmoid_bitlength,
-          input_bitlength, in_dim, h_dim, "./data/seed1x5.txt")
+          input_bitlength, in_dim, h_dim, seed_path)
           rbm(clock, reset, ImageI, H_WeightI, H_BiasI, H_Output);
+
 
 
 ClassifyLayer #(input_bitlength,

@@ -30,12 +30,9 @@ wire[output_bitlength-1:0] Outputm`DIM_1D(out_dim);
 `DEFINE_PACK_VAR;
 `PACK_1D_ARRAY(in_dim, input_bitlength, InputHVm, InputHV)
 `D1_TO_D2_ARRAY(in_dim, out_dim, C_WeightIm_1d, C_WeightIm)
-
-//`PACK_1D_ARRAY(in_dim*out_dim, input_bitlength, C_WeightIm_1d, C_WeightI)
 `PACK_2D_ARRAY(in_dim, out_dim, input_bitlength, C_WeightIm, C_WeightI)
-
 `PACK_1D_ARRAY(out_dim, input_bitlength, C_BiasIm, C_BiasI)
-`UNPACK_1D_ARRAY(out_dim, input_bitlength, Output, Outputm)
+`UNPACK_1D_ARRAY(out_dim, output_bitlength, Output, Outputm)
 
 
 initial begin

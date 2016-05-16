@@ -11,6 +11,7 @@
 !/build/*.yml
 !/build/data/*
 !/build/scripts/*
+/build/scripts/.idea
 *.ace
 *~
 *#
