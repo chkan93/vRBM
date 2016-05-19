@@ -9,9 +9,9 @@ module test_Main
   parameter  input_bitlength = 12,
   parameter  sigmoid_bitlength = 8,
   parameter  output_bitlength = 8,
-  parameter  in_dim = 784,
-  parameter  h_dim = 441,
-  parameter  out_dim = 10,
+  parameter  in_dim = 15,
+  parameter  h_dim = 5,
+  parameter  out_dim = 2,
   parameter  clock_period = 10
 );
 
