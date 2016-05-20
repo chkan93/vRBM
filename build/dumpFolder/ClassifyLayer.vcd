@@ -1,0 +1,294 @@
+$date
+	Sun May 15 16:51:46 2016
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module test_ClassifyLayer $end
+$var wire 16 ! Output [15:0] $end
+$var wire 60 " InputHV [59:0] $end
+$var wire 120 # C_WeightI [119:0] $end
+$var wire 24 $ C_BiasI [23:0] $end
+$var integer 32 % pt_i [31:0] $end
+$var integer 32 & pt_j [31:0] $end
+$scope begin genblk1[1] $end
+$upscope $end
+$scope begin genblk1[2] $end
+$upscope $end
+$scope begin genblk1[3] $end
+$upscope $end
+$scope begin genblk1[4] $end
+$upscope $end
+$scope begin genblk1[5] $end
+$upscope $end
+$scope begin genblk2[0] $end
+$scope begin genblk3[0] $end
+$upscope $end
+$scope begin genblk3[1] $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[1] $end
+$scope begin genblk3[0] $end
+$upscope $end
+$scope begin genblk3[1] $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[2] $end
+$scope begin genblk3[0] $end
+$upscope $end
+$scope begin genblk3[1] $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[3] $end
+$scope begin genblk3[0] $end
+$upscope $end
+$scope begin genblk3[1] $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[4] $end
+$scope begin genblk3[0] $end
+$upscope $end
+$scope begin genblk3[1] $end
+$upscope $end
+$upscope $end
+$scope begin genblk4[1] $end
+$scope begin genblk5[1] $end
+$upscope $end
+$scope begin genblk5[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk4[2] $end
+$scope begin genblk5[1] $end
+$upscope $end
+$scope begin genblk5[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk4[3] $end
+$scope begin genblk5[1] $end
+$upscope $end
+$scope begin genblk5[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk4[4] $end
+$scope begin genblk5[1] $end
+$upscope $end
+$scope begin genblk5[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk4[5] $end
+$scope begin genblk5[1] $end
+$upscope $end
+$scope begin genblk5[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk6[1] $end
+$upscope $end
+$scope begin genblk6[2] $end
+$upscope $end
+$scope begin genblk7[1] $end
+$upscope $end
+$scope begin genblk7[2] $end
+$upscope $end
+$scope module cl $end
+$var wire 24 ' BiasI [23:0] $end
+$var wire 60 ( Input [59:0] $end
+$var wire 120 ) WeightI [119:0] $end
+$var wire 24 * temp_mul [23:0] $end
+$var wire 24 + temp_add [23:0] $end
+$var wire 16 , HoutputO [15:0] $end
+$scope begin genblk1[1] $end
+$upscope $end
+$scope begin genblk1[2] $end
+$upscope $end
+$scope begin genblk2[1] $end
+$upscope $end
+$scope begin genblk2[2] $end
+$upscope $end
+$scope begin genblk3[0] $end
+$scope module sg $end
+$var wire 12 - sum [11:0] $end
+$var wire 1 . sign $end
+$var reg 8 / s [7:0] $end
+$var reg 12 0 z [11:0] $end
+$upscope $end
+$upscope $end
+$scope begin genblk3[1] $end
+$scope module sg $end
+$var wire 12 1 sum [11:0] $end
+$var wire 1 2 sign $end
+$var reg 8 3 s [7:0] $end
+$var reg 12 4 z [11:0] $end
+$upscope $end
+$upscope $end
+$scope module ma $end
+$var wire 24 5 BI [23:0] $end
+$var wire 24 6 CO [23:0] $end
+$var wire 24 7 AI [23:0] $end
+$scope begin genblk1[1] $end
+$scope begin genblk2[1] $end
+$upscope $end
+$scope begin genblk2[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk3[1] $end
+$scope begin genblk4[1] $end
+$upscope $end
+$scope begin genblk4[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk5[1] $end
+$scope begin genblk6[1] $end
+$upscope $end
+$scope begin genblk6[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk7[0] $end
+$scope begin genblk8[0] $end
+$upscope $end
+$scope begin genblk8[1] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module mm $end
+$var wire 60 8 AI [59:0] $end
+$var wire 120 9 BI [119:0] $end
+$var wire 24 : CO [23:0] $end
+$scope begin genblk1[1] $end
+$scope begin genblk2[1] $end
+$upscope $end
+$scope begin genblk2[2] $end
+$upscope $end
+$scope begin genblk2[3] $end
+$upscope $end
+$scope begin genblk2[4] $end
+$upscope $end
+$scope begin genblk2[5] $end
+$upscope $end
+$upscope $end
+$scope begin genblk3[1] $end
+$scope begin genblk4[1] $end
+$upscope $end
+$scope begin genblk4[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk3[2] $end
+$scope begin genblk4[1] $end
+$upscope $end
+$scope begin genblk4[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk3[3] $end
+$scope begin genblk4[1] $end
+$upscope $end
+$scope begin genblk4[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk3[4] $end
+$scope begin genblk4[1] $end
+$upscope $end
+$scope begin genblk4[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk3[5] $end
+$scope begin genblk4[1] $end
+$upscope $end
+$scope begin genblk4[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk5[1] $end
+$scope begin genblk6[1] $end
+$upscope $end
+$scope begin genblk6[2] $end
+$upscope $end
+$upscope $end
+$scope begin genblk7[0] $end
+$scope begin genblk8[0] $end
+$scope begin genblk9[0] $end
+$scope begin genblk10 $end
+$upscope $end
+$upscope $end
+$scope begin genblk9[1] $end
+$scope begin genblk11 $end
+$upscope $end
+$upscope $end
+$scope begin genblk9[2] $end
+$scope begin genblk11 $end
+$upscope $end
+$upscope $end
+$scope begin genblk9[3] $end
+$scope begin genblk11 $end
+$upscope $end
+$upscope $end
+$scope begin genblk9[4] $end
+$scope begin genblk11 $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk8[1] $end
+$scope begin genblk9[0] $end
+$scope begin genblk10 $end
+$upscope $end
+$upscope $end
+$scope begin genblk9[1] $end
+$scope begin genblk11 $end
+$upscope $end
+$upscope $end
+$scope begin genblk9[2] $end
+$scope begin genblk11 $end
+$upscope $end
+$upscope $end
+$scope begin genblk9[3] $end
+$scope begin genblk11 $end
+$upscope $end
+$upscope $end
+$scope begin genblk9[4] $end
+$scope begin genblk11 $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b11000001000010010000000 :
+b101000001001001110101100000100010000110000111001101010010100101111000100101000010100101000110010001011000010101100011 9
+b1100100000001100010000101100001000001110111000100110100 8
+b11000001000010010000000 7
+b111001011010011111100001 6
+b100001010010001101100001 5
+b110100110 4
+b0 3
+12
+b111001011010 1
+b11111100001 0
+b10000000 /
+0.
+b11111100001 -
+b10000000 ,
+b111001011010011111100001 +
+b11000001000010010000000 *
+b101000001001001110101100000100010000110000111001101010010100101111000100101000010100101000110010001011000010101100011 )
+b1100100000001100010000101100001000001110111000100110100 (
+b100001010010001101100001 '
+b11 &
+b110 %
+b100001010010001101100001 $
+b101000001001001110101100000100010000110000111001101010010100101111000100101000010100101000110010001011000010101100011 #
+b1100100000001100010000101100001000001110111000100110100 "
+b10000000 !
+$end
+#10
+b10 %
+#20
+b10 %
+#30
+b10 %
+#40
+b10 %
+#50

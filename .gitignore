@@ -5,12 +5,7 @@
 *.bak
 *.lso
 *.elf
-/build/*
-!/build/scripts/*
-!/build/Makefile
-!/build/*.yml
-!/build/data/*
-!/build/scripts/*
+/build/output/
 /build/scripts/.idea
 *.ace
 *~
