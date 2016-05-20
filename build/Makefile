@@ -1,4 +1,4 @@
-GEN = python ./scripts/generate_random_data.py
+OBGEN = python ./scripts/generate_random_data.py
 GEN_MATLAB = python ./scripts/generate_matlab_data.py
 
 prepare:
@@ -61,7 +61,6 @@ ClassifyLayer_TB: prepare
 	iverilog -o ./output/design_ClassifyLayer_TB ../test_bench/ClassifyLayer_tb.v
 	vvp ./output/design_ClassifyLayer_TB
 
-
 Main_wave:
 	gtkwave ./dumpFolder/Main.vcd &
 
@@ -74,4 +73,42 @@ Main_real_TB: prepare
 	iverilog -o ./output/design_Main_Real_TB ../test_bench/Main_Real_tb.v
 	vvp ./output/design_Main_Real_TB
 
-all_TB: sigmoid_TB MatrixAdd_TB MatrixMul_TB RandomGenerator_TB
+
+vlib: 
+	vlib work
+
+
+vsim_Main_TB: vlib
+	vlog  ../test_bench/Main_tb.v
+	vsim -c -do "run -all" test_Main
+
+vsim_Main_Real_TB: vlib
+	vlog ../test_bench/Main_Real_tb.v
+	vsim -c  -do "run -all" test_Real_Main
+
+vsim_RandomGenerator_TB: vlib
+	vlog ../test_bench/RandomGenerator_tb.v
+	vsim -c  -do "run -all" test_RandomGenerator
+
+vsim_sigmoid_TB: vlib
+	vlog ../test_bench/sigmoid_tb.v
+	vsim -c -do "run -all" test_sigmoid
+
+vsim_RBMLayer_TB: vlib
+	vlog ../test_bench/RBMLayer_tb.v
+	vsim -c -do "run -all" test_RBMLayer
+
+vsim_MatrixAdd_TB: vlib
+	vlog ../test_bench/MatrixAdd_tb.v
+	vsim -c -do "run -all" test_MatrixAdd
+
+vsim_MatrixMul_TB: vlib
+	vlog ../test_bench/MatrixMul_tb.v
+	vsim -c -do "run -all" test_MatrixMul
+
+
+
+load_modules:
+	module load dc-2015.06-SP4 #dc_shell
+	module load modelsim #vsim
+	module load primetime-64

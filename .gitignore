@@ -6,6 +6,7 @@
 *.lso
 *.elf
 /build/output/
+/build/work/
 /build/scripts/.idea
 *.ace
 *~

@@ -57,7 +57,7 @@ RBMLayer #(input_bitlength,sg_bitlength ,output_bitlength, in_dim, out_dim, rand
 
 always begin
     clock = !clock;
-    `DISPLAY_1D_ARRAY(out_dim, "Output = ", Outputm);
+    `DISPLAY_1D_ARRAY(out_dim, "Output = ", Outputm)
 
 #clock_period;
 end
