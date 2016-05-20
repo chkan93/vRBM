@@ -3,6 +3,7 @@ from __future__ import print_function
 import sys
 import random
 import math
+from numberToBitString import toHex
 
 
 def generateRandomData(output_dir='./data/',  bit=8, dim1=1, dim2=6):
@@ -11,7 +12,7 @@ def generateRandomData(output_dir='./data/',  bit=8, dim1=1, dim2=6):
     lmt = math.pow(2, bit)-1
     with open(file_name, "w") as f:
         for _ in range(dim):
-            print(str(random.randint(0, lmt)), file=f)
+            print(toHex(random.randint(0, lmt)), file=f)
 
 
 def getDim(st):

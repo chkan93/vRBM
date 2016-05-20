@@ -20,12 +20,12 @@
 `define TB_RG_DUMPFILE "./dumpFolder/RG.vcd"
 
 
-// `define ReadMem(x,y) $readmemh(x,y)
+`define ReadMem(x,y) $readmemh(x,y)
 `define DEFINE_READMEM_VAR     integer rm_file, rm_temp
-`define ReadMem(path, mem)              \
-        rm_file = $fopen(path, "r");    \
-        rm_temp = $fread(mem, rm_file); \
-        rm_temp = $fclose(rm_file)
+// `define ReadMem(path, mem)              \
+//         rm_file = $fopen(path, "r");    \
+//         rm_temp = $fread(mem, rm_file); \
+//         rm_temp = $fclose(rm_file)
 
 
 
