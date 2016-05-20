@@ -4,7 +4,7 @@
 
 `timescale 1s/1s
 
-module test_Main
+module test_Real_Main
 #(
   parameter  input_bitlength = 12,
   parameter  sigmoid_bitlength = 8,

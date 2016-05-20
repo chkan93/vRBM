@@ -92,14 +92,14 @@ always @ (posedge clock) begin
 if(start) begin
 icounter = icounter + 1;
 $display("Iteration No'%d", icounter);
-`DISPLAY_1D_ARRAY(out_dim, "This iteration Output = ", Outputm);
-`DISPLAY_1D_ARRAY(out_dim, "Cumulated Result = ", Result);
+`DISPLAY_1D_ARRAY(out_dim, "This iteration Output = ", Outputm)
+`DISPLAY_1D_ARRAY(out_dim, "Cumulated Result = ", Result)
 $display("Clock is %b",clock);
 // $display("Reset is %b", reset);
 
   if(finish) begin
     $display("The iteration is finished! ");
-    `DISPLAY_1D_ARRAY(out_dim, "Cumulated Result = ", Result);
+    `DISPLAY_1D_ARRAY(out_dim, "Cumulated Result = ", Result)
 
     $finish;
   end
