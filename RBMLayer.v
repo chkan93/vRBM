@@ -79,7 +79,7 @@ module RBMLayer
 		end
 	end
 
-
+`DEFINE_READMEM_VAR;
 initial begin
 	`ReadMem(random_seed_file, seed);
 end

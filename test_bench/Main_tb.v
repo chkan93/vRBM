@@ -56,6 +56,7 @@ wire[output_bitlength-1:0] Result`DIM_1D(out_dim);
 `UNPACK_1D_ARRAY(out_dim, output_bitlength, ResultO, Result)
 // I should have a naming convention here, sorry.
 
+`DEFINE_READMEM_VAR;
 integer start = 0;
 initial begin
   reset = 0;

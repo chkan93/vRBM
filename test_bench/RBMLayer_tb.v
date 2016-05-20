@@ -38,7 +38,7 @@ wire[output_bitlength-1:0] Outputm`DIM_1D(out_dim);
 `PACK_1D_ARRAY(out_dim, input_bitlength, H_BiasIm, H_BiasI)
 `UNPACK_1D_ARRAY(out_dim, output_bitlength, Output, Outputm)
 
-
+`DEFINE_READMEM_VAR;
 initial begin
 clock = 1;
 reset = 0;
