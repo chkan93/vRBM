@@ -7,6 +7,8 @@ prepare:
 randomSeed:
 	$(GEN) ./data/seed 8 5
 	$(GEN) ./data/seed 8 2
+	$(GEN) ./data/seed 8 441
+	$(GEN) ./data/seed 8 10
 
 randomRBMData:
 	$(GEN)  ./data/image    1   15
