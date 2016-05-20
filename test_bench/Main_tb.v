@@ -63,18 +63,18 @@ initial begin
   #20 reset = 0;
   #20 start = 1;
   clock = 1;
-  $readmemh("./data/Cbias1x2.txt", C_BiasIm);
-  $readmemh("./data/Cweight5x2.txt", C_WeightIm_1d);
-  $readmemh("./data/Hbias1x5.txt", H_BiasIm);
-  $readmemh("./data/Hweight15x5.txt", H_WeightIm_1d);
-  $readmemh("./data/image1x15.txt", ImageIm);
+  `ReadMem("./data/Cbias1x2.txt", C_BiasIm);
+  `ReadMem("./data/Cweight5x2.txt", C_WeightIm_1d);
+  `ReadMem("./data/Hbias1x5.txt", H_BiasIm);
+  `ReadMem("./data/Hweight15x5.txt", H_WeightIm_1d);
+  `ReadMem("./data/image1x15.txt", ImageIm);
   $dumpfile ("./dumpFolder/Main.vcd");
   $dumpvars;
 
 
 end
 
-Main #(input_bitlength, sigmoid_bitlength, output_bitlength, in_dim, h_dim, out_dim, "./data/seed1x5.txt", 10, 10)
+Main #(input_bitlength, sigmoid_bitlength, output_bitlength, in_dim, h_dim, out_dim, "./data/seed1x5.txt","./data/seed1x2.txt", 1000, 10)
 m(clock, reset, ImageI, H_WeightI, H_BiasI, C_WeightI, C_BiasI, Output, ResultO, finish);
 
 `DEFINE_PRINTING_VAR;

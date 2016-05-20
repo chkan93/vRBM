@@ -20,6 +20,7 @@
 `define TB_RG_DUMPFILE "./dumpFolder/RG.vcd"
 
 
+`define ReadMem(x,y) $readmemh(x,y)
 
 
 

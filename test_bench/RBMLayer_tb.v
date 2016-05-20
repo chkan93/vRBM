@@ -42,9 +42,9 @@ wire[output_bitlength-1:0] Outputm`DIM_1D(out_dim);
 initial begin
 clock = 1;
 reset = 0;
-$readmemh("./data/Hbias1x5.txt", H_BiasIm);
-$readmemh("./data/Hweight15x5.txt", H_WeightIm_1d);
-$readmemh("./data/image1x15.txt", InputHVm);
+`ReadMem("./data/Hbias1x5.txt", H_BiasIm);
+`ReadMem("./data/Hweight15x5.txt", H_WeightIm_1d);
+`ReadMem("./data/image1x15.txt", InputHVm);
 $dumpfile ("./dumpFolder/RBMLayer.vcd");
 $dumpvars;
 #100 $finish;

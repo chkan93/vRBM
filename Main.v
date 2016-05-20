@@ -16,7 +16,8 @@ module Main #(
   parameter  in_dim = 15,
   parameter  h_dim = 5,
   parameter  out_dim = 2,
-	parameter seed_path="./data/seed1x5.txt",
+	parameter seed_path_hd="./data/seed1x5.txt",
+	parameter seed_path_cl="./data/seed1x2.txt",
 	parameter iteration_num = 100,
 	parameter counter_bit_length = 10
 )(
@@ -45,14 +46,14 @@ wire[output_bitlength-1:0] OutputVector`DIM_1D(out_dim);
 wire [`PORT_1D(h_dim, input_bitlength)] H_Output;
 RBMLayer #(input_bitlength,
           sigmoid_bitlength,
-          input_bitlength, in_dim, h_dim, seed_path)
+          input_bitlength, in_dim, h_dim, seed_path_hd)
           rbm(clock, reset, ImageI, H_WeightI, H_BiasI, H_Output);
 
 
 
 RBMLayer #(input_bitlength,
 					sigmoid_bitlength,
-					input_bitlength, h_dim, out_dim, seed_path)
+					input_bitlength, h_dim, out_dim, seed_path_cl)
 					cl(clock, reset, H_Output, C_WeightI, C_BiasI, Output);
 
 

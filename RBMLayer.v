@@ -81,7 +81,7 @@ module RBMLayer
 
 
 initial begin
-	$readmemh(random_seed_file, seed);
+	`ReadMem(random_seed_file, seed);
 end
 
   // 1. matrix Multiplication         [x]

@@ -1,11 +1,12 @@
-OBGEN = python ./scripts/generate_random_data.py
+GEN = python ./scripts/generate_random_data.py
 GEN_MATLAB = python ./scripts/generate_matlab_data.py
 
 prepare:
 	mkdir -p output
 
-randomNumber1x5_Seed:
-	$(GEN) ./data/seed 5 5
+randomSeed:
+	$(GEN) ./data/seed 8 5
+	$(GEN) ./data/seed 8 2
 
 randomRBMData:
 	$(GEN)  ./data/image    1   15
@@ -74,7 +75,7 @@ Main_real_TB: prepare
 	vvp ./output/design_Main_Real_TB
 
 
-vlib: 
+vlib:
 	vlib work
 
 
