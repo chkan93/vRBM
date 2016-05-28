@@ -2,6 +2,18 @@
 `define _my_incl_vh_
 
 
+/*
+For new version
+*/
+
+// `define SPARSE
+
+
+
+
+`define GET_2D(regfile, D2, BL, i, j) regfile[(i*D2 + j)*BL+BL-1 -: BL]
+`define GET_1D(regfile, BL, i) regfile[i*BL+BL-1 -: BL]
+`define ASSERT(condition, msg) if(condition) begin $display(msg); $finish(1); end
 
 
 

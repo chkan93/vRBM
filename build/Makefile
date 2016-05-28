@@ -22,12 +22,14 @@ generate_matlab_data:
 	rm -rf ./data/mnist/verilog/* $@
 	rm -rf ./data/model/verilog/* $@
 	echo "Generating Mnist Test Data to verilog format." $@
-	$(GEN_MATLAB)  ./data/mnist/matlab/data.mat mnist  ./data/mnist/verilog/ 4  && echo "Finished" || echo "Error Occured" $@
+	$(GEN_MATLAB)  ./data/mnist/matlab/data.mat mnist  ./data/mnist/verilog/ 8  && echo "Finished" || echo "Error Occured" $@
 	echo "Generating RBM Model Data to verilog format." $@
-	$(GEN_MATLAB)  ./data/model/matlab/data.mat  mnist_rbm_model  ./data/model/verilog/ 4 && echo "Finished" || echo "Error Occured" $@
+	$(GEN_MATLAB)  ./data/model/matlab/data.mat  mnist_rbm_model  ./data/model/verilog/ 8 && echo "Finished" || echo "Error Occured" $@
 
 
-
+ap_adder_TB: prepare
+	iverilog -o ./output/ap_adder_TB ../test_bench/ap_adder_tb.v
+	vvp ./output/ap_adder_TB
 
 
 sigmoid_TB: prepare

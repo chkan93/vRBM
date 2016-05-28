@@ -23,6 +23,7 @@
 *.cmd_log
 *_beh.prj
 *.ncd
+*.pyc
 isim
 db
 incremental_db

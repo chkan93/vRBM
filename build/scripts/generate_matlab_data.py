@@ -18,7 +18,7 @@ def binary(lst):
 
 
 def rounding(lst, floating_bits):
-    return [int(l * math.pow(2, floating_bits)) for l in lst]
+    return [int(math.ceil(l * math.pow(2, floating_bits))) for l in lst]
 
 
 def output_list(f,list):

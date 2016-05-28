@@ -21,7 +21,7 @@ ans =
 */
 
 module test_MatrixMul
-  #(parameter M1_D1 = 3,parameter M1_D2 = 3, parameter  M2_D2 = 3, parameter  bitlength = 8);
+  #(parameter M1_D1 = 15,parameter M1_D2 = 15, parameter  M2_D2 = 15, parameter  bitlength = 8);
 
 
 
