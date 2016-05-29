@@ -8,6 +8,8 @@
 /build/output/
 /build/work/
 /build/scripts/.idea
+/build/dumpFolder
+/build/-p
 *.ace
 *~
 *#

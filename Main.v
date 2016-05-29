@@ -26,7 +26,7 @@ module Main #(parameter integer bitlength = 12,
                   (input reset,
                    input clock,
                    input data_valid,
-                   input wire signed[`PORT_1D(input_dim, bitlength)] InputData,
+                   input wire signed[`PORT_1D(general_input_dim, bitlength)] InputData,
                    output reg signed[`PORT_1D(output_dim, bitlength)] OutputData,
                    output reg finish);
 
@@ -85,16 +85,17 @@ always @ (posedge clock) begin
 				// $display("internal_finish = %0d", internal_finish);
         if(internal_finish) begin
           //do the self addition here
-					`DISPLAY_1D_BIT_ARRAY(output_dim, bitlength, "OutputDataOneTime = ", OutputDataOneTime); // [x, 0] ==> wrong
+					`DISPLAY_1D_BIT_ARRAY(output_dim, bitlength, "OutputDataOneTime = ", OutputDataOneTime)// [x, 0] ==> wrong
           for(i = 0; i<output_dim; i=i+1) begin
             `GET_1D(OutputData, bitlength, i) = SelfAddOutput[i];
           end
           iteration_counter = iteration_counter + 1;
 					$display("============\niteration_counter = %0d", iteration_counter);
           internal_reset = 1;
-        end else begin
-          // just wait here
         end
+					// else begin
+	        //   // just wait here
+	        // end
       end
   end else begin
 		if (iteration_counter > 0) begin

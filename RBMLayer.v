@@ -24,7 +24,7 @@ module RBMLayer 				#(parameter integer bitlength = 12,
 															 input rand_reset,
                                input clock,
 															 input data_valid,
-                               input wire [`PORT_1D(input_dim, bitlength)] InputData,
+                               input wire [`PORT_1D(general_input_dim, bitlength)] InputData,
                                output reg [`PORT_1D(output_dim, bitlength)] OutputData,
                                output reg finish
                                );
@@ -87,10 +87,10 @@ always @ ( posedge clock ) begin
 		// $display("reach here"); yes, reach here
 		$display("cursor = %0d", cursor);
 		if (cursor < output_dim) begin
-			for(i = 0; i< temp_dim; i++) begin
+			for(i = 0; i< temp_dim; i=i+1) begin
 				Add_Group_Input[i][0] <= Bias[cursor];
-				for(j = 1; j< input_dim+1; j++) begin
-					if (`GET_1D(InputData, bitlength, j-1))
+				for(j = 1; j< input_dim+1; j=j+1) begin
+					if (`GET_1D(InputData, bitlength, j-1)) // problem here, if sparse, need to use an expression other than "j-1"
 						Add_Group_Input[i][j] <= Weight[j][cursor];
 						else
 						Add_Group_Input[i][j] <= 0;

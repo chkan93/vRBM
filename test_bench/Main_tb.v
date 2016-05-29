@@ -66,7 +66,7 @@ end
 
 `DEFINE_PRINTING_VAR;
 always @ (posedge finish) begin
-  `DISPLAY_1D_ARRAY(output_dim ,"output of RBM = ",  OutputData);
+  `DISPLAY_1D_ARRAY(output_dim ,"output of RBM = ",  OutputData)
   $finish;
 end
 
