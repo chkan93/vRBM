@@ -26,10 +26,10 @@ module RBMLayer
 (
   input clock,
 	input reset,
-  input wire[`PORT_1D(in_dim, input_bitlength)] ImageI,
-  input wire[`PORT_2D(in_dim, out_dim, input_bitlength)] WeightI,
-  input wire[`PORT_1D(out_dim, input_bitlength)] BiasI,
-  output [`PORT_1D(out_dim, output_bitlength)] HoutputO
+  input wire [`PORT_1D(in_dim, input_bitlength)] ImageI,
+  input wire signed[`PORT_2D(in_dim, out_dim, input_bitlength)] WeightI,
+  input wire signed[`PORT_1D(out_dim, input_bitlength)] BiasI,
+  output signed[`PORT_1D(out_dim, output_bitlength)] HoutputO
   );
 
   wire[`PORT_1D(out_dim, input_bitlength)] temp_mul;

@@ -15,7 +15,6 @@ module RBMLayer_new 				#(parameter integer bitlength = 12,
                               parameter integer sparse_input_dim = 8, //64
                               parameter integer output_dim = 5, //441,10
                               parameter  Inf = 12'b0111_1111_1111,
-                              parameter  SEED = 8'b0000_0111,
                               parameter weight_path = "../build/data/Hweight15x5.txt",  // load a different weight for sparse case 64x441
                               parameter bias_path = "../build/data/Hbias1x5.txt",
                               parameter seed_path = "../build/data/seed1x10.txt",
@@ -24,8 +23,8 @@ module RBMLayer_new 				#(parameter integer bitlength = 12,
                               (input reset,
                                input clock,
 															 input data_valid,
-                               input wire[`PORT_1D(input_dim, bitlength)] InputData,
-                               output reg[`PORT_1D(output_dim, bitlength)] OutputData,
+                               input wire [`PORT_1D(input_dim, bitlength)] InputData,
+                               output reg [`PORT_1D(output_dim, bitlength)] OutputData,
                                output reg finish
                                );
 
