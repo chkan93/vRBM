@@ -19,7 +19,7 @@ to avoid bias, a more complex implementation is needed, like 'Tkacik LFSR'.
 */
 
 
-	reg [bitlength-1: 0] shiftReg = 0;
+	reg [bitlength-1: 0] shiftReg;
 	wire shiftIn, xorOut, zeroDetector;
 
 	assign xorOut = shiftReg[`R_1] ^ shiftReg[`R_2] ^ shiftReg[`R_3] ^ shiftReg[`R_4];
@@ -43,11 +43,14 @@ to avoid bias, a more complex implementation is needed, like 'Tkacik LFSR'.
 	always @(posedge clk) begin
 		// $display("[RandomGenerator.reset = %d]",reset);  // ok
 		// $display("[RandomGenerator.shiftReg = %d]", shiftReg); // ok
+			// $display("random number = %0d", shiftReg);
 			shiftReg <= {shiftReg[bitlength-2: 0], shiftIn};
 	end
 
 	always @(posedge reset) begin
+			$display("random number reset, seed = %0d", seed);
 			shiftReg <= seed;
+			// $display("random number = %0d", shiftReg);
 	end
 
 

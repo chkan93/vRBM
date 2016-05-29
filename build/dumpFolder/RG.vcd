@@ -1,16 +1,215 @@
 $date
-	Fri May 20 13:31:16 2016
+	Sun May 29 16:16:47 2016
 $end
 $version
-	ModelSim Version 10.2c
+	Icarus Verilog
 $end
 $timescale
-	1ns
+	1s
 $end
-
 $scope module test_RandomGenerator $end
+$var wire 8 ! rvalue [7:0] $end
+$var reg 1 " clock $end
+$var reg 1 # reset $end
+$var reg 8 $ seed [7:0] $end
+$var integer 32 % clock_counter [31:0] $end
+$var integer 32 & clock_period [31:0] $end
+$var integer 32 ' reset_begin [31:0] $end
+$var integer 32 ( reset_perid [31:0] $end
+$scope module rnd $end
+$var wire 1 " clk $end
+$var wire 8 ) dataOut [7:0] $end
+$var wire 1 # reset $end
+$var wire 8 * seed [7:0] $end
+$var wire 1 + shiftIn $end
+$var wire 1 , xorOut $end
+$var wire 1 - zeroDetector $end
+$var reg 8 . shiftReg [7:0] $end
+$upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
+bx .
+x-
+x,
+x+
+b100 *
+bx )
+b1010 (
+b101000 '
+b101 &
+b101 %
+b100 $
+0#
+1"
+bx !
 $end
+#5
+0"
+#10
+b1010 %
+1"
+#15
+0"
+#20
+b1111 %
+1"
+#25
+0"
+#30
+b10100 %
+1"
+#35
+0"
+#40
+b11001 %
+1"
+#45
+0"
+#50
+b11110 %
+1"
+#55
+0"
+#60
+b100011 %
+1"
+#65
+0"
+#70
+b101000 %
+1"
+#75
+0"
+#80
+0+
+0,
+0-
+b100 !
+b100 )
+b100 .
+1#
+b101101 %
+1"
+#85
+0"
+#90
+1+
+1,
+b1000 !
+b1000 )
+b1000 .
+0#
+b110010 %
+1"
+#95
+0"
+#100
+1+
+1,
+b10001 !
+b10001 )
+b10001 .
+b110111 %
+1"
+#105
+0"
+#110
+1+
+1,
+b100011 !
+b100011 )
+b100011 .
+b111100 %
+1"
+#115
+0"
+#120
+0+
+0,
+b1000111 !
+b1000111 )
+b1000111 .
+b1000001 %
+1"
+#125
+0"
+#130
+0+
+0,
+b10001110 !
+b10001110 )
+b10001110 .
+b1000110 %
+1"
+#135
+0"
+#140
+0+
+0,
+b11100 !
+b11100 )
+b11100 .
+b1001011 %
+1"
+#145
+0"
+#150
+1+
+1,
+b111000 !
+b111000 )
+b111000 .
+b1010000 %
+1"
+#155
+0"
+#160
+0+
+0,
+b1110001 !
+b1110001 )
+b1110001 .
+b1010101 %
+1"
+#165
+0"
+#170
+0+
+0,
+b11100010 !
+b11100010 )
+b11100010 .
+b1011010 %
+1"
+#175
+0"
+#180
+1+
+1,
+b11000100 !
+b11000100 )
+b11000100 .
+b1011111 %
+1"
+#185
+0"
+#190
+0+
+0,
+b10001001 !
+b10001001 )
+b10001001 .
+b1100100 %
+1"
+#195
+0"
+#200
+1+
+1,
+b10010 !
+b10010 )
+b10010 .
+b1101001 %
+1"

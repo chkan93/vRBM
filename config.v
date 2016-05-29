@@ -93,7 +93,7 @@ Utility
 `define DISPLAY_1D_ARRAY(D1,msg, array)    \
       $display("%s", msg);                               \
       for(pt_i = 0; pt_i < D1; pt_i=pt_i+1) begin       \
-          $display("%d ", array[pt_i]);                 \
+          $display("%0d ", array[pt_i]);                 \
       end                                               \
       $display("\n");
 
@@ -102,7 +102,7 @@ Utility
 $display("%s", msg);   \
 for(pt_i = 0; pt_i < D1; pt_i=pt_i+1)  begin      \
   for(pt_j = 0; pt_j < D2; pt_j=pt_j+1)   begin   \
-      $display("%d ", array[pt_i][pt_j]);         \
+      $display("%0d ", array[pt_i][pt_j]);         \
       end                                         \
     $display("\n");                                \
   end                                             \
@@ -112,7 +112,7 @@ $display("\n");
 `define DISPLAY_1D_BIT_ARRAY(D1, BL, msg, array)  \
     $display("%s", msg);                   \
     for(pt_i = 0 ;pt_i < D1; pt_i=pt_i+1) begin \
-          $display("%d ", array[((pt_i-1)*BL)+BL-1 -: BL]);                  \
+          $display("%0d ", array[((pt_i-1)*BL)+BL-1 -: BL]);                  \
     end                     \
     $display("\n");
 
@@ -121,7 +121,7 @@ $display("\n");
     $display("%s", msg);                   \
     for(pt_i = 1 ;pt_i <= D1; pt_i=pt_i+1)  \
         for(pt_j = 1; pt_j <= D2; pt_j=pt_j+1)  begin \
-          $display("%d ", array[(((pt_i-1)*D2 + (pt_j-1))*BL)+BL-1 -: BL]);                  \
+          $display("%0d ", array[(((pt_i-1)*D2 + (pt_j-1))*BL)+BL-1 -: BL]);                  \
         end                     \
         $display("\n");
 
