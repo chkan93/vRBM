@@ -59,3 +59,10 @@ RandomGenerator_TB: prepare
 Main_test_runnable: prepare
 	iverilog -o ./output/design_Main_test_runnable_TB   ../test_bench/Main_tb.v
 	vvp ./output/design_Main_test_runnable_TB
+
+vlib:
+	vlib work
+
+vsim_Main_test_runnableB: vlib
+	vlog  ../test_bench/Main_tb.v
+	vsim -c -do "run -all" test_Main
