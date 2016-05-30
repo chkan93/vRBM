@@ -5,17 +5,17 @@ prepare:
 	mkdir -p output
 
 randomSeed:
-	$(GEN) ./data/Hseed 8 5
-	$(GEN) ./data/Cseed 8 2
 	$(GEN) ./data/Hseed 8 441
 	$(GEN) ./data/Cseed 8 10
 
 randomRBMData:
-	$(GEN)  ./data/image    1   15
-	$(GEN)  ./data/Hweight  12  15*5
-	$(GEN)  ./data/Hbias    12  5
-	$(GEN)  ./data/Cweight  12  5*2
-	$(GEN)  ./data/Cbias    12  2
+	$(GEN)  ./data/image    1   4
+	$(GEN)  ./data/Hweight  8  4*3
+	$(GEN) ./data/Hseed     8  3
+	$(GEN) ./data/Cseed     8  2
+	$(GEN)  ./data/Hbias    8  3
+	$(GEN)  ./data/Cweight  8  3*2
+	$(GEN)  ./data/Cbias    8  2
 
 
 generate_matlab_data:
