@@ -99,7 +99,7 @@ always @ ( posedge clock ) begin
 						Add_Group_Input[i][j] <= 0;
 					end
 
-
+					// 473   310   340					
 					// $display("RandomData[%0d] = %0d",cursor,RandomData[i]);
 					// `DISPLAY_2D_ARRAY(temp_dim, input_dim, "Add_Group_Temp_Result = ", Add_Group_Temp_Result)
 					// $display("SigmoidOutput[%0d] = %0d",cursor,SigmoidOutput[i]);
