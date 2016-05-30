@@ -1,18 +1,11 @@
-`ifndef  TEST_BENCH
-  `include "config.v"
-`endif
-
-`ifndef sigmoid
-`define sigmoid
-
 module sigmoid
-  #(parameter input_bitlength = 12, parameter sigmoid_bitlength = 8)
-  (input [input_bitlength-1:0] sum,
-   output reg[sigmoid_bitlength-1:0] s);
-  reg[sigmoid_bitlength:0] stmp;
-  reg[input_bitlength-1:0] z;//Q8.4
+  #(parameter bitlength = 8)
+  (output reg[bitlength-1:0] s,
+  input reg[15:0] sum);
+  reg[bitlength:0] stmp;
+  reg[11:0] z;//Q8.4
   always @(sum) begin
-    if (sum[input_bitlength-1]==1)begin
+    if (sum[11]==1)begin
       z = ~sum;
       z = z+11'b00000000001;
     end
@@ -36,6 +29,3 @@ module sigmoid
     s=stmp[7:0];
   end
 endmodule
-
-
-`endif

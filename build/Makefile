@@ -63,6 +63,14 @@ Main_test_runnable: prepare
 vlib:
 	vlib work
 
+vsim_sigmoid: vlib
+	vlog ../test_bench/sigmoid_tb.v
+	vsim -c -do "run -all" test_sigmoid
+
+vsim_random: vlib
+	vlog  ../test_bench/RandomGenerator_tb.v
+	vsim -c -do "run -all" test_RandomGenerator
+
 vsim_Main_test_runnable: vlib
 	vlog  ../test_bench/Main_tb.v
 	vsim -c -do "run -all" test_Main

@@ -1,11 +1,9 @@
-`define TEST_BENCH
-`include "../config.v"
-`include "../sigmoid.v"
+`include "./sigmoid.v"
 
 module test_sigmoid;
   reg signed [11:0] sum;
   wire[7:0] s;
-  sigmoid sigmoidins(sum, s);
+  sigmoid sigmoidins(s,sum);
   reg[7:0] i;
   initial
   begin

@@ -1,215 +1,296 @@
 $date
-	Sun May 29 16:16:47 2016
+	Mon May 30 11:35:09 2016
 $end
 $version
-	Icarus Verilog
+	ModelSim Version 10.4b
 $end
 $timescale
-	1s
+	1ps
 $end
+
 $scope module test_RandomGenerator $end
-$var wire 8 ! rvalue [7:0] $end
+$var reg 1 ! reset $end
 $var reg 1 " clock $end
-$var reg 1 # reset $end
-$var reg 8 $ seed [7:0] $end
-$var integer 32 % clock_counter [31:0] $end
-$var integer 32 & clock_period [31:0] $end
-$var integer 32 ' reset_begin [31:0] $end
-$var integer 32 ( reset_perid [31:0] $end
+$var reg 8 # seed [7:0] $end
+$var wire 1 $ rvalue [7] $end
+$var wire 1 % rvalue [6] $end
+$var wire 1 & rvalue [5] $end
+$var wire 1 ' rvalue [4] $end
+$var wire 1 ( rvalue [3] $end
+$var wire 1 ) rvalue [2] $end
+$var wire 1 * rvalue [1] $end
+$var wire 1 + rvalue [0] $end
+$var integer 32 , clock_counter $end
+$var integer 32 - clock_period $end
+$var integer 32 . reset_begin $end
+$var integer 32 / reset_perid $end
+
 $scope module rnd $end
-$var wire 1 " clk $end
-$var wire 8 ) dataOut [7:0] $end
-$var wire 1 # reset $end
-$var wire 8 * seed [7:0] $end
-$var wire 1 + shiftIn $end
-$var wire 1 , xorOut $end
-$var wire 1 - zeroDetector $end
-$var reg 8 . shiftReg [7:0] $end
+$var parameter 32 0 bitlength $end
+$var wire 1 1 reset $end
+$var wire 1 2 clk $end
+$var wire 1 3 seed [7] $end
+$var wire 1 4 seed [6] $end
+$var wire 1 5 seed [5] $end
+$var wire 1 6 seed [4] $end
+$var wire 1 7 seed [3] $end
+$var wire 1 8 seed [2] $end
+$var wire 1 9 seed [1] $end
+$var wire 1 : seed [0] $end
+$var wire 1 $ dataOut [7] $end
+$var wire 1 % dataOut [6] $end
+$var wire 1 & dataOut [5] $end
+$var wire 1 ' dataOut [4] $end
+$var wire 1 ( dataOut [3] $end
+$var wire 1 ) dataOut [2] $end
+$var wire 1 * dataOut [1] $end
+$var wire 1 + dataOut [0] $end
+$var reg 8 ; shiftReg [7:0] $end
+$var wire 1 < shiftIn $end
+$var wire 1 = xorOut $end
+$var wire 1 > zeroDetector $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-bx .
-x-
-x,
-x+
-b100 *
-bx )
-b1010 (
-b101000 '
-b101 &
-b101 %
-b100 $
-0#
+0!
 1"
-bx !
+b100 #
+bx ;
+b1000 0
+b101 ,
+b101 -
+b101000 .
+b1010 /
+x+
+x*
+x)
+x(
+x'
+x&
+x%
+x$
+x<
+x=
+x>
+0:
+09
+18
+07
+06
+05
+04
+03
+12
+01
 $end
 #5
 0"
+02
 #10
-b1010 %
 1"
+b1010 ,
+12
 #15
 0"
+02
 #20
-b1111 %
 1"
+b1111 ,
+12
 #25
 0"
+02
 #30
-b10100 %
 1"
+b10100 ,
+12
 #35
 0"
+02
 #40
-b11001 %
 1"
+b11001 ,
+12
 #45
 0"
+02
 #50
-b11110 %
 1"
+b11110 ,
+12
 #55
 0"
+02
 #60
-b100011 %
 1"
+b100011 ,
+12
 #65
 0"
+02
 #70
-b101000 %
 1"
+b101000 ,
+12
 #75
 0"
+02
 #80
-0+
-0,
-0-
-b100 !
-b100 )
-b100 .
-1#
-b101101 %
 1"
+b101101 ,
+12
+1!
+11
+b100 ;
+0+
+0*
+1)
+0(
+0'
+0&
+0%
+0$
+0>
+0=
+0<
 #85
 0"
+02
 #90
-1+
-1,
-b1000 !
-b1000 )
-b1000 .
-0#
-b110010 %
 1"
+b110010 ,
+12
+0!
+b1000 ;
+0)
+1(
+1=
+1<
+01
 #95
 0"
+02
 #100
-1+
-1,
-b10001 !
-b10001 )
-b10001 .
-b110111 %
 1"
+b110111 ,
+12
+b10001 ;
+1+
+0(
+1'
 #105
 0"
+02
 #110
-1+
-1,
-b100011 !
-b100011 )
-b100011 .
-b111100 %
 1"
+b111100 ,
+12
+b100011 ;
+1*
+0'
+1&
 #115
 0"
+02
 #120
-0+
-0,
-b1000111 !
-b1000111 )
-b1000111 .
-b1000001 %
 1"
+b1000001 ,
+12
+b1000111 ;
+1)
+0&
+1%
+0=
+0<
 #125
 0"
+02
 #130
-0+
-0,
-b10001110 !
-b10001110 )
-b10001110 .
-b1000110 %
 1"
+b1000110 ,
+12
+b10001110 ;
+0+
+1(
+0%
+1$
 #135
 0"
+02
 #140
-0+
-0,
-b11100 !
-b11100 )
-b11100 .
-b1001011 %
 1"
+b1001011 ,
+12
+b11100 ;
+0*
+1'
+0$
 #145
 0"
+02
 #150
-1+
-1,
-b111000 !
-b111000 )
-b111000 .
-b1010000 %
 1"
+b1010000 ,
+12
+b111000 ;
+0)
+1&
+1=
+1<
 #155
 0"
+02
 #160
-0+
-0,
-b1110001 !
-b1110001 )
-b1110001 .
-b1010101 %
 1"
+b1010101 ,
+12
+b1110001 ;
+1+
+0(
+1%
+0=
+0<
 #165
 0"
+02
 #170
-0+
-0,
-b11100010 !
-b11100010 )
-b11100010 .
-b1011010 %
 1"
+b1011010 ,
+12
+b11100010 ;
+0+
+1*
+0'
+1$
 #175
 0"
+02
 #180
-1+
-1,
-b11000100 !
-b11000100 )
-b11000100 .
-b1011111 %
 1"
+b1011111 ,
+12
+b11000100 ;
+0*
+1)
+0&
+1=
+1<
 #185
 0"
+02
 #190
-0+
-0,
-b10001001 !
-b10001001 )
-b10001001 .
-b1100100 %
 1"
+b1100100 ,
+12
+b10001001 ;
+1+
+0)
+1(
+0%
+0=
+0<
 #195
 0"
-#200
-1+
-1,
-b10010 !
-b10010 )
-b10010 .
-b1101001 %
-1"
+02
