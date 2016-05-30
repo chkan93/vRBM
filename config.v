@@ -11,8 +11,8 @@ For new version
 
 
 
-`define GET_2D(regfile, D2, BL, i, j) regfile[(i*D2 + j)*BL+BL-1 -: BL]
-`define GET_1D(regfile, BL, i) regfile[i*BL+BL-1 -: BL]
+`define GET_2D(regfile, D2, BL, i, j) regfile[((i)*D2 + (j))*BL+BL-1 -: BL]
+`define GET_1D(regfile, BL, i) regfile[(i)*BL+BL-1 -: BL]
 `define ASSERT(condition, msg) if(condition) begin $display(msg); $finish(1); end
 
 
@@ -104,7 +104,7 @@ for(pt_i = 0; pt_i < D1; pt_i=pt_i+1)  begin      \
   for(pt_j = 0; pt_j < D2; pt_j=pt_j+1)   begin   \
       $display("%0d ", array[pt_i][pt_j]);         \
       end                                         \
-    $display("\n");                                \
+    $display("\n====");                                \
   end                                             \
 $display("\n");
 
@@ -123,6 +123,6 @@ $display("\n");
         for(pt_j = 1; pt_j <= D2; pt_j=pt_j+1)  begin \
           $display("%0d ", array[(((pt_i-1)*D2 + (pt_j-1))*BL)+BL-1 -: BL]);                  \
         end                     \
-        $display("\n");
+        $display("\n====");
 
 `endif

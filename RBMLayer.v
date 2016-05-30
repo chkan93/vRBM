@@ -36,11 +36,15 @@ localparam input_dim = general_input_dim;
 localparam input_dim = sparse_input_dim;
 `endif
 
-
+`DEFINE_PRINTING_VAR;
 initial begin
 `ReadMem(weight_path, Weight);
 `ReadMem(bias_path, Bias);
 `ReadMem(seed_path, SeedData);
+// `DISPLAY_2D_ARRAY(input_dim, output_dim,"Weight = ", Weight)
+// `DISPLAY_1D_ARRAY(output_dim,"Bias = ", Bias)
+// `DISPLAY_1D_ARRAY(output_dim,"SeedData = ", SeedData)
+// data is readed correctly.
 end
 
 
@@ -56,7 +60,7 @@ genvar g,h;
 reg [sigmoid_bitlength-1:0] SeedData`DIM_1D(temp_dim);
 wire [sigmoid_bitlength-1:0] RandomData`DIM_1D(temp_dim);
 wire [sigmoid_bitlength-1:0] SigmoidOutput`DIM_1D(temp_dim);
-`DEFINE_PRINTING_VAR;
+
 
 generate
 for(g = 0; g< temp_dim; g=g+1) begin
@@ -87,21 +91,35 @@ end
 
 always @ ( posedge clock ) begin
 	if (data_valid && !reset) begin
+ // 	`DISPLAY_1D_BIT_ARRAY(input_dim, bitlength, "Image = ", InputData) // correct
 		// $display("reach here"); yes, reach here
 		// $display("cursor = %0d", cursor);
+		if (cursor == output_dim) begin
+			// `DISPLAY_2D_ARRAY(temp_dim, input_dim, "Add_Group_Temp_Result = ", Add_Group_Temp_Result)
+			// for(i = 0; i<temp_dim;i=i+1)
+			// 	$display("%d", Add_Group_Temp_Result[i][input_dim-1]);
+			// $display("=======================");
+			// $display("Before_Sigmoid = [%d, %d, %d]", Add_Group_Temp_Result[0][3], Add_Group_Temp_Result[1][3], Add_Group_Temp_Result[2][3]);
+			finish = 1;
+		end
+
 		if (cursor < output_dim) begin
+			// $display("InputData = %b", InputData);
 			for(i = 0; i< temp_dim; i=i+1) begin
 				Add_Group_Input[i][0] <= Bias[cursor];
 				for(j = 1; j< input_dim+1; j=j+1) begin
-					if (`GET_1D(InputData, bitlength, j-1)) // problem here, if sparse, need to use an expression other than "j-1"
-						Add_Group_Input[i][j] <= Weight[j][cursor];
-						else
-						Add_Group_Input[i][j] <= 0;
+						// $display("InputData[%0d] = %b", j-1, `GET_1D(InputData, bitlength, j-1));
+						if (`GET_1D(InputData, bitlength, j-1)) begin // problem here, if sparse, need to use an expression other than "j-1"
+							Add_Group_Input[i][j] <= Weight[j-1][cursor];
+							// $display("Add_Group_Input[%0d][%0d] <= Weight[%0d][%0d] = %0d",i,j-1, j-1, cursor, Weight[j-1][cursor]);
+						end	else begin
+						  Add_Group_Input[i][j] <= 0;
+						end
 					end
 
-					// 473   310   340					
+					// 473   310   340
 					// $display("RandomData[%0d] = %0d",cursor,RandomData[i]);
-					// `DISPLAY_2D_ARRAY(temp_dim, input_dim, "Add_Group_Temp_Result = ", Add_Group_Temp_Result)
+					// $display("Add_Group_Temp_Result[%0d][%0d] = %0d;",i, input_dim-1, Add_Group_Temp_Result[i][input_dim-1]);
 					// $display("SigmoidOutput[%0d] = %0d",cursor,SigmoidOutput[i]);
 					if(SigmoidOutput[i] > RandomData[i]) begin
 						// $display("OutputData[%0d] = %b",cursor, `GET_1D(OutputData, bitlength, cursor));
@@ -110,17 +128,8 @@ always @ ( posedge clock ) begin
 					else  begin
 						`GET_1D(OutputData, bitlength, cursor) = 0;
 					end
-
 					cursor = cursor + 1;
 			end
-		end
-
-		if (cursor == output_dim) begin
-			// $finish;
-			//  `DISPLAY_1D_BIT_ARRAY(output_dim, bitlength, "OutputData = ", OutputData)
-			// $display("On Finished this it OutputData = %b", OutputData);
-			finish = 1;
-		end else begin
 			finish = 0;
 		end
 	end
