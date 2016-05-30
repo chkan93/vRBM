@@ -1,6 +1,7 @@
 *.log
 *.svf
 *.scr
+*.pyc
 *.cmd
 *.bak
 *.lso

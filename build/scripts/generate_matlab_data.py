@@ -4,7 +4,7 @@ import sys
 import scipy.io as io
 import os
 import math
-from numberToBitString import toHex
+from numberToBitString import toBin, toHex
 
 TYPE = {
     'MNIST':'mnist',
@@ -21,10 +21,13 @@ def rounding(lst, floating_bits):
     return [int(math.ceil(l * math.pow(2, floating_bits))) for l in lst]
 
 
-def output_list(f,list):
-    for d in list:
-        print(toHex(d), file=f)
-
+def output_list(f,list,bits=12):
+    if bits != None:
+        for d in list:
+            print(toBin(d, bits=bits), file=f)
+    else:
+        for d in list:
+            print(toHex(d), file=f)
 
 def get_data(m, key, fun=lambda x:x):
     return {
@@ -32,7 +35,7 @@ def get_data(m, key, fun=lambda x:x):
         'data': fun(m[key])
     }
 
-def generate_data(input_file='', output_dir='', prefix='', floating_bits=4):
+def generate_data(input_file='', output_dir='', prefix='', floating_bits=4, bits=12):
     data = None
     if prefix == TYPE['MNIST']:
         md = io.loadmat(input_file)
@@ -44,7 +47,7 @@ def generate_data(input_file='', output_dir='', prefix='', floating_bits=4):
         for m in data:
             for i in range(len(m['data'])):
                 with open(os.path.join(output_dir, prefix + '_' + m['key'] + str(i) + EXT), 'w') as f:
-                    output_list(f, binary(m['data'][i]))
+                    output_list(f, binary(m['data'][i]), bits=None)
 
     elif prefix == TYPE['MNIST_RBM_MODEL']:
         md = io.loadmat(input_file)
@@ -55,7 +58,7 @@ def generate_data(input_file='', output_dir='', prefix='', floating_bits=4):
                 get_data(md, 'hbias',  fun=fun)]
         for m in data:
             with open(os.path.join(output_dir, prefix + '_' + m['key'] + EXT), 'w') as f:
-                output_list(f, rounding(m['data'], floating_bits))
+                output_list(f, rounding(m['data'], floating_bits), bits=bits)
 
     else:
         print('Unrecognized data type.')
@@ -66,7 +69,9 @@ def generate_data(input_file='', output_dir='', prefix='', floating_bits=4):
 
 
 if __name__ == "__main__":
+    # print(sys.argv)
     generate_data(input_file=os.path.realpath(sys.argv[1]),
                   prefix=sys.argv[2],
                   output_dir=os.path.realpath(sys.argv[3]),
-                  floating_bits=int(sys.argv[4]))
+                  floating_bits=int(sys.argv[4]),
+                  bits=int(sys.argv[5]))
