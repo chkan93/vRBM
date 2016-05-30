@@ -66,3 +66,7 @@ vlib:
 vsim_Main_test_runnable: vlib
 	vlog  ../test_bench/Main_tb.v
 	vsim -c -do "run -all" test_Main
+
+vsim_Main_test_mnist: vlib
+	vlog  ../test_bench/Main_Real_tb.v
+	vsim -c -do "run -all" test_Main_Real
