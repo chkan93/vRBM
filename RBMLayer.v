@@ -56,7 +56,7 @@ genvar g,h;
 reg [sigmoid_bitlength-1:0] SeedData`DIM_1D(temp_dim);
 wire [sigmoid_bitlength-1:0] RandomData`DIM_1D(temp_dim);
 wire [sigmoid_bitlength-1:0] SigmoidOutput`DIM_1D(temp_dim);
-
+`DEFINE_PRINTING_VAR;
 
 generate
 for(g = 0; g< temp_dim; g=g+1) begin
@@ -79,13 +79,16 @@ always @(posedge reset) begin
 		for(j = 0; j < input_dim + 1; j=j+1) begin
 				Add_Group_Input[i][j] = 0;
 		end
+	// $display("on reset before OutputData = %b", OutputData);
   OutputData = 0;
+	// $display("on reset af OutputData = %b", OutputData);
 	//reset has nothing to do with random number generator
 end
+
 always @ ( posedge clock ) begin
 	if (data_valid && !reset) begin
 		// $display("reach here"); yes, reach here
-		$display("cursor = %0d", cursor);
+		// $display("cursor = %0d", cursor);
 		if (cursor < output_dim) begin
 			for(i = 0; i< temp_dim; i=i+1) begin
 				Add_Group_Input[i][0] <= Bias[cursor];
@@ -96,15 +99,26 @@ always @ ( posedge clock ) begin
 						Add_Group_Input[i][j] <= 0;
 					end
 
-					$display("RandomData[%0d] = %0d",i,RandomData[i]);
-					if(SigmoidOutput[i] > RandomData[i])
-					`GET_1D(OutputData, bitlength, cursor) = 1;
+
+					// $display("RandomData[%0d] = %0d",cursor,RandomData[i]);
+					// `DISPLAY_2D_ARRAY(temp_dim, input_dim, "Add_Group_Temp_Result = ", Add_Group_Temp_Result)
+					// $display("SigmoidOutput[%0d] = %0d",cursor,SigmoidOutput[i]);
+					if(SigmoidOutput[i] > RandomData[i]) begin
+						// $display("OutputData[%0d] = %b",cursor, `GET_1D(OutputData, bitlength, cursor));
+						`GET_1D(OutputData, bitlength, cursor) = 1;
+					end
+					else  begin
+						`GET_1D(OutputData, bitlength, cursor) = 0;
+					end
+
 					cursor = cursor + 1;
 			end
 		end
 
 		if (cursor == output_dim) begin
 			// $finish;
+			//  `DISPLAY_1D_BIT_ARRAY(output_dim, bitlength, "OutputData = ", OutputData)
+			// $display("On Finished this it OutputData = %b", OutputData);
 			finish = 1;
 		end else begin
 			finish = 0;

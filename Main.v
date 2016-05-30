@@ -86,6 +86,7 @@ always @ (posedge clock) begin
         if(internal_finish) begin
           //do the self addition here
 					`DISPLAY_1D_BIT_ARRAY(output_dim, bitlength, "OutputDataOneTime = ", OutputDataOneTime)// [x, 0] ==> wrong
+					// $display("OutputDataOneTime = %b", OutputDataOneTime);
           for(i = 0; i<output_dim; i=i+1) begin
             `GET_1D(OutputData, bitlength, i) = SelfAddOutput[i];
           end

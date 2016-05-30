@@ -22,7 +22,7 @@ localparam c_bias_path = "../build/data/Cbias1x2.txt";
 localparam c_seed_path = "../build/data/Cseed1x2.txt";
 localparam hidden_adder_group_num = 1;
 localparam cl_adder_group_num = 1;
-localparam iteration_num = 4;
+localparam iteration_num = 100;
 
 integer i = 0;
 reg clock, reset, data_valid;
@@ -67,6 +67,7 @@ end
 `DEFINE_PRINTING_VAR;
 always @ (posedge finish) begin
   `DISPLAY_1D_ARRAY(output_dim ,"output of RBM = ",  OutputData)
+  // $display("Output of this RBM is %b", OutputDataPort);
   $finish;
 end
 
