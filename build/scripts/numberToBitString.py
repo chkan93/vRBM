@@ -5,6 +5,9 @@ def toHex(num):
     else:
         return '-' + s
 
+def binToHex(s):
+    # print s
+    return '%0*X' % ((len(s) + 3) // 4, int(s, 2))
 
 def toBin(num, bits=12):
     sign = "0"
@@ -47,4 +50,6 @@ def addOne(lst):
 
 
 
-# print toBin(-1024)
+# x = toBin(-124)
+# print x;
+# print binToHex(x)

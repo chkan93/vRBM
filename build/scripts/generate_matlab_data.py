@@ -4,7 +4,7 @@ import sys
 import scipy.io as io
 import os
 import math
-from numberToBitString import toBin, toHex
+from numberToBitString import toBin, toHex, binToHex
 
 TYPE = {
     'MNIST':'mnist',
@@ -24,7 +24,7 @@ def rounding(lst, floating_bits):
 def output_list(f,list,bits=12):
     if bits != None:
         for d in list:
-            print(toBin(d, bits=bits), file=f)
+            print(binToHex(toBin(d, bits=bits)), file=f)
     else:
         for d in list:
             print(toHex(d), file=f)
