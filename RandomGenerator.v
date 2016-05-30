@@ -48,7 +48,7 @@ to avoid bias, a more complex implementation is needed, like 'Tkacik LFSR'.
 	end
 
 	always @(posedge reset) begin
-			$display("random number reset, seed = %0d", seed);
+			// $display("random number reset, seed = %0d", seed);
 			shiftReg <= seed;
 			// $display("random number = %0d", shiftReg);
 	end

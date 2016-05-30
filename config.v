@@ -111,7 +111,7 @@ $display("\n");
 
 `define DISPLAY_1D_BIT_ARRAY(D1, BL, msg, array)  \
     $display("%s", msg);                   \
-    for(pt_i = 0 ;pt_i < D1; pt_i=pt_i+1) begin \
+    for(pt_i = 1 ;pt_i < D1+1; pt_i=pt_i+1) begin \
           $display("%0d ", array[((pt_i-1)*BL)+BL-1 -: BL]);                  \
     end                     \
     $display("\n");

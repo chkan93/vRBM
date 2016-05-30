@@ -4,25 +4,33 @@
 
 // `timescale 1s/1s
 
-module test_Main;
-localparam  input_dim = 15;
-localparam  output_dim = 2;
+module test_Main_Real;
+
+localparam  output_dim = 10;  //10
 localparam  bitlength = 12;
 localparam  clock_period = 10;
 localparam  sigmoid_bitlength = 8;
-localparam  general_input_dim = 15;
-localparam  sparse_input_dim = 64;
-localparam  hidden_dim = 5;
+localparam  general_input_dim = 784; //784
+localparam  sparse_input_dim = 64 ;
+localparam  hidden_dim = 441; //441
 localparam   Inf = 12'b0111_1111_1111;
-localparam h_weight_path = "../build/data/Hweight15x5.txt";  // load a different weight for sparse case 64x441
-localparam h_bias_path = "../build/data/Hbias1x5.txt";
-localparam h_seed_path = "../build/data/Hseed1x5.txt";
-localparam c_weight_path = "../build/data/Cweight5x2.txt";  // load a different weight for sparse case 64x441
-localparam c_bias_path = "../build/data/Cbias1x2.txt";
-localparam c_seed_path = "../build/data/Cseed1x2.txt";
+localparam h_weight_path = "../build/data/model/verilog/mnist_rbm_model_hweight.txt";  // load a different weight for sparse case 64x441
+localparam h_bias_path = "../build/data/model/verilog/mnist_rbm_model_hbias.txt";
+localparam h_seed_path = "../build/data/Hseed1x441.txt";
+localparam c_weight_path = "../build/data/model/verilog/mnist_rbm_model_cweight.txt";  // load a different weight for sparse case 64x441
+localparam c_bias_path = "../build/data/model/verilog/mnist_rbm_model_cbias.txt";
+localparam c_seed_path = "../build/data/Cseed1x10.txt";
+localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata1.txt";
 localparam hidden_adder_group_num = 1;
 localparam cl_adder_group_num = 1;
 localparam iteration_num = 100;
+
+`ifndef SPARSE
+localparam input_dim = general_input_dim;
+`else
+localparam input_dim = sparse_input_dim;
+`endif
+
 
 integer i = 0;
 reg clock, reset, data_valid;
@@ -34,9 +42,9 @@ reg[bitlength-1:0] InputData`DIM_1D(input_dim);
 wire[`PORT_1D(input_dim, bitlength)] InputDataPort;
 
 initial begin
-  $dumpfile ("./dumpFolder/Main_test_runnable.vcd");
+  $dumpfile ("./dumpFolder/Main_test_mnist.vcd");
   $dumpvars;
-  `ReadMem("./data/image1x15.txt",InputData);
+  `ReadMem(input_image_path, InputData);
   clock = 0;
   reset = 0;
   data_valid = 0;
