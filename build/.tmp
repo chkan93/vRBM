@@ -1,7 +1,7 @@
 vlib work
 ** Warning: (vlib-34) Library already exists at "work".
 vlog  ../test_bench/Main_Real_tb.v
-Start time: 21:44:42 on May 30,2016
+Start time: 22:14:30 on May 30,2016
 vlog ../test_bench/Main_Real_tb.v 
 Model Technology ModelSim ALTERA vlog 10.4b Compiler 2015.05 May 27 2015
 -- Compiling module sigmoid
@@ -13,7 +13,7 @@ Model Technology ModelSim ALTERA vlog 10.4b Compiler 2015.05 May 27 2015
 
 Top level modules:
 	test_Main_Real
-End time: 21:44:42 on May 30,2016, Elapsed time: 0:00:00
+End time: 22:14:30 on May 30,2016, Elapsed time: 0:00:00
 Errors: 0, Warnings: 0
 vsim -c -do "run -all" test_Main_Real
 Reading C:/altera/15.1/modelsim_ase/tcl/vsim/pref.tcl
@@ -21,7 +21,7 @@ Reading C:/altera/15.1/modelsim_ase/tcl/vsim/pref.tcl
 # 10.4b
 
 # vsim -c -do "run -all" test_Main_Real 
-# Start time: 21:44:43 on May 30,2016
+# Start time: 22:14:32 on May 30,2016
 # Loading work.test_Main_Real
 # Loading work.Main
 # Loading work.RBMLayer
@@ -40,7 +40,7 @@ Reading C:/altera/15.1/modelsim_ase/tcl/vsim/pref.tcl
 # 0 
 # 1 
 # 0 
-# 0 
+# 1 
 # 0 
 # 0 
 # 0 
@@ -48,5 +48,5 @@ Reading C:/altera/15.1/modelsim_ase/tcl/vsim/pref.tcl
 # 
 # ** Note: $finish    : ../test_bench/Main_Real_tb.v(79)
 #    Time: 9220 ps  Iteration: 2  Instance: /test_Main_Real
-# End time: 21:45:02 on May 30,2016, Elapsed time: 0:00:19
+# End time: 22:14:55 on May 30,2016, Elapsed time: 0:00:23
 # Errors: 0, Warnings: 2

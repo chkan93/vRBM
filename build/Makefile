@@ -19,12 +19,12 @@ randomRBMData:
 
 
 generate_matlab_data:
-  rm -rf ./data/nmist/verilog/* $@
-  rm -rf ./data/model/verilog/* $@
-  echo "Generating Mnist Test Data to verilog format." $@
+	rm -rf ./data/nmist/verilog/* $@
+	rm -rf ./data/model/verilog/* $@
+	echo "Generating Mnist Test Data to verilog format." $@
 	$(GEN_MATLAB)  ./data/mnist/matlab/data.mat mnist  ./data/mnist/verilog/ 8  12 && echo "Finished" || echo "Error Occured" $@
-  echo "Generating RBM Model Data to verilog format." $@
- 	$(GEN_MATLAB)  ./data/model/matlab/data.mat  mnist_rbm_model  ./data/model/verilog/ 8 12 && echo "Finished" || echo "Error Occured" $@
+	echo "Generating RBM Model Data to verilog format." $@
+	$(GEN_MATLAB)  ./data/model/matlab/data.mat  mnist_rbm_model  ./data/model/verilog/ 8 12 && echo "Finished" || echo "Error Occured" $@
 
 
 
@@ -78,3 +78,7 @@ vsim_Main_test_runnable: vlib
 vsim_Main_test_mnist: vlib
 	vlog  ../test_bench/Main_Real_tb.v
 	vsim -c -do "run -all" test_Main_Real
+
+
+run_mnist_test:
+	python ./scripts/run_mnist_test.py  100 30

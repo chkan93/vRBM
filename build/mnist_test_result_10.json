@@ -1,0 +1,18 @@
+{
+  "result" :
+      [
+        {"truth" : 4, "result" : true, "detection" : 4, "id" : 0},
+        {"truth" : 6, "result" : false, "detection" : 4, "id" : 1},
+        {"truth" : 7, "result" : false, "detection" : 3, "id" : 2},
+        {"truth" : 8, "result" : true, "detection" : 8, "id" : 3},
+        {"truth" : 3, "result" : true, "detection" : 3, "id" : 4},
+        {"truth" : 2, "result" : true, "detection" : 2, "id" : 5},
+        {"truth" : 2, "result" : true, "detection" : 2, "id" : 6},
+        {"truth" : 10, "result" : false, "detection" : 5, "id" : 7},
+        {"truth" : 8, "result" : false, "detection" : 5, "id" : 8},
+        {"truth" : 5, "result" : true, "detection" : 5, "id" : 9}
+      ],
+      "summary" : {
+    "CorrectDetection" : 6, "Rate" : 0.6, "ImageNumber" : 10
+  }
+}

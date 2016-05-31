@@ -38,9 +38,8 @@ def runCmd():
 def updateContent(id, num):
     with fileinput.FileInput('../test_bench/Main_real_tb.v', inplace=True) as f:
         for line in f:
-            if "iteration_num" in line:
-                print(line.replace('localparam iteration_num = 25;',
-                               'localparam iteration_num = {0};'.format(num)), end='')
+            if "localparam iteration_num" in line:
+                print('localparam iteration_num = {0};\n'.format(num), end='')
             elif "mnist_testdata" in line:
                 print('localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata{0}.txt";\n'.format(id), end='')
             else:
@@ -57,6 +56,7 @@ def getDetection(r):
 
 def main(N=0,ITER=25):
     result = []
+    print("When testing, please don't edit test_bench/Main_real_tb.v")
     print("Test Begin")
     print("Total Image Number: {0}, with iteration = {1}".format(N, ITER))
     bar = progressbar.ProgressBar()
@@ -69,17 +69,17 @@ def main(N=0,ITER=25):
             result.append(makeDetectionToken(int(f.read()),int(dt),num=i))
 
     s = summary(result)
-    print("Test finished, Image Number: {0}, Correct Detection: {1}, Rate: {2}",
-          s['ImageNumber'], s['CorrectDetection'], s['Rate'])
+    print("Test finished, Image Number: {0}, Correct Detection: {1}, Rate: {2}".format(
+          s['ImageNumber'], s['CorrectDetection'], s['Rate']))
     print("Writing Test Result into file")
-    output_json = 'mnist_test_result_{1}.json'.format(N)
+    output_json = 'mnist_test_result_{0}.json'.format(N)
     with open(output_json, 'w') as f:
         json.dump({'summary':s,'result':result}, f)
     print("Test Finished")
 
 
 
-main(10,1)
+# main(10,1)
 
 import sys
 if __name__ == "__main__":
