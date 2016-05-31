@@ -20,10 +20,10 @@ localparam h_seed_path = "../build/data/Hseed1x441.txt";
 localparam c_weight_path = "../build/data/model/verilog/mnist_rbm_model_cweight.txt";  // load a different weight for sparse case 64x441
 localparam c_bias_path = "../build/data/model/verilog/mnist_rbm_model_cbias.txt";
 localparam c_seed_path = "../build/data/Cseed1x10.txt";
-localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata9.txt";
+localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata14.txt";
 localparam hidden_adder_group_num = 1;
 localparam cl_adder_group_num = 1;
-localparam iteration_num = 1;
+localparam iteration_num = 40;
 
 `ifndef SPARSE
 localparam input_dim = general_input_dim;

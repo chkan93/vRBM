@@ -81,4 +81,4 @@ vsim_Main_test_mnist: vlib
 
 
 run_mnist_test:
-	python ./scripts/run_mnist_test.py  100 30
+	python ./scripts/run_mnist_test.py  100 40

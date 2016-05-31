@@ -7,12 +7,13 @@ import os
 import fileinput
 import re
 
-def makeDetectionToken(gt=0,dt=0, num=0):
+def makeDetectionToken(gt=0,dt=0, id=0, weight=[]):
     return  {
-        'id':num,
+        'id':id,
         'truth':gt,
         'detection':dt,
-        'result':gt == dt
+        'result':gt == dt,
+        'weight':weight
     }
 
 def summary(result):
@@ -52,7 +53,7 @@ def getDetection(r):
     numlist = re.findall(r'\d+', s)
     numlist = [int(n) for n in numlist]
     label = numlist.index(max(numlist))
-    return label+1
+    return label+1,numlist
 
 def main(N=0,ITER=25):
     result = []
@@ -64,9 +65,9 @@ def main(N=0,ITER=25):
     for i in bar(range(N)):
         updateContent(i, ITER)
         r = runCmd()
-        dt = getDetection(r)
+        dt,numlist = getDetection(r)
         with open('./data/mnist/verilog/mnist_testlabels{0}.txt'.format(i), 'r') as f:
-            result.append(makeDetectionToken(int(f.read()),int(dt),num=i))
+            result.append(makeDetectionToken(int(f.read()),int(dt),id=i,weight=numlist))
 
     s = summary(result)
     print("Test finished, Image Number: {0}, Correct Detection: {1}, Rate: {2}".format(
@@ -82,5 +83,8 @@ def main(N=0,ITER=25):
 # main(10,1)
 
 import sys
+import time
 if __name__ == "__main__":
+    start_time = time.time()
     main(N=int(sys.argv[1]),ITER=int(sys.argv[2]))
+    print("--------------------- Program Run Time: {0} seconds. ---------------------".format(time.time()-start_time))
