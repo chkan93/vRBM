@@ -19,11 +19,11 @@ randomRBMData:
 
 
 generate_matlab_data:
-	rm -rf ./data/mnist/verilog/* $@
-	rm -rf ./data/model/verilog/* $@
-	echo "Generating Mnist Test Data to verilog format." $@
+# rm -rf ./data/mnist/verilog/* $@
+# rm -rf ./data/model/verilog/* $@
+# echo "Generating Mnist Test Data to verilog format." $@
 	$(GEN_MATLAB)  ./data/mnist/matlab/data.mat mnist  ./data/mnist/verilog/ 8  12 && echo "Finished" || echo "Error Occured" $@
-	echo "Generating RBM Model Data to verilog format." $@
+# echo "Generating RBM Model Data to verilog format." $@
 	$(GEN_MATLAB)  ./data/model/matlab/data.mat  mnist_rbm_model  ./data/model/verilog/ 8 12 && echo "Finished" || echo "Error Occured" $@
 
 

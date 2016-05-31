@@ -27,7 +27,7 @@ def output_list(f,list,bits=12):
             print(binToHex(toBin(d, bits=bits)), file=f)
     else:
         for d in list:
-            print(toHex(d), file=f)
+            print(d, file=f)
 
 def get_data(m, key, fun=lambda x:x):
     return {

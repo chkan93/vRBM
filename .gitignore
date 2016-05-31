@@ -7,7 +7,9 @@
 *.lso
 *.elf
 /build/output/
+/build/.tmp
 /build/work/
+/build/.idea/*
 /build/scripts/.idea
 /build/dumpFolder
 /build/-p

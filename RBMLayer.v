@@ -100,15 +100,17 @@ always @ ( posedge clock ) begin
 		end
 
 		if (sigmoid_cursor < cursor) begin
+		  j = 0;
 			for(i = sigmoid_cursor; i < cursor; i = i+1) begin
-				if(SigmoidOutput[i] > RandomData[i]) begin
-					// $display("Set OutputData[%0d] = 1, Add_Group_Temp_Result[%0d][%0d] = %0d, SigmoidOutput[%0d] = %0d, RandomData[%0d] = %0d",
-					// i,i,input_dim-1,Add_Group_Temp_Result[i][input_dim-1],i, SigmoidOutput[i], i, RandomData[i]);
+				// $display("**ID = %0d** Set OutputData[%0d] = %0d, Add_Group_Temp_Result[%0d][%0d] = %0d, SigmoidOutput[%0d] = %0d, RandomData[%0d] = %0d", id,
+				// 				  i,SigmoidOutput[j] > RandomData[j],i,input_dim-1,Add_Group_Temp_Result[j][input_dim-1],i, SigmoidOutput[j], i, RandomData[j]);
+				if(SigmoidOutput[j] > RandomData[j]) begin
 					`GET_1D(OutputData, bitlength, sigmoid_cursor) = 1;
 				end else  begin
 					`GET_1D(OutputData, bitlength, sigmoid_cursor) = 0;
 				end
 				sigmoid_cursor = sigmoid_cursor + 1;
+				j = j + 1;
 			end
 		end
 
@@ -117,12 +119,16 @@ always @ ( posedge clock ) begin
 				if(cursor < output_dim) begin
 			  	Add_Group_Input[i][0] <= Bias[cursor];
 				  for(j = 1; j< input_dim+1; j=j+1) begin
+						// $display("InputData[%0d] = %0d, Weight[%0d][%0d] = %0d",j-1, `GET_1D(InputData, bitlength, j-1), j-1, cursor, Weight[j-1][cursor]); // here all correct
 						if (`GET_1D(InputData, bitlength, j-1)) begin
 							Add_Group_Input[i][j] <= Weight[j-1][cursor];
+							// $display("Weight[%0d][%0d] = %0d, Add_Group_Input[%0d][%0d] = %0d",j-1,cursor, Weight[j-1][cursor], i, j,	Add_Group_Input[i][j]);
+							// $display("Add_Group_Temp_Result[%0d][%0d] = %0d",i,input_dim-1,Add_Group_Temp_Result[i][input_dim-1] );
 						end	else begin
 						  Add_Group_Input[i][j] <= 0;
 						end
 					end
+					// $display("Finish Computed Number %0d", cursor); //all correct here
 					cursor = cursor + 1;
 				end
 			end

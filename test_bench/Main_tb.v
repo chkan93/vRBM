@@ -19,8 +19,8 @@ localparam h_seed_path = "../build/data/Hseed1x3.txt";
 localparam c_weight_path = "../build/data/Cweight3x2.txt";  // load a different weight for sparse case 64x441
 localparam c_bias_path = "../build/data/Cbias1x2.txt";
 localparam c_seed_path = "../build/data/Cseed1x2.txt";
-localparam hidden_adder_group_num = 3;
-localparam cl_adder_group_num = 2;
+localparam hidden_adder_group_num = 1;
+localparam cl_adder_group_num = 1;
 localparam iteration_num = 1;
 
 `ifndef SPARSE
