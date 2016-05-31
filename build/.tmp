@@ -2,7 +2,7 @@ make[1]: Entering directory `C:/Users/xiz36/Documents/Workspace/vRBM/build'
 vlib work
 ** Warning: (vlib-34) Library already exists at "work".
 vlog  ../test_bench/Main_Real_tb.v
-Start time: 12:27:32 on May 31,2016
+Start time: 16:21:13 on May 31,2016
 vlog ../test_bench/Main_Real_tb.v 
 Model Technology ModelSim ALTERA vlog 10.4b Compiler 2015.05 May 27 2015
 -- Compiling module sigmoid
@@ -14,7 +14,7 @@ Model Technology ModelSim ALTERA vlog 10.4b Compiler 2015.05 May 27 2015
 
 Top level modules:
 	test_Main_Real
-End time: 12:27:33 on May 31,2016, Elapsed time: 0:00:01
+End time: 16:21:13 on May 31,2016, Elapsed time: 0:00:00
 Errors: 0, Warnings: 0
 vsim -c -do "run -all" test_Main_Real
 Reading C:/altera/15.1/modelsim_ase/tcl/vsim/pref.tcl
@@ -22,7 +22,7 @@ Reading C:/altera/15.1/modelsim_ase/tcl/vsim/pref.tcl
 # 10.4b
 
 # vsim -c -do "run -all" test_Main_Real 
-# Start time: 12:27:34 on May 31,2016
+# Start time: 16:21:16 on May 31,2016
 # Loading work.test_Main_Real
 # Loading work.Main
 # Loading work.RBMLayer
@@ -34,12 +34,21 @@ Reading C:/altera/15.1/modelsim_ase/tcl/vsim/pref.tcl
 #    Time: 0 ps  Iteration: 0  Instance: /test_Main_Real/main/hidden_layer
 # ** Warning: (vsim-PLI-3407) Too many data words read on line 2 of file "../build/data/Cseed1x10.txt". (Current address [1], address range [0])    : ../RBMLayer.v(44)
 #    Time: 0 ps  Iteration: 0  Instance: /test_Main_Real/main/classify_layer
-# Break key hit
-# Break at ../RBMLayer.v line 74
-# Stopped at ../RBMLayer.v line 74
-VSIM 2> > VSIM 2> > # Break key hit
+# output of RBM = 
+# 0 
+# 0 
+# 0 
+# 0 
+# 0 
+# 0 
+# 3 
+# 0 
+# 0 
+# 0 
 # 
-# <EOF>
-# End time: 12:30:15 on May 31,2016, Elapsed time: 0:02:41
+# 
+# ** Note: $finish    : ../test_bench/Main_Real_tb.v(79)
+#    Time: 365680 ps  Iteration: 2  Instance: /test_Main_Real
+# End time: 16:29:36 on May 31,2016, Elapsed time: 0:08:20
 # Errors: 0, Warnings: 2
-Terminate batch job (Y/N)? 
+make[1]: Leaving directory `C:/Users/xiz36/Documents/Workspace/vRBM/build'

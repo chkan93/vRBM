@@ -1,0 +1,145 @@
+{
+  "summary" : {"ImageNumber" : 20, "Rate" : 0.5, "CorrectDetection" : 10},
+              "result" :[
+                {
+                  "result" : true,
+                  "id" : 0,
+                  "weight" : [ 0, 0, 0, 39, 0, 0, 1, 0, 0, 0 ],
+                  "detection" : 4,
+                  "truth" : 4
+                },
+                {
+                  "result" : true,
+                  "id" : 1,
+                  "weight" : [ 0, 0, 0, 13, 0, 37, 0, 0, 0, 0 ],
+                  "detection" : 6,
+                  "truth" : 6
+                },
+                {
+                  "result" : false,
+                  "id" : 2,
+                  "weight" : [ 0, 0, 39, 0, 0, 6, 39, 0, 0, 0 ],
+                  "detection" : 3,
+                  "truth" : 7
+                },
+                {
+                  "result" : true,
+                  "id" : 3,
+                  "weight" : [ 0, 0, 0, 0, 2, 0, 0, 39, 0, 0 ],
+                  "detection" : 8,
+                  "truth" : 8
+                },
+                {
+                  "result" : true,
+                  "id" : 4,
+                  "weight" : [ 0, 0, 40, 0, 0, 0, 38, 0, 0, 0 ],
+                  "detection" : 3,
+                  "truth" : 3
+                },
+                {
+                  "result" : false,
+                  "id" : 5,
+                  "weight" : [ 0, 39, 0, 0, 40, 0, 0, 0, 0, 0 ],
+                  "detection" : 5,
+                  "truth" : 2
+                },
+                {
+                  "result" : true,
+                  "id" : 6,
+                  "weight" : [ 0, 40, 0, 0, 40, 0, 34, 0, 0, 0 ],
+                  "detection" : 2,
+                  "truth" : 2
+                },
+                {
+                  "result" : false,
+                  "id" : 7,
+                  "weight" : [ 0, 0, 0, 0, 40, 0, 0, 0, 0, 0 ],
+                  "detection" : 5,
+                  "truth" : 10
+                },
+                {
+                  "result" : false,
+                  "id" : 8,
+                  "weight" : [ 0, 0, 0, 0, 39, 0, 0, 1, 0, 0 ],
+                  "detection" : 5,
+                  "truth" : 8
+                },
+                {
+                  "result" : true,
+                  "id" : 9,
+                  "weight" : [ 0, 0, 0, 0, 40, 0, 35, 0, 0, 0 ],
+                  "detection" : 5,
+                  "truth" : 5
+                },
+                {
+                  "result" : false,
+                  "id" : 10,
+                  "weight" : [ 0, 0, 0, 0, 0, 0, 39, 0, 0, 0 ],
+                  "detection" : 7,
+                  "truth" : 5
+                },
+                {
+                  "result" : false,
+                  "id" : 11,
+                  "weight" : [ 0, 0, 0, 0, 39, 0, 0, 0, 0, 0 ],
+                  "detection" : 5,
+                  "truth" : 10
+                },
+                {
+                  "result" : false,
+                  "id" : 12,
+                  "weight" : [ 0, 0, 0, 0, 0, 0, 29, 0, 0, 0 ],
+                  "detection" : 7,
+                  "truth" : 2
+                },
+                {
+                  "result" : true,
+                  "id" : 13,
+                  "weight" : [ 0, 0, 0, 39, 0, 36, 26, 0, 0, 0 ],
+                  "detection" : 4,
+                  "truth" : 4
+                },
+                {
+                  "result" : true,
+                  "id" : 14,
+                  "weight" : [ 0, 0, 39, 0, 0, 40, 39, 0, 0, 0 ],
+                  "detection" : 6,
+                  "truth" : 6
+                },
+                {
+                  "result" : false,
+                  "id" : 15,
+                  "weight" : [ 0, 3, 0, 0, 38, 0, 9, 0, 35, 0 ],
+                  "detection" : 5,
+                  "truth" : 2
+                },
+                {
+                  "result" : false,
+                  "id" : 16,
+                  "weight" : [ 0, 0, 35, 0, 0, 0, 39, 0, 0, 0 ],
+                  "detection" : 7,
+                  "truth" : 3
+                },
+                {
+                  "result" : true,
+                  "id" : 17,
+                  "weight" : [ 0, 0, 0, 0, 0, 0, 0, 0, 40, 0 ],
+                  "detection" : 9,
+                  "truth" : 9
+                },
+                {
+                  "result" : true,
+                  "id" : 18,
+                  "weight" : [ 40, 0, 0, 0, 0, 10, 0, 0, 39, 0 ],
+                  "detection" : 1,
+                  "truth" : 1
+                },
+                {
+                  "result" : false,
+                  "id" : 19,
+                  "weight" : [ 0, 0, 0, 0, 0, 0, 3, 0, 0, 0 ],
+                  "detection" : 7,
+                  "truth" : 8
+                }
+              ]
+}
