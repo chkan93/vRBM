@@ -21,7 +21,7 @@ localparam c_bias_path = "../build/data/Cbias1x2.txt";
 localparam c_seed_path = "../build/data/Cseed1x2.txt";
 localparam hidden_adder_group_num = 1;
 localparam cl_adder_group_num = 1;
-localparam iteration_num = 1;
+localparam iteration_num = 30;
 
 `ifndef SPARSE
 localparam input_dim = general_input_dim;

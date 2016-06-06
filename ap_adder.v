@@ -9,7 +9,7 @@ always @ ( x or y ) begin
         z = Inf;
       end
   else if (y < 0 && x < 0 && z >= 0) begin
-        z = -Inf;
+        z = $signed(-Inf);
       end
 end
 endmodule

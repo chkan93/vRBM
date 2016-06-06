@@ -76,9 +76,12 @@ vsim_Main_test_runnable: vlib
 	vsim -c -do "run -all" test_Main
 
 vsim_Main_test_mnist: vlib
-	vlog  ../test_bench/Main_Real_tb.v
+	vlog  ../test_bench/Main_real_tb.v
 	vsim -c -do "run -all" test_Main_Real
 
 
 run_mnist_test:
 	python ./scripts/run_mnist_test.py  20 40
+
+run_synthesis:
+	dc_shell -tcl_mode -f ./scripts/synthesis.tcl
