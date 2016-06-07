@@ -25,8 +25,8 @@ module RBMLayer 				#(parameter integer bitlength = 12,
     input rand_reset,
     input clock,
     input data_valid,
-    input wire [`PORT_1D(general_input_dim, bitlength)] InputData,
-    output reg [`PORT_1D(output_dim, bitlength)] OutputData,
+    input wire [`PORT_1D(general_input_dim, 1)] InputData,
+    output reg [`PORT_1D(output_dim, 1)] OutputData,
     output reg finish
     );
 
@@ -96,24 +96,14 @@ module RBMLayer 				#(parameter integer bitlength = 12,
 	 end
 
 	 if (sigmoid_cursor < cursor) begin
-	    // j = 0;		
-	    // for(i = sigmoid_cursor; i < cursor; i = i+1) begin
-	    //    if(SigmoidOutput[j] > RandomData[j]) begin
-	    // 	  `GET_1D(OutputData, bitlength, sigmoid_cursor) = 1;
-	    //    end else  begin
-	    // 	  `GET_1D(OutputData, bitlength, sigmoid_cursor) = 0;
-	    //    end
-	    //    sigmoid_cursor = sigmoid_cursor + 1;
-	    //    j = j + 1;
-	    // end
 	    for(i = 0; i<temp_dim; i=i+1) begin
 	       if(SigmoidOutput[i] > RandomData[i]) begin
-		  `GET_1D(OutputData, bitlength, cursor - temp_dim + i) = 1;
+		  `GET_1D(OutputData, 1, cursor - temp_dim + i) = 1;
 	       end else  begin
-		  `GET_1D(OutputData, bitlength, cursor - temp_dim + i) = 0;
+		  `GET_1D(OutputData, 1, cursor - temp_dim + i) = 0;
 	       end
 	    end
-	    sigmoid_cursor = sigmoid_cursor + i;	    
+	    sigmoid_cursor = sigmoid_cursor + i;
 	 end
 
 	 if (cursor < output_dim) begin
@@ -121,7 +111,7 @@ module RBMLayer 				#(parameter integer bitlength = 12,
 	       if(cursor < output_dim) begin
 		  Add_Group_Input[i][0] <= Bias[cursor];
 		  for(j = 1; j< input_dim+1; j=j+1) begin
-		     if (`GET_1D(InputData, bitlength, j-1)) begin
+		     if (`GET_1D(InputData, 1, j-1)) begin
 			Add_Group_Input[i][j] <= Weight[j-1][cursor];
 		     end	else begin
 			Add_Group_Input[i][j] <= 0;
