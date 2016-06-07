@@ -1,8 +1,8 @@
 `ifndef  TEST_BENCH
  `include "config.v"
- `include "RBMLayer.v"
+// `include "RBMLayer.v"		
 `else
- `include "../RBMLayer.v"
+// `include "../RBMLayer.v"
 `endif
 
 
