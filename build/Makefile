@@ -63,6 +63,10 @@ Main_test_runnable: prepare
 vlib:
 	vlib work
 
+vsim_ap_adder: vlib
+	vlog ../test_bench/ap_adder_tb.v
+	vsim -c -do "run -all" ap_adder_tb
+
 vsim_sigmoid: vlib
 	vlog ../test_bench/sigmoid_tb.v
 	vsim -c -do "run -all" test_sigmoid
