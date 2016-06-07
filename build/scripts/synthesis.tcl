@@ -1,19 +1,22 @@
 set link_library {"*"}
 set target_library  {"tc6a_cbacore.db"}
+define_design_lib WORK -path ./WORK
 
 # ap_adder.v is fixed
 #  - use $signed()
 #  - don't need to change parameter, use default
-# read_verilog ../ap_adder.v
+analyze -f verilog ../ap_adder.v 
+elaborate ap_adder
 
 # RandomGenerator.v is fixed
 #  - use same and one always block
 #  - don't need to change parameter, use default
-# read_verilog ../RandomGenerator.v
+analyze -f verilog ../RandomGenerator.v
+elaborate RandomGenerator
 
 # sigmoid.v has no error.
-# read_verilog ../sigmoid.v
-
+analyze -f verilog ../sigmoid.v
+elaborate sigmoid
 # RBMLayer.v is fixed
 #  - add translate guard to initial block
 #  - change integer to reg
@@ -23,7 +26,8 @@ set target_library  {"tc6a_cbacore.db"}
 #  - **remaining problems: 
 #    - type conversion signed to unsigned, line 90, 130
 #    - Net SeedData is reg and connected to instance, but not driven by an always block. 
-# read_verilog ../RBMLayer.v
+analyze -f verilog ../RBMLayer.v
+elaborate RBMLayer
 
 # Main.v is fixed
 #  - combine the always block
