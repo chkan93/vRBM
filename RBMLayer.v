@@ -51,9 +51,9 @@ module RBMLayer 				#(parameter integer bitlength = 12,
    reg signed[bitlength-1:0] Weight`DIM_2D(input_dim, output_dim);
    reg signed [bitlength-1:0] Bias`DIM_1D(output_dim);
    wire signed [bitlength-1:0] Add_Group_Temp_Result`DIM_2D(temp_dim, input_dim);
-   reg  signed [bitlength-1:0] Add_Group_Input`DIM_2D(temp_dim, input_dim+1);
-   reg [bitlength-1:0] 	       cursor, sigmoid_cursor;
-   reg [bitlength-1:0] 	       i,j,k;
+   wire  signed [bitlength-1:0] Add_Group_Input`DIM_2D(temp_dim, input_dim+1);
+   reg [9:0] 	       cursor, sigmoid_cursor;
+   reg [9:0] 	       i,j,k;
    genvar 		       g,h;
    reg [sigmoid_bitlength-1:0] SeedData`DIM_1D(temp_dim);
    wire [sigmoid_bitlength-1:0] RandomData`DIM_1D(temp_dim);
@@ -66,9 +66,10 @@ module RBMLayer 				#(parameter integer bitlength = 12,
 	 RandomGenerator  #(sigmoid_bitlength) rnd(rand_reset, clock, SeedData[g], RandomData[g]);
 	 for(h = 0; h<input_dim; h=h+1) begin : generate_adders
 	    if (h == 0)  begin : generate_first_adder
-	       ap_adder #(bitlength, Inf) adder(Add_Group_Input[g][h], Add_Group_Input[g][h+1], Add_Group_Temp_Result[g][h]);
+
+	       ap_adder #(bitlength, Inf) adder(Bias[cursor], Weight[h][cursor] & {12{`GET_1D(InputData, 1, h)}}, Add_Group_Temp_Result[g][h]);
 	    end else begin : generate_rest_adders
-	       ap_adder #(bitlength, Inf) adder(Add_Group_Temp_Result[g][h-1], Add_Group_Input[g][h+1], Add_Group_Temp_Result[g][h]);
+	       ap_adder #(bitlength, Inf) adder(Add_Group_Temp_Result[g][h-1], Weight[h][cursor] & {12{`GET_1D(InputData, 1, h)}}, Add_Group_Temp_Result[g][h]);
 	    end
 	 end
       end
@@ -80,47 +81,43 @@ module RBMLayer 				#(parameter integer bitlength = 12,
 
    always @ ( posedge clock or posedge reset) begin
       if (reset == 1'b1) begin
-	 finish = 0;
-	 cursor = 0;
-	 sigmoid_cursor = 0;
-	 for(i = 0; i < temp_dim; i=i+1)
-	   for(j = 0; j < input_dim + 1; j=j+1) begin
-	      Add_Group_Input[i][j] <= 0;
-	   end
-	 OutputData = $unsigned(0);
-      end else if (data_valid && !reset) begin
-	 if (sigmoid_cursor == output_dim) begin
-	    finish = 1;
-	 end else begin
-	    finish = 0;
-	 end
-
-	 if (sigmoid_cursor < cursor) begin
-	    for(i = 0; i<temp_dim; i=i+1) begin
-	       if(SigmoidOutput[i] > RandomData[i]) begin
-		  `GET_1D(OutputData, 1, cursor - temp_dim + i) = 1;
-	       end else  begin
-		  `GET_1D(OutputData, 1, cursor - temp_dim + i) = 0;
-	       end
-	    end
-	    sigmoid_cursor = sigmoid_cursor + i;
-	 end
-
-	 if (cursor < output_dim) begin
-	    for(i = 0; i< temp_dim; i=i+1) begin
-	       if(cursor < output_dim) begin
-		  Add_Group_Input[i][0] <= Bias[cursor];
-		  for(j = 1; j< input_dim+1; j=j+1) begin
-		     if (`GET_1D(InputData, 1, j-1)) begin
-			Add_Group_Input[i][j] <= Weight[j-1][cursor];
-		     end	else begin
-			Add_Group_Input[i][j] <= 0;
-		     end
-		  end
-		  cursor = cursor + $unsigned(1);
-	       end
-	    end
-	 end
+	       finish = 0;
+	       cursor = 0;
+	       sigmoid_cursor = 0;
+	       OutputData = $unsigned(0);
       end
-   end
+      else if (data_valid && !reset) begin
+	          if (sigmoid_cursor == output_dim) begin
+	            finish = 1;
+	          end else begin
+	            finish = 0;
+	          end
+	          if (sigmoid_cursor < cursor) begin
+	            for(i = 0; i<temp_dim; i=i+1) begin
+	               if(SigmoidOutput[i] > RandomData[i]) begin
+		               `GET_1D(OutputData, 1, cursor - temp_dim + i) = 1;
+	               end else begin
+		               `GET_1D(OutputData, 1, cursor - temp_dim + i) = 0;
+	               end
+	            end
+	            sigmoid_cursor = sigmoid_cursor + i;
+	         end
+
+	         if (cursor < output_dim) begin
+	            for(i = 0; i< temp_dim; i=i+1) begin
+	            //   if(cursor < output_dim) begin
+		          //       Add_Group_Input[i][0] <= Bias[cursor];
+		          //       for(j = 1; j< input_dim+1; j=j+1) begin
+		          //         if (`GET_1D(InputData, 1, j-1)) begin
+			        //            Add_Group_Input[i][j] <= Weight[j-1][cursor];
+		          //         end else begin
+			        //            Add_Group_Input[i][j] <= 0;
+		          //         end
+		          //       end
+		                cursor = cursor + $unsigned(1);
+	              // end
+	            end
+	         end
+    end
+  end
 endmodule

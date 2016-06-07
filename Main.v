@@ -1,6 +1,6 @@
 `ifndef  TEST_BENCH
  `include "config.v"
-// `include "RBMLayer.v"		
+// `include "RBMLayer.v"
 `else
 // `include "../RBMLayer.v"
 `endif
@@ -60,7 +60,7 @@ module Main #(parameter integer bitlength = 12,
   //     end
   //  endgenerate
 
-   reg[bitlength-1:0] i;
+   reg[3:0] i;
    always @ (posedge clock or posedge reset) begin
       if (reset == 1'b1) begin
 	 iteration_counter = 0;
