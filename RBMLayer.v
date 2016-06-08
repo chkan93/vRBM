@@ -60,46 +60,51 @@ module RBMLayer 				#(parameter integer bitlength = 12,
    reg signed[11:0] Temp;
   //  reg signed[11:0] Adder_Input[adder_num-1:0];
    wire signed[11:0] Adder_Input_Temp[adder_num-1:0];
-   sigmoid #(bitlength,sigmoid_bitlength) sg(Temp + Bias[cursor], SigmoidOutput);
+   sigmoid #(bitlength,sigmoid_bitlength) sg(Temp, SigmoidOutput);
    RandomGenerator  #(sigmoid_bitlength) rnd(rand_reset, clock, SeedData, RandomData);
 
 
    generate
-     ap_adder #(12, Inf) adder(Temp, Weight[adding_cursor][cursor], Adder_Input_Temp[0]);
-	   for(g = 1; g<adder_num; g=g+1) begin : generate_adders
-	       ap_adder #(12, Inf) adder(Adder_Input_Temp[g-1], Weight[adding_cursor + g][cursor], Adder_Input_Temp[g]);
-     end
+    //  ap_adder #(12, Inf) adder(Temp, Weight[adding_cursor][cursor], Adder_Input_Temp[0]);
+	  //  for(g = 1; g<adder_num; g=g+1) begin : generate_adders
+	  //      ap_adder #(12, Inf) adder(Adder_Input_Temp[g-1], Weight[adding_cursor + g][cursor], Adder_Input_Temp[g]);
+    //  end
+    ap_adder #(12, Inf) adder_first(Weight[adding_cursor][cursor] & {12{InputData[adding_cursor]}}, Weight[adding_cursor+1][cursor] & {12{InputData[adding_cursor+1]}}, Adder_Input_Temp[0]);
+    for(g = 1; g<adder_num-1; g=g+1) begin : generate_adders
+        ap_adder #(12, Inf) adder_middle(Adder_Input_Temp[g-1], Weight[adding_cursor+g+1][cursor] & {12{InputData[adding_cursor+g+1]}}, Adder_Input_Temp[g]);
+    end
+    ap_adder #(12, Inf) adder_last(Adder_Input_Temp[adder_num-2], Temp, Adder_Input_Temp[adder_num-1]);
    endgenerate
 
 
-   always @ ( * ) begin
-      if (cursor < output_dim) begin
-         if (adding_cursor == 0) begin
-            Temp <= Bias[cursor];
-         end else begin
-            Temp <= Adder_Input_Temp[adder_num-1];
-         end
-      end
-   end
 
    always @ ( posedge clock or posedge reset) begin
         if(reset) begin
           finish = 0;
           cursor = 0;
           adding_cursor = 0;
+          Temp = 0;
         end else begin
-          if (cursor == output_dim) begin
-            finish = 1;
-          end else begin
-            finish = 0;
-           if (adding_cursor == input_dim) begin
-              `GET_1D(OutputData, 1, cursor) = SigmoidOutput > RandomData;
-              adding_cursor = 0;
-              cursor = cursor + 1;
-           end else begin
-              adding_cursor = adding_cursor + adder_num;
-           end
+          if (data_valid) begin
+            if (cursor == output_dim) begin
+              finish = 1;
+            end else begin
+              finish = 0;
+              if (adding_cursor == input_dim) begin
+                `GET_1D(OutputData, 1, cursor) = SigmoidOutput > RandomData;
+                adding_cursor = 0;
+                cursor = cursor + 1;
+                // $display("adding_cursor = %0d, cursor = %0d, Temp = %0d, SigmoidOutput = %0d", adding_cursor, cursor, Temp, SigmoidOutput);
+              end else begin
+                if (adding_cursor == 0) begin
+                    Temp = Bias[cursor];
+                end else begin
+                    Temp = Adder_Input_Temp[adder_num-1];
+                end
+                adding_cursor = adding_cursor + adder_num;
+              end
           end
+        end
         end
    end
 endmodule

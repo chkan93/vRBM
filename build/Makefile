@@ -79,9 +79,15 @@ vsim_Main_test_runnable: vlib
 	vlog  ../test_bench/Main_tb.v
 	vsim -c -do "run -all" test_Main
 
-vsim_Main_test_mnist: vlib
+run_Main: vlib
 	vlog  ../test_bench/Main_real_tb.v
 	vsim -c -do "run -all" test_Main_Real
+
+
+debug_Main: vlib
+	vlog ../test_bench/Main_real_tb.v
+	vsim  test_Main_Real
+
 
 
 run_mnist_test:

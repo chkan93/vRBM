@@ -10,8 +10,8 @@ module test_sigmoid;
   initial
   begin
 
-    #10 sum=12'h60;
-    for(i=1;i<197;i=i+1)begin
+    #10 sum= 2047;
+    for(i=1;i<4096;i=i+1)begin
      #10 sum=sum-1;
      $display("i = %d, output is: %d",sum, s);
     end
