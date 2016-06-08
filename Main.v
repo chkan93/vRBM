@@ -19,8 +19,8 @@ module Main #(parameter integer bitlength = 12,
               parameter c_weight_path = "../build/data/Cweight3x2.txt",
               parameter c_bias_path = "../build/data/Cbias1x2.txt",
               parameter c_seed_path = "../build/data/Cseed1x2.txt",
-              parameter hidden_adder_group_num = 1,
-              parameter cl_adder_group_num = 1,
+              parameter hidden_adder_group_num = 28,
+              parameter cl_adder_group_num = 21,
               parameter iteration_num = 100
               )
    (input reset,
