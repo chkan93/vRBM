@@ -18,7 +18,8 @@ module RBMLayer 				#(parameter integer bitlength = 12,
 						  parameter weight_path = "../build/data/Hweight15x5.txt",  // load a different weight for sparse case 64x441
 						  parameter bias_path = "../build/data/Hbias1x5.txt",
 						  parameter seed_path = "../build/data/seed1x10.txt",
-						  parameter integer adder_group_num  = 1,
+						  parameter integer adder_num  = 28,
+              parameter [7:0] SeedData = 32,
 						  parameter integer id = 0
 						  )
    (input reset,
@@ -30,7 +31,6 @@ module RBMLayer 				#(parameter integer bitlength = 12,
     output reg finish
     );
 
-   localparam  temp_dim = adder_group_num;
 `ifndef SPARSE
    localparam input_dim = general_input_dim;
 `else
@@ -42,82 +42,68 @@ module RBMLayer 				#(parameter integer bitlength = 12,
    initial begin
       `ReadMem(weight_path, Weight);
       `ReadMem(bias_path, Bias);
-      `ReadMem(seed_path, SeedData);
    end
    // synopsys translate_on
 
+   reg signed[11:0] Weight`DIM_2D(input_dim, output_dim);
+   reg signed [11:0] Bias`DIM_1D(output_dim);
 
-
-   reg signed[bitlength-1:0] Weight`DIM_2D(input_dim, output_dim);
-   reg signed [bitlength-1:0] Bias`DIM_1D(output_dim);
-   wire signed [bitlength-1:0] Add_Group_Temp_Result`DIM_2D(temp_dim, input_dim);
-   wire  signed [bitlength-1:0] Add_Group_Input`DIM_2D(temp_dim, input_dim+1);
-   reg [9:0] 	       cursor, sigmoid_cursor;
+   reg [9:0] 	       cursor, adding_cursor;
    reg [9:0] 	       i,j,k;
-   genvar 		       g,h;
-   reg [sigmoid_bitlength-1:0] SeedData`DIM_1D(temp_dim);
-   wire [sigmoid_bitlength-1:0] RandomData`DIM_1D(temp_dim);
-   wire [sigmoid_bitlength-1:0] SigmoidOutput`DIM_1D(temp_dim);
+   genvar 		       g;
+
+
+   wire [7:0] RandomData;
+   wire [7:0] SigmoidOutput;
+
+
+   reg signed[11:0] Temp;
+   reg signed[11:0] Adder_Input[adder_num-1:0];
+   wire signed[11:0] Adder_Input_Temp[adder_num-1:0];
+   sigmoid #(bitlength,sigmoid_bitlength) sg(Temp + Bias[cursor], SigmoidOutput);
+   RandomGenerator  #(sigmoid_bitlength) rnd(rand_reset, clock, SeedData, RandomData);
 
 
    generate
-      for(g = 0; g< temp_dim; g=g+1) begin : generate_adder_group
-	 sigmoid #(bitlength,sigmoid_bitlength) sg(Add_Group_Temp_Result[g][input_dim-1], SigmoidOutput[g]); //
-	 RandomGenerator  #(sigmoid_bitlength) rnd(rand_reset, clock, SeedData[g], RandomData[g]);
-	 for(h = 0; h<input_dim; h=h+1) begin : generate_adders
-	    if (h == 0)  begin : generate_first_adder
-
-	       ap_adder #(bitlength, Inf) adder(Bias[cursor], Weight[h][cursor] & {12{`GET_1D(InputData, 1, h)}}, Add_Group_Temp_Result[g][h]);
-	    end else begin : generate_rest_adders
-	       ap_adder #(bitlength, Inf) adder(Add_Group_Temp_Result[g][h-1], Weight[h][cursor] & {12{`GET_1D(InputData, 1, h)}}, Add_Group_Temp_Result[g][h]);
-	    end
-	 end
-      end
+     ap_adder #(12, Inf) adder(Temp, Adder_Input[0], Adder_Input_Temp[0]);
+	   for(g = 1; g<adder_num; g=g+1) begin : generate_adders
+	       ap_adder #(12, Inf) adder(Adder_Input[g], Adder_Input_Temp[g-1], Adder_Input_Temp[g]);
+     end
    endgenerate
 
 
-
-
+   always @ ( * ) begin
+      if (cursor < output_dim) begin
+         if (adding_cursor == 0) begin
+            Temp <= Bias[cursor];
+         end else begin
+            Temp <= Adder_Input_Temp[adder_num-1];
+         end
+         for(i = 0;i < adder_num; i=i+1) begin
+            Adder_Input[i] <= Weight[cursor][i+adding_cursor];
+         end
+      end
+   end
 
    always @ ( posedge clock or posedge reset) begin
-      if (reset == 1'b1) begin
-	       finish = 0;
-	       cursor = 0;
-	       sigmoid_cursor = 0;
-	       OutputData = $unsigned(0);
-      end
-      else if (data_valid && !reset) begin
-	          if (sigmoid_cursor == output_dim) begin
-	            finish = 1;
-	          end else begin
-	            finish = 0;
-	          end
-	          if (sigmoid_cursor < cursor) begin
-	            for(i = 0; i<temp_dim; i=i+1) begin
-	               if(SigmoidOutput[i] > RandomData[i]) begin
-		               `GET_1D(OutputData, 1, cursor - temp_dim + i) = 1;
-	               end else begin
-		               `GET_1D(OutputData, 1, cursor - temp_dim + i) = 0;
-	               end
-	            end
-	            sigmoid_cursor = sigmoid_cursor + i;
-	         end
-
-	         if (cursor < output_dim) begin
-	            for(i = 0; i< temp_dim; i=i+1) begin
-	            //   if(cursor < output_dim) begin
-		          //       Add_Group_Input[i][0] <= Bias[cursor];
-		          //       for(j = 1; j< input_dim+1; j=j+1) begin
-		          //         if (`GET_1D(InputData, 1, j-1)) begin
-			        //            Add_Group_Input[i][j] <= Weight[j-1][cursor];
-		          //         end else begin
-			        //            Add_Group_Input[i][j] <= 0;
-		          //         end
-		          //       end
-		                cursor = cursor + $unsigned(1);
-	              // end
-	            end
-	         end
-    end
-  end
+        if(reset) begin
+          finish = 0;
+          cursor = 0;
+          adding_cursor = 0;
+          Temp = 0;
+        end else begin
+          if (cursor == output_dim) begin
+            finish = 1;
+          end else begin
+            finish = 0;
+           if (adding_cursor == input_dim) begin
+              `GET_1D(OutputData, 1, cursor) = SigmoidOutput > RandomData;
+              adding_cursor = 0;
+              cursor = cursor + 1;
+           end else begin
+              adding_cursor = adding_cursor + adder_num;
+           end
+          end
+        end
+   end
 endmodule

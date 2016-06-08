@@ -1,8 +1,8 @@
 `ifndef  TEST_BENCH
  `include "config.v"
-// `include "RBMLayer.v"
+ `include "RBMLayer.v"
 `else
-// `include "../RBMLayer.v"
+ `include "../RBMLayer.v"
 `endif
 
 
@@ -40,7 +40,7 @@ module Main #(parameter integer bitlength = 12,
 
    wire        hidden_finish, internal_finish;
    reg 	       internal_reset;
-   reg [31:0]  iteration_counter;
+   reg [9:0]  iteration_counter;
    wire [`PORT_1D(hidden_dim, 1)] HiddenData;
    wire [`PORT_1D(output_dim, 1)] OutputDataOneTime;
   //  wire [bitlength-1:0] 		  SelfAddOutput`DIM_1D(output_dim);
@@ -48,10 +48,10 @@ module Main #(parameter integer bitlength = 12,
 
    RBMLayer #(bitlength, sigmoid_bitlength, general_input_dim, sparse_input_dim,
               hidden_dim, Inf, h_weight_path, h_bias_path, h_seed_path,
-              hidden_adder_group_num, 1) hidden_layer(internal_reset, reset,  clock, data_valid, InputData , HiddenData, hidden_finish);
+              hidden_adder_group_num, 124, 1) hidden_layer(internal_reset, reset,  clock, data_valid, InputData , HiddenData, hidden_finish);
    RBMLayer #(bitlength, sigmoid_bitlength, hidden_dim, hidden_dim,
               output_dim, Inf, c_weight_path, c_bias_path, c_seed_path,
-              cl_adder_group_num, 2) classify_layer(internal_reset, reset, clock, hidden_finish, HiddenData, OutputDataOneTime, internal_finish);
+              cl_adder_group_num, 63,  2) classify_layer(internal_reset, reset, clock, hidden_finish, HiddenData, OutputDataOneTime, internal_finish);
 
   //  genvar 				  g;
   //  generate
