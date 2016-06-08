@@ -58,16 +58,16 @@ module RBMLayer 				#(parameter integer bitlength = 12,
 
 
    reg signed[11:0] Temp;
-   reg signed[11:0] Adder_Input[adder_num-1:0];
+  //  reg signed[11:0] Adder_Input[adder_num-1:0];
    wire signed[11:0] Adder_Input_Temp[adder_num-1:0];
    sigmoid #(bitlength,sigmoid_bitlength) sg(Temp + Bias[cursor], SigmoidOutput);
    RandomGenerator  #(sigmoid_bitlength) rnd(rand_reset, clock, SeedData, RandomData);
 
 
    generate
-     ap_adder #(12, Inf) adder(Temp, Adder_Input[0], Adder_Input_Temp[0]);
+     ap_adder #(12, Inf) adder(Temp, Weight[adding_cursor][cursor], Adder_Input_Temp[0]);
 	   for(g = 1; g<adder_num; g=g+1) begin : generate_adders
-	       ap_adder #(12, Inf) adder(Adder_Input[g], Adder_Input_Temp[g-1], Adder_Input_Temp[g]);
+	       ap_adder #(12, Inf) adder(Adder_Input_Temp[g-1], Weight[adding_cursor + g][cursor], Adder_Input_Temp[g]);
      end
    endgenerate
 
@@ -79,9 +79,6 @@ module RBMLayer 				#(parameter integer bitlength = 12,
          end else begin
             Temp <= Adder_Input_Temp[adder_num-1];
          end
-         for(i = 0;i < adder_num; i=i+1) begin
-            Adder_Input[i] <= Weight[cursor][i+adding_cursor];
-         end
       end
    end
 
@@ -90,7 +87,6 @@ module RBMLayer 				#(parameter integer bitlength = 12,
           finish = 0;
           cursor = 0;
           adding_cursor = 0;
-          Temp = 0;
         end else begin
           if (cursor == output_dim) begin
             finish = 1;
