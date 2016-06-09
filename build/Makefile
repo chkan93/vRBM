@@ -73,6 +73,10 @@ Main_test_mnist: prepare
 vlib:
 	vlib work
 
+vsim_ap_adder: vlib
+	vlog ../test_bench/ap_adder_tb.v
+	vsim -c -do "run -all" ap_adder_tb
+
 vsim_sigmoid: vlib
 	vlog ../test_bench/sigmoid_tb.v
 	vsim -c -do "run -all" test_sigmoid
@@ -85,10 +89,19 @@ vsim_Main_test_runnable: vlib
 	vlog  ../test_bench/Main_tb.v
 	vsim -c -do "run -all" test_Main
 
-vsim_Main_test_mnist: vlib
-	vlog  ../test_bench/Main_Real_tb.v
+run_Main: vlib
+	vlog  ../test_bench/Main_real_tb.v
 	vsim -c -do "run -all" test_Main_Real
+
+
+debug_Main: vlib
+	vlog ../test_bench/Main_real_tb.v
+	vsim  test_Main_Real
+
 
 
 run_mnist_test:
 	python ./scripts/run_mnist_test.py  20 40
+
+run_synthesis:
+	dc_shell -tcl_mode -f ./scripts/synthesis.tcl

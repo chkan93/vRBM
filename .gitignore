@@ -8,6 +8,7 @@
 *.elf
 /build/output/
 /build/.tmp
+/build/*.v
 /build/work/
 /build/.idea/*
 /build/scripts/.idea

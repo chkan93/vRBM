@@ -21,7 +21,7 @@ localparam c_bias_path = "../build/data/Cbias1x2.txt";
 localparam c_seed_path = "../build/data/Cseed1x2.txt";
 localparam hidden_adder_group_num = 1;
 localparam cl_adder_group_num = 1;
-localparam iteration_num = 1;
+localparam iteration_num = 30;
 
 `ifndef SPARSE
 localparam input_dim = general_input_dim;
@@ -36,8 +36,8 @@ wire finish;
 wire[bitlength-1:0] OutputData`DIM_1D(output_dim);
 wire[`PORT_1D(output_dim, bitlength)] OutputDataPort;
 
-reg[bitlength-1:0] InputData`DIM_1D(input_dim);
-wire[`PORT_1D(input_dim, bitlength)] InputDataPort;
+reg InputData`DIM_1D(input_dim);
+wire[`PORT_1D(input_dim, 1)] InputDataPort;
 
 initial begin
   $dumpfile ("./dumpFolder/Main_test_runnable.vcd");
@@ -53,7 +53,7 @@ end
 
 `DEFINE_PACK_VAR;
 
-`PACK_1D_ARRAY(input_dim, bitlength, InputData, InputDataPort)
+`PACK_1D_ARRAY(input_dim, 1, InputData, InputDataPort)
 `UNPACK_1D_ARRAY(output_dim, bitlength, OutputDataPort, OutputData)
 
 Main #(bitlength, sigmoid_bitlength, general_input_dim,
