@@ -18,16 +18,19 @@ randomRBMData:
 	$(GEN)  ./data/Cbias    8  2
 
 
-generate_matlab_data:
+generate_matlab_data_mnist:
 	rm -rf ./data/nmist/verilog/* $@
 	rm -rf ./data/model/verilog/* $@
 	echo "Generating Mnist Test Data to verilog format." $@
 	$(GEN_MATLAB)  ./data/mnist/matlab/data.mat mnist  ./data/mnist/verilog/ 8  12 && echo "Finished" || echo "Error Occured" $@
-	echo "Generating RBM Model Data to verilog format." $@
-	$(GEN_MATLAB)  ./data/model/matlab/data.mat  mnist_rbm_model  ./data/model/verilog/ 8 12 && echo "Finished" || echo "Error Occured" $@
+
+generate_matlab_data_model:
+	rm -rf ./data/nmist/verilog/* $@
+	rm -rf ./data/model/verilog/* $@
+	python ./scripts/generate_matlab_data_new.py  ./data/model/matlab/   ./data/model/verilog/   12
 
 
-
+generate_matlab_data: generate_matlab_data_model generate_matlab_data_mnist
 
 
 load_modules:
@@ -59,6 +62,13 @@ RandomGenerator_TB: prepare
 Main_test_runnable: prepare
 	iverilog -o ./output/design_Main_test_runnable_TB   ../test_bench/Main_tb.v
 	vvp ./output/design_Main_test_runnable_TB
+
+
+
+Main_test_mnist: prepare
+	iverilog -o ./output/design_Main_test_mnist_TB   ../test_bench/Main_real_tb.v
+	vvp ./output/design_Main_test_mnist_TB
+
 
 vlib:
 	vlib work
