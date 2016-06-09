@@ -26,8 +26,8 @@ module Main #(parameter integer bitlength = 12,
    (input reset,
     input clock,
     input data_valid,
-    input wire signed[`PORT_1D(general_input_dim, 1)] InputData,
-    output reg signed[`PORT_1D(output_dim, bitlength)] OutputData,
+    input wire [`PORT_1D(general_input_dim, 1)] InputData,
+    output reg [`PORT_1D(output_dim, bitlength)] OutputData,
     output reg finish);
 
 
@@ -75,7 +75,7 @@ module Main #(parameter integer bitlength = 12,
                if(internal_finish) begin
 		  for(i = 0; i<output_dim; i=i+1) begin
         if (`GET_1D(OutputDataOneTime, 1, i) == 1)
-		     `GET_1D(OutputData, bitlength, i) = `GET_1D(OutputData, bitlength, i) + 1;
+	  `GET_1D(OutputData, bitlength, i) = `GET_1D(OutputData, bitlength, i) + 1;
 		  end
 		  iteration_counter = iteration_counter + 1;
 		  internal_reset = 1;

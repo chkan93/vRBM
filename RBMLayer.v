@@ -4,9 +4,9 @@
  `include "RandomGenerator.v"
  `include "ap_adder.v"
 `else
- `include "../sigmoid.v"
- `include "../RandomGenerator.v"
- `include "../ap_adder.v"
+  `include "../sigmoid.v"
+  `include "../RandomGenerator.v"
+  `include "../ap_adder.v"
 `endif
 
 module RBMLayer 				#(parameter integer bitlength = 12,
@@ -45,7 +45,7 @@ module RBMLayer 				#(parameter integer bitlength = 12,
    end
    // synopsys translate_on
 
-   reg signed[11:0] Weight`DIM_2D(input_dim, output_dim);
+   reg [11:0] Weight`DIM_2D(input_dim, output_dim);
    reg signed [11:0] Bias`DIM_1D(output_dim);
 
    reg [9:0] 	       cursor, adding_cursor;
