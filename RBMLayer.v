@@ -77,35 +77,29 @@ module RBMLayer 				#(parameter integer bitlength = 12,
    endgenerate
 
 
-   always @ ( * ) begin
-         `GET_1D(OutputData, 1, cursor) <= SigmoidOutput > RandomData;
-   end
-
-
    always @ ( posedge clock or posedge reset) begin
         if(reset) begin
-          finish = 0;
-          cursor = 0;
-          adding_cursor = 0;
-          Temp = 0;
+          finish <= 0;
+          cursor <= 0;
+          adding_cursor <= 0;
+          Temp <= 0;
         end else begin
           if (data_valid) begin
             if (cursor == output_dim) begin
-              finish = 1;
+              finish <= 1;
             end else begin
-              finish = 0;
+              finish <= 0;
               if (adding_cursor == input_dim) begin
-                adding_cursor = 0;
-                cursor = cursor + 1;
-                //  `GET_1D(OutputData, 1, cursor) = SigmoidOutput > RandomData;
-                // $display("adding_cursor = %0d, cursor = %0d, Temp = %0d, SigmoidOutput = %0d", adding_cursor, cursor, Temp, SigmoidOutput);
+		`GET_1D(OutputData, 1, cursor) <= SigmoidOutput > RandomData;
+                adding_cursor <= 0;
+                cursor <= cursor + 1;
               end else begin
                 if (adding_cursor == 0) begin
-                    Temp = Bias[cursor];
+                    Temp <= Bias[cursor];
                 end else begin
-                    Temp = Adder_Input_Temp[adder_num-1];
+                    Temp <= Adder_Input_Temp[adder_num-1];
                 end
-                adding_cursor = adding_cursor + adder_num;
+                adding_cursor <= adding_cursor + adder_num;
               end
           end
         end
