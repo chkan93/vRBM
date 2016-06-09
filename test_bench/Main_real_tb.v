@@ -21,8 +21,8 @@ localparam c_weight_path = "../build/data/model/verilog/mnist_rbm_model_cweight.
 localparam c_bias_path = "../build/data/model/verilog/mnist_rbm_model_cbias.txt";
 localparam c_seed_path = "../build/data/Cseed1x10.txt";
 localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata0.txt";
-localparam hidden_adder_group_num = 28;
-localparam cl_adder_group_num = 21;
+localparam hidden_adder_group_num = 1;
+localparam cl_adder_group_num = 1;
 localparam iteration_num = 5;
 
 `ifndef SPARSE

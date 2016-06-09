@@ -21,7 +21,7 @@ module Main #(parameter integer bitlength = 12,
               parameter c_seed_path = "../build/data/Cseed1x2.txt",
               parameter hidden_adder_group_num = 28,
               parameter cl_adder_group_num = 21,
-              parameter iteration_num = 100
+              parameter iteration_num = 30
               )
    (input reset,
     input clock,
@@ -49,6 +49,7 @@ module Main #(parameter integer bitlength = 12,
    RBMLayer #(bitlength, sigmoid_bitlength, general_input_dim, sparse_input_dim,
               hidden_dim, Inf, h_weight_path, h_bias_path, h_seed_path,
               hidden_adder_group_num, 124, 1) hidden_layer(internal_reset, reset,  clock, data_valid, InputData , HiddenData, hidden_finish);
+
    RBMLayer #(bitlength, sigmoid_bitlength, hidden_dim, hidden_dim,
               output_dim, Inf, c_weight_path, c_bias_path, c_seed_path,
               cl_adder_group_num, 63,  2) classify_layer(internal_reset, reset, clock, hidden_finish, HiddenData, OutputDataOneTime, internal_finish);
@@ -73,6 +74,7 @@ module Main #(parameter integer bitlength = 12,
                internal_reset = 0;
 	    end else begin
                if(internal_finish) begin
+		  $display("Above are iteration %0d.\n\n", iteration_counter);	   
 		  for(i = 0; i<output_dim; i=i+1) begin
         if (`GET_1D(OutputDataOneTime, 1, i) == 1)
 	  `GET_1D(OutputData, bitlength, i) = `GET_1D(OutputData, bitlength, i) + 1;
