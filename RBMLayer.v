@@ -45,35 +45,35 @@ module RBMLayer 				#(parameter integer bitlength = 12,
    end
    // synopsys translate_on
 
-   reg [11:0] Weight`DIM_2D(input_dim, output_dim);
-   reg signed [11:0] Bias`DIM_1D(output_dim);
+   reg [bitlength-1:0] Weight`DIM_2D(input_dim, output_dim);
+   reg signed [bitlength-1:0] Bias`DIM_1D(output_dim);
 
    reg [9:0] 	     cursor, adding_cursor;
    reg [9:0] 	     i,j,k;
    genvar 	     g;
 
 
-   wire [7:0] 	     RandomData;
-   wire [7:0] 	     SigmoidOutput;
+   wire [sigmoid_bitlength-1:0] 	     RandomData;
+   wire [sigmoid_bitlength-1:0] 	     SigmoidOutput;
 
 
-   reg signed [11:0] Temp;
+   reg signed [bitlength-1:0] Temp;
    //  reg signed[11:0] Adder_Input[adder_num-1:0];
-   wire signed [11:0] Adder_Input_Temp[adder_num-1:0];
+   wire signed [bitlength-1:0] Adder_Input_Temp[adder_num-1:0];
    sigmoid #(bitlength,sigmoid_bitlength) sg(Temp, SigmoidOutput);
    RandomGenerator  #(sigmoid_bitlength) rnd(rand_reset, clock, SeedData, RandomData);
 
 
    generate
-      if (adder_num > 1) begin 
-	 
-	 ap_adder #(12, Inf) adder_first(Weight[adding_cursor][cursor] & {12{InputData[adding_cursor]}}, Weight[adding_cursor+1][cursor] & {12{InputData[adding_cursor+1]}}, Adder_Input_Temp[0]);
+      if (adder_num > 1) begin
+
+	 ap_adder #(bitlength, Inf) adder_first(Weight[adding_cursor][cursor] & {12{InputData[adding_cursor]}}, Weight[adding_cursor+1][cursor] & {12{InputData[adding_cursor+1]}}, Adder_Input_Temp[0]);
 	 for(g = 1; g<adder_num-1; g=g+1) begin : generate_adders
             ap_adder #(12, Inf) adder_middle(Adder_Input_Temp[g-1], Weight[adding_cursor+g+1][cursor] & {12{InputData[adding_cursor+g+1]}}, Adder_Input_Temp[g]);
 	 end
-	 ap_adder #(12, Inf) adder_last(Adder_Input_Temp[adder_num-2], Temp, Adder_Input_Temp[adder_num-1]);
+	 ap_adder #(bitlength, Inf) adder_last(Adder_Input_Temp[adder_num-2], Temp, Adder_Input_Temp[adder_num-1]);
       end else begin
-	 ap_adder #(12, Inf) adder_only(Weight[adding_cursor][cursor] & {12{InputData[adding_cursor]}}, Temp, Adder_Input_Temp[adder_num-1]);	 	 
+	 ap_adder #(bitlength, Inf) adder_only(Weight[adding_cursor][cursor] & {12{InputData[adding_cursor]}}, Temp, Adder_Input_Temp[adder_num-1]);
       end
    endgenerate
 
@@ -101,6 +101,10 @@ module RBMLayer 				#(parameter integer bitlength = 12,
                   end else begin
                      Temp <= Adder_Input_Temp[adder_num-1];
                   end
+                  // if (id == 1 && adding_cursor == input_dim-1) begin
+                  // $display("Image[%0d] = %0d, Weight[%0d][%0d]=%0d ,Temp{cursor==0}{adding_cursor=%0d} = %0d;",adding_cursor,InputData[adding_cursor],
+                  //  adding_cursor, cursor,$signed(Weight[adding_cursor][cursor]), adding_cursor, Temp);
+                  // end
                   adding_cursor <= adding_cursor + adder_num;
                end
             end
