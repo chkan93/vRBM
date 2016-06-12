@@ -10,6 +10,7 @@
 /build/.tmp
 /build/*.v
 /build/work/
+!/build/data/random/*
 /build/.idea/*
 /build/scripts/.idea
 /build/dumpFolder
