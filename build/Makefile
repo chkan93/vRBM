@@ -32,6 +32,8 @@ generate_matlab_data_model:
 
 generate_matlab_data: generate_matlab_data_model generate_matlab_data_mnist
 
+generate_matlab_random_number:
+	python ./scripts/transform_random_number_to_mat.py   ./data/random/1000.log    ./data/random/1000.mat    1000
 
 load_modules:
 	module load dc-2015.06-SP4 #dc_shell
