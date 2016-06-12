@@ -6,7 +6,8 @@
 `endif
 
 
-module Main #(parameter integer bitlength = 12,
+module Main #(parameter integer bitlength = 16,
+              parameter integer w_bitlength = 12,
               parameter integer sigmoid_bitlength = 8,
               parameter integer general_input_dim = 784,
               parameter integer sparse_input_dim = 64,
@@ -27,7 +28,7 @@ module Main #(parameter integer bitlength = 12,
     input clock,
     input data_valid,
     input wire [`PORT_1D(general_input_dim, 1)] InputData,
-    output reg [`PORT_1D(output_dim, bitlength)] OutputData,
+    output reg [`PORT_1D(output_dim, w_bitlength)] OutputData,
     output reg finish);
 
 
@@ -46,11 +47,11 @@ module Main #(parameter integer bitlength = 12,
   //  wire [bitlength-1:0] 		  SelfAddOutput`DIM_1D(output_dim);
 
 
-   RBMLayer #(bitlength, sigmoid_bitlength, general_input_dim, sparse_input_dim,
+   RBMLayer #(bitlength, w_bitlength, sigmoid_bitlength, general_input_dim, sparse_input_dim,
               hidden_dim, Inf, h_weight_path, h_bias_path, h_seed_path,
               hidden_adder_group_num, 124, 1) hidden_layer(internal_reset, reset,  clock, data_valid, InputData , HiddenData, hidden_finish);
 
-   RBMLayer #(bitlength, sigmoid_bitlength, hidden_dim, hidden_dim,
+   RBMLayer #(bitlength, w_bitlength, sigmoid_bitlength, hidden_dim, hidden_dim,
               output_dim, Inf, c_weight_path, c_bias_path, c_seed_path,
               cl_adder_group_num, 63,  2) classify_layer(internal_reset, reset, clock, hidden_finish, HiddenData, OutputDataOneTime, internal_finish);
 
@@ -74,10 +75,10 @@ module Main #(parameter integer bitlength = 12,
                internal_reset = 0;
 	    end else begin
                if(internal_finish) begin
-		  $display("Above is iteration %0d.\n\n", iteration_counter);	   
+		  $display("Above is iteration %0d.\n\n", iteration_counter);
 		  for(i = 0; i<output_dim; i=i+1) begin
         if (`GET_1D(OutputDataOneTime, 1, i) == 1)
-	  `GET_1D(OutputData, bitlength, i) = `GET_1D(OutputData, bitlength, i) + 1;
+	  `GET_1D(OutputData, w_bitlength, i) = `GET_1D(OutputData, w_bitlength, i) + 1;
 		  end
 		  iteration_counter = iteration_counter + 1;
 		  internal_reset = 1;

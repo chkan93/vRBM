@@ -6,36 +6,51 @@
 `define sigmoid
 
 module sigmoid
-  #(parameter input_bitlength = 12, parameter sigmoid_bitlength = 8)
+  #(parameter input_bitlength = 16, parameter sigmoid_bitlength = 8)
   (input [input_bitlength-1:0] sum,
    output reg[sigmoid_bitlength-1:0] s);
-  reg[sigmoid_bitlength:0] stmp;
-  reg[input_bitlength-1:0] z;//Q8.4
+
+
+   wire sign;
+   reg [input_bitlength-1:0] abs;
+   assign sign = sum[input_bitlength-1];
+   reg [sigmoid_bitlength:0] tmp;
+
   always @(sum) begin
-    if (sum[input_bitlength-1]==1)begin
-      z = ~sum;
-      z = z+11'b00000000001;
+    if (sign) begin
+      abs = ~sum + 16'b0000_0000_0000_0001;
+    end else begin
+      abs = sum;
     end
+
+    if (abs > 16'b0000_0101_0000_0000) begin  //5
+      tmp = 9'b100000000;
+    end else if (abs > 16'b0000_0010_0110_0000) begin //right 3bits, 216
+      tmp = abs[13:5] +  9'b0_1101_1000;
+    end else if (abs > 16'b0000_0001_0000_0000) begin // 5bits, 160
+      tmp = abs[11:3] + 9'b0_1010_0000;
+    end else begin // 8 bits, 128
+      tmp = abs[10:2] + 9'b0_1000_0000;
+    end
+
+
+    if (sign) begin
+      tmp = 9'b100000000 - tmp; // 256(1) - tmp
+    end
+
+    if (tmp[8] == 1) // overflow
+      s = 8'b1111_1111;
     else
-      z = sum;
-    if (z>8'b01010000)//z>5
-      stmp = 9'b100000000; // s=1
-    else if (z>8'b00100110) //2.375<z<5
-      stmp = z[9:1] + 9'b011011000; //s=z/32+6'b011011/32
-    else if (z>8'b00010000) //1<z<2.375
-      stmp = {z[7:0], 1'b0} + 9'b010100000;
-    else
-      stmp = {z[6:0], 2'b00} + 9'b010000000;
-
-    if(sum[11]==1)
-      stmp = 9'b100000000 - stmp;
-    if(stmp[8]==1)
-      stmp = 9'b111111111;
-
-
-    s=stmp[7:0];
+      s = tmp[7:0];
   end
 endmodule
 
 
 `endif
+
+
+// y = ((xp >= 5) + ...
+//           (xp < 5 & xp >= 2.375) .* (0.03125 * xp + 0.84375) + ...
+//           (xp < 2.375 & xp >= 1) .* (0.125 * xp + 0.625) + ...
+//           (xp < 1 ) .* (0.25 * xp + 0.5)) ...
+//           .* sign(x) + (-sign(x) + 1)/2;

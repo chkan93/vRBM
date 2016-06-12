@@ -7,7 +7,8 @@
 module test_Main_Real;
 
 localparam  output_dim = 10;  //10
-localparam  bitlength = 12;
+localparam  bitlength = 16;
+localparam  w_bitlength = 12;
 localparam  clock_period = 10;
 localparam  sigmoid_bitlength = 8;
 localparam  general_input_dim = 784; //784
@@ -35,8 +36,8 @@ localparam input_dim = sparse_input_dim;
 integer i = 0;
 reg clock, reset, data_valid;
 wire finish;
-wire[bitlength-1:0] OutputData`DIM_1D(output_dim);
-wire[`PORT_1D(output_dim, bitlength)] OutputDataPort;
+wire[w_bitlength-1:0] OutputData`DIM_1D(output_dim);
+wire[`PORT_1D(output_dim, w_bitlength)] OutputDataPort;
 
 reg InputData`DIM_1D(input_dim);
 wire[`PORT_1D(input_dim, 1)] InputDataPort;
@@ -55,9 +56,9 @@ end
 
 `DEFINE_PACK_VAR;
 `PACK_1D_ARRAY(input_dim, 1, InputData, InputDataPort)
-`UNPACK_1D_ARRAY(output_dim, bitlength, OutputDataPort, OutputData)
+`UNPACK_1D_ARRAY(output_dim, w_bitlength, OutputDataPort, OutputData)
 
-Main #(bitlength, sigmoid_bitlength, general_input_dim,
+Main #(bitlength,w_bitlength, sigmoid_bitlength, general_input_dim,
            sparse_input_dim, hidden_dim, output_dim, Inf,
            h_weight_path, h_bias_path, h_seed_path, c_weight_path,
            c_bias_path, c_seed_path,
