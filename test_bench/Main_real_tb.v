@@ -24,7 +24,7 @@ localparam c_seed_path = "../build/data/Cseed1x10.txt";
 localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata0.txt";
 localparam hidden_adder_group_num = 1;
 localparam cl_adder_group_num = 1;
-localparam iteration_num = 10;
+localparam iteration_num = 3;
 
 `ifndef SPARSE
 localparam input_dim = general_input_dim;
@@ -66,6 +66,10 @@ Main #(bitlength,w_bitlength, sigmoid_bitlength, general_input_dim,
            main(reset, clock, data_valid, InputDataPort, OutputDataPort, finish);
 
 
+initial begin
+  $display("BEGIN");
+end
+
 always begin
   clock = !clock;
   //check finish
@@ -74,6 +78,7 @@ end
 
 `DEFINE_PRINTING_VAR;
 always @ (posedge finish) begin
+  $display("FINISH");
   `DISPLAY_1D_ARRAY(output_dim ,"output of RBM = ",  OutputData)
   // $display("Output of this RBM is %b", OutputDataPort);
   $finish;

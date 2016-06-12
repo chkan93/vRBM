@@ -98,13 +98,15 @@ module RBMLayer 				#(parameter integer bitlength = 16,
          Temp <= 0;
       end else begin
          if (data_valid) begin
+            // if (id == 2)
+            // $display("in layer: %0d, adding_cursor: %0d, random = %0d",id, adding_cursor, RandomData);
             if (cursor == output_dim) begin
                finish <= 1;
             end else begin
                finish <= 0;
                if (adding_cursor == input_dim) begin
-		  // $display("In layer_1: %0d, output_id = %0d, random_number = %0d", id, cursor, RandomData);
-		  `GET_1D(OutputData, 1, cursor) <= SigmoidOutput > RandomData;
+		              $display("%0d,%0d", id, RandomData);
+		              `GET_1D(OutputData, 1, cursor) <= SigmoidOutput > RandomData;
                   adding_cursor <= 0;
                   cursor <= cursor + 1;
                end else begin
