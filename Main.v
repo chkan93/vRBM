@@ -75,7 +75,7 @@ module Main #(parameter integer bitlength = 16,
                internal_reset = 0;
 	    end else begin
                if(internal_finish) begin
-		  $display("EOT,%0d", iteration_counter);
+		  // $display("EOT,%0d", iteration_counter);
 		  for(i = 0; i<output_dim; i=i+1) begin
         if (`GET_1D(OutputDataOneTime, 1, i) == 1)
 	  `GET_1D(OutputData, w_bitlength, i) = `GET_1D(OutputData, w_bitlength, i) + 1;
