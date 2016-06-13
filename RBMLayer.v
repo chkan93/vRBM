@@ -108,7 +108,7 @@ module RBMLayer 				#(parameter integer bitlength = 16,
                finish = 0;
                if (adding_cursor == input_dim) begin
 		              //  $display("%0d,%0d", id, RandomData); //#important for exporting random number
-		              $display("%0d: %0d => %0d >< %0d", id,Temp ,SigmoidOutput, RandomData);
+		        //      $display("%0d: %0d => %0d >< %0d", id,Temp ,SigmoidOutput, RandomData);
 		              `GET_1D(OutputData, 1, cursor) <= SigmoidOutput > RandomData;
                   adding_cursor = 0;
                   mask = 0;

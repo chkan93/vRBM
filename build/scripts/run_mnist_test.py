@@ -29,7 +29,7 @@ def summary(result):
 def runCmd():
     TMP_FILE='.tmp'
     file = open(TMP_FILE, 'w')
-    call(["make", "vsim_Main_test_mnist"], stdout=file)
+    call(["make", "run_Main"], stdout=file)
     file.close()
     file = open(TMP_FILE, 'r')
     r = file.read()
@@ -37,14 +37,15 @@ def runCmd():
     return r
 
 def updateContent(id, num):
-    with fileinput.FileInput('../test_bench/Main_real_tb.v', inplace=True) as f:
-        for line in f:
-            if "localparam iteration_num" in line:
-                print('localparam iteration_num = {0};\n'.format(num), end='')
-            elif "mnist_testdata" in line:
-                print('localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata{0}.txt";\n'.format(id), end='')
-            else:
-                print(line, end='')
+    f = fileinput.FileInput('../test_bench/Main_real_tb.v', inplace=True)
+    for line in f:
+        if "localparam iteration_num" in line:
+            print('localparam iteration_num = {0};\n'.format(num), end='')
+        elif "mnist_testdata" in line:
+            print('localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata{0}.txt";\n'.format(id), end='')
+        else:
+            print(line, end='')
+    f.close()
 
 
 def getDetection(r):
