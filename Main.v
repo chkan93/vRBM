@@ -1,8 +1,8 @@
 `ifndef  TEST_BENCH
  `include "config.v"
- `include "RBMLayer.v"
+ // `include "RBMLayer.v"
 `else
- `include "../RBMLayer.v"
+ // `include "../RBMLayer.v"
 `endif
 
 
@@ -20,9 +20,9 @@ module Main #(parameter integer bitlength = 16,
               parameter c_weight_path = "../build/data/Cweight3x2.txt",
               parameter c_bias_path = "../build/data/Cbias1x2.txt",
               parameter c_seed_path = "../build/data/Cseed1x2.txt",
-              parameter hidden_adder_group_num = 28,
-              parameter cl_adder_group_num = 21,
-              parameter iteration_num = 30
+              parameter hidden_adder_group_num = 1,
+              parameter cl_adder_group_num = 1,
+              parameter iteration_num = 100
               )
    (input reset,
     input clock,

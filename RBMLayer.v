@@ -1,12 +1,12 @@
 `ifndef  TEST_BENCH
  `include "config.v"
- `include "sigmoid.v"
- `include "RandomGenerator.v"
- `include "ap_adder.v"
+ // `include "sigmoid.v"
+ // `include "RandomGenerator.v"
+ // `include "ap_adder.v"
 `else
- `include "../sigmoid.v"
- `include "../RandomGenerator.v"
- `include "../ap_adder.v"
+ // `include "../sigmoid.v"
+ // `include "../RandomGenerator.v"
+ // `include "../ap_adder.v"
 `endif
 
 `define bit_12_16(b) {b[11],b[11],b[11],b[11],b}
@@ -53,7 +53,7 @@ module RBMLayer 				#(parameter integer bitlength = 16,
    // synopsys translate_on
 
    reg [w_bitlength-1:0] Weight`DIM_2D(input_dim, output_dim);
-   reg signed [w_bitlength-1:0] Bias`DIM_1D(output_dim);
+   reg [w_bitlength-1:0] Bias`DIM_1D(output_dim);
 
    reg [9:0] 	     cursor, adding_cursor;
    reg [9:0] 	     i,j,k;
@@ -65,7 +65,7 @@ module RBMLayer 				#(parameter integer bitlength = 16,
    wire [sigmoid_bitlength-1:0] 	     SigmoidOutput;
 
 
-   reg signed [bitlength-1:0] Temp;
+   reg [bitlength-1:0] Temp;
    //  reg signed[11:0] Adder_Input[adder_num-1:0];
    wire signed [bitlength-1:0] Adder_Input_Temp[adder_num-1:0];
    sigmoid #(bitlength,sigmoid_bitlength) sg(Temp, SigmoidOutput);

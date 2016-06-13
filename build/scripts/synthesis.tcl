@@ -47,7 +47,7 @@ create_clock clock -p 10
 report_clock
 
 # Compile
-# compile
+compile
 
 
 

@@ -1,10 +1,8 @@
-make[1]: Entering directory `C:/Users/xiz36/Documents/Workspace/vRBM/build'
+make[1]: Entering directory `/home/linux/ieng6/oce/6i/xiz368/vRBM/build'
 vlib work
-** Warning: (vlib-34) Library already exists at "work".
-vlog  ../test_bench/Main_Real_tb.v
-Start time: 16:21:13 on May 31,2016
-vlog ../test_bench/Main_Real_tb.v 
-Model Technology ModelSim ALTERA vlog 10.4b Compiler 2015.05 May 27 2015
+** Warning: (vlib-34) Library already exists at "work".
+vlog  ../test_bench/Main_real_tb.v
+Model Technology ModelSim SE vlog 10.2c Compiler 2013.07 Jul 18 2013
 -- Compiling module sigmoid
 -- Compiling module RandomGenerator
 -- Compiling module ap_adder
@@ -14,41 +12,25 @@ Model Technology ModelSim ALTERA vlog 10.4b Compiler 2015.05 May 27 2015
 
 Top level modules:
 	test_Main_Real
-End time: 16:21:13 on May 31,2016, Elapsed time: 0:00:00
-Errors: 0, Warnings: 0
 vsim -c -do "run -all" test_Main_Real
-Reading C:/altera/15.1/modelsim_ase/tcl/vsim/pref.tcl
+Reading pref.tcl 
 
-# 10.4b
+# 10.2c
 
-# vsim -c -do "run -all" test_Main_Real 
-# Start time: 16:21:16 on May 31,2016
-# Loading work.test_Main_Real
-# Loading work.Main
-# Loading work.RBMLayer
-# Loading work.sigmoid
-# Loading work.RandomGenerator
-# Loading work.ap_adder
-# run -all
-# ** Warning: (vsim-PLI-3407) Too many data words read on line 2 of file "../build/data/Hseed1x441.txt". (Current address [1], address range [0])    : ../RBMLayer.v(44)
-#    Time: 0 ps  Iteration: 0  Instance: /test_Main_Real/main/hidden_layer
-# ** Warning: (vsim-PLI-3407) Too many data words read on line 2 of file "../build/data/Cseed1x10.txt". (Current address [1], address range [0])    : ../RBMLayer.v(44)
-#    Time: 0 ps  Iteration: 0  Instance: /test_Main_Real/main/classify_layer
-# output of RBM = 
-# 0 
-# 0 
-# 0 
-# 0 
-# 0 
-# 0 
-# 3 
-# 0 
-# 0 
-# 0 
-# 
-# 
-# ** Note: $finish    : ../test_bench/Main_Real_tb.v(79)
-#    Time: 365680 ps  Iteration: 2  Instance: /test_Main_Real
-# End time: 16:29:36 on May 31,2016, Elapsed time: 0:08:20
-# Errors: 0, Warnings: 2
-make[1]: Leaving directory `C:/Users/xiz36/Documents/Workspace/vRBM/build'
+# vsim -do {run -all} -c test_Main_Real 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# //  ModelSim SE 10.2c Jul 18 2013 Linux 2.6.32-573.18.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.test_Main_Real(fast)
+# run -all 
+# BEGIN
+# Break key hit 
+# Simulation stop requested.
+VSIM 2> # error reading "stdin": I/O error
