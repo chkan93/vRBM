@@ -16,10 +16,10 @@ def process(in_path, out_path, N):
         current_classi_id = 0
         for line in logfile:
             line = line[2:]
-            if line == "BEGIN":
+            if line == "BEGIN\n":
                 start_parse = True
                 continue
-            elif line == "FINISH":
+            elif line == "FINISH\n":
                 break
 
             if start_parse:
@@ -29,7 +29,7 @@ def process(in_path, out_path, N):
                     current_classi_id = 0
                     current_iteration = int(rd)+1
                 else:
-                    rd = int(rd)
+                    rd = float(rd)
                     if id == "1":
                         mat['hidden_random'][current_iteration, current_hidden_id] = rd
                         current_hidden_id += 1
