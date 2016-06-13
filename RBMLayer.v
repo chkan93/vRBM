@@ -1,12 +1,12 @@
 `ifndef  TEST_BENCH
  `include "config.v"
- // `include "sigmoid.v"
- // `include "RandomGenerator.v"
- // `include "ap_adder.v"
+ `include "sigmoid.v"
+ `include "RandomGenerator.v"
+ `include "ap_adder.v"
 `else
- // `include "../sigmoid.v"
- // `include "../RandomGenerator.v"
- // `include "../ap_adder.v"
+ `include "../sigmoid.v"
+ `include "../RandomGenerator.v"
+ `include "../ap_adder.v"
 `endif
 
 `define bit_12_16(b) {b[11],b[11],b[11],b[11],b}

@@ -19,18 +19,11 @@ Reading pref.tcl
 
 # vsim -do {run -all} -c test_Main_Real 
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# //  ModelSim SE 10.2c Jul 18 2013 Linux 2.6.32-573.18.1.el6.x86_64
-# //
-# //  Copyright 1991-2013 Mentor Graphics Corporation
-# //  All Rights Reserved.
-# //
-# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
-# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
-# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
-# //
-# Loading work.test_Main_Real(fast)
-# run -all 
-# BEGIN
 # Break key hit 
-# Simulation stop requested.
-VSIM 2> # error reading "stdin": I/O error
+# ** Fatal: (SIGINT) Compile interrupted.
+# ** Warning: (vopt-31) Unable to unlink file "/home/linux/ieng6/oce/6i/xiz368/vRBM/build/work/@_opt/.nfs00000000037c604000003441".
+# Device or resource busy. (errno = EBUSY)
+# ** Warning: (vopt-133) Unable to remove directory "/home/linux/ieng6/oce/6i/xiz368/vRBM/build/work/@_opt".
+# Directory not empty. (errno = 39)
+# ** Error: Vopt Compiler exiting
+# Error loading design
