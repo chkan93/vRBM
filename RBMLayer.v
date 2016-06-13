@@ -59,6 +59,7 @@ module RBMLayer 				#(parameter integer bitlength = 16,
    reg [9:0] 	     i,j,k;
    genvar 	     g;
   //  reg mask;
+  reg mask;
 
    wire [sigmoid_bitlength-1:0] 	     RandomData;
    wire [sigmoid_bitlength-1:0] 	     SigmoidOutput;
@@ -92,34 +93,40 @@ module RBMLayer 				#(parameter integer bitlength = 16,
 
    always @ ( posedge clock or posedge reset) begin
       if(reset) begin
-         finish <= 0;
-         cursor <= 0;
-         adding_cursor <= 0;
+         finish = 0;
+         cursor = 0;
+         adding_cursor = 0;
          Temp = 0;
+         mask = 0;
       end else begin
          if (data_valid) begin
             // if (id == 2)
             // $display("in layer: %0d, adding_cursor: %0d, random = %0d",id, adding_cursor, RandomData);
             if (cursor == output_dim) begin
-               finish <= 1;
+               finish = 1;
             end else begin
-               finish <= 0;
+               finish = 0;
                if (adding_cursor == input_dim) begin
-		              //  $display("%0d,%0d", id, RandomData); //#important for exporting random number
-		              $display("%0d: %0d => %0d >< %0d", id,Temp ,SigmoidOutput, RandomData);
+		               $display("%0d,%0d", id, RandomData); //#important for exporting random number
+		              // $display("%0d: %0d => %0d >< %0d", id,Temp ,SigmoidOutput, RandomData);
 		              `GET_1D(OutputData, 1, cursor) <= SigmoidOutput > RandomData;
-                  adding_cursor <= 0;
-                  cursor <= cursor + 1;
+                  adding_cursor = 0;
+                  mask = 0;
+                  cursor = cursor + 1;
                end else begin
-                  if (adding_cursor == 0) begin
-                     Temp =  `bit_12_16(Bias[cursor]) + (`bit_12_16(Weight[adding_cursor][cursor])  & {16{InputData[adding_cursor]}}); // problem here,
+                  if (adding_cursor == 0 && mask == 0) begin
+                     Temp =  `bit_12_16(Bias[cursor]);// + (`bit_12_16(Weight[adding_cursor][cursor])  & {16{InputData[adding_cursor]}}); // problem here,
                   end else begin
-                     Temp = Adder_Input_Temp[adder_num-1];
+                  //   if (id == 1 && cursor == 0) begin
+                  //  $display("layer: %0d, inputdata[%0d] = %0d, temp = %0d", id,adding_cursor, InputData[adding_cursor],Temp);
+                  //  end
+                     Temp =  Adder_Input_Temp[adder_num-1];
                   end
                   // if (id == 2 && cursor == 0) begin
-                  //   $display("layer: %0d, inputdata[%0d] = %0d, temp = %0d", id,adding_cursor, InputData[adding_cursor],Temp);
+                  //   $display("layer: %0d, cursor = %d, inputdata[%0d] = %0d, temp = %0d", id,cursor,adding_cursor, InputData[adding_cursor],Temp);
                   // end
-                  adding_cursor <= adding_cursor + adder_num;
+                  adding_cursor = adding_cursor + adder_num & {10{mask}};
+                  mask = 1;
                end
             end
          end
