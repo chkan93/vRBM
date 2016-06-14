@@ -24,7 +24,7 @@ module sigmoid
     end
 
     if (abs > 16'b0000_0101_0000_0000) begin  //5
-      tmp = 9'b100000000;
+      tmp = 9'b0_1111_1111;
     end else if (abs > 16'b0000_0010_0110_0000) begin //right 3bits, 216
       tmp = abs[13:5] +  9'b0_1101_1000;
     end else if (abs > 16'b0000_0001_0000_0000) begin // 5bits, 160
@@ -35,7 +35,7 @@ module sigmoid
 
 
     if (sign) begin
-      tmp = 9'b100000000 - tmp; // 256(1) - tmp
+      tmp = 9'b0_1111_1111 - tmp; // 256(1) - tmp
     end
 
     if (tmp[8] == 1) // overflow
