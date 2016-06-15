@@ -3,10 +3,12 @@
  `include "sigmoid.v"
  `include "RandomGenerator.v"
  `include "ap_adder.v"
+ `include "i_ap_adder.v"  //approximate adder
 `else
  `include "../sigmoid.v"
  `include "../RandomGenerator.v"
- `include "../ap_adder.v"
+ `include "../ap_adder.v" 
+ `include "../i_ap_adder.v"  //approximate adder
 `endif
 
 `define bit_12_16(b) {b[11],b[11],b[11],b[11],b}
@@ -22,6 +24,7 @@ module RBMLayer 				#(parameter integer bitlength = 16,
 						  parameter weight_path = "../build/data/Hweight15x5.txt",  // load a different weight for sparse case 64x441
 						  parameter bias_path = "../build/data/Hbias1x5.txt",
 						  parameter seed_path = "../build/data/seed1x10.txt",
+              parameter ord_path = "../build/data/order/example/c_adder_ord_example.txt",
 						  parameter integer adder_num  = 28,
 						  parameter [7:0] SeedData = 32,
 						  parameter integer id = 0
@@ -49,11 +52,13 @@ module RBMLayer 				#(parameter integer bitlength = 16,
    initial begin
       `ReadMem(weight_path, Weight);
       `ReadMem(bias_path, Bias);
+      `ReadMem(ord_path, Switch);
    end
    // synopsys translate_on
 
    reg [w_bitlength-1:0] Weight`DIM_2D(input_dim, output_dim);
    reg [w_bitlength-1:0] Bias`DIM_1D(output_dim);
+   reg Switch`DIM_1D(output_dim); //0=>adder, 1=>iadder
 
    reg [9:0] 	     cursor, adding_cursor;
    reg [9:0] 	     i,j,k;
@@ -66,27 +71,43 @@ module RBMLayer 				#(parameter integer bitlength = 16,
 
 
    reg [bitlength-1:0] Temp;
-   //  reg signed[11:0] Adder_Input[adder_num-1:0];
-   wire signed [bitlength-1:0] Adder_Input_Temp[adder_num-1:0];
+   // two adder "tree"
+   wire signed [bitlength-1:0] Adder_Input_Temp_Exact[adder_num-1:0];
+   wire signed [bitlength-1:0] Adder_Input_Temp_Approximate[adder_num-1:0];
+   wire signed [bitlength-1:0] Next_Temp;
    sigmoid #(bitlength,sigmoid_bitlength) sg(Temp, SigmoidOutput);
    RandomGenerator  #(sigmoid_bitlength) rnd(rand_reset, clock, SeedData, RandomData);
 
 
    generate
       if (adder_num > 1) begin
-
-	 ap_adder #(bitlength, Inf) adder_first(
-                                      `bit_12_16(Weight[adding_cursor][cursor]) & {16{InputData[adding_cursor]}},
-                                      `bit_12_16(Weight[adding_cursor+1][cursor]) & {16{InputData[adding_cursor+1]}},
-          Adder_Input_Temp[0]);
-	 for(g = 1; g<adder_num-1; g=g+1) begin : generate_adders
-            ap_adder #(bitlength, Inf) adder_middle(Adder_Input_Temp[g-1], `bit_12_16(Weight[adding_cursor+g+1][cursor]) & {16{InputData[adding_cursor+g+1]}}, Adder_Input_Temp[g]);
-	 end
-	 ap_adder #(bitlength, Inf) adder_last(Adder_Input_Temp[adder_num-2], Temp, Adder_Input_Temp[adder_num-1]);
+        // currently not supported
+	      // ap_adder #(bitlength, Inf) adder_first(
+        //                               `bit_12_16(Weight[adding_cursor][cursor]) & {16{InputData[adding_cursor]}},
+        //                               `bit_12_16(Weight[adding_cursor+1][cursor]) & {16{InputData[adding_cursor+1]}},
+        //                             Adder_Input_Temp[0]);
+	      // for(g = 1; g<adder_num-1; g=g+1) begin : generate_adders
+        //     ap_adder #(bitlength, Inf)  adder_middle(Adder_Input_Temp[g-1], `bit_12_16(Weight[adding_cursor+g+1][cursor]) & {16{InputData[adding_cursor+g+1]}}, Adder_Input_Temp[g]);
+	      // end
+	      // ap_adder #(bitlength, Inf) adder_last(Adder_Input_Temp[adder_num-2], Temp, Adder_Input_Temp[adder_num-1]);
       end else begin
-	 ap_adder #(bitlength, Inf) adder_only(
-                                      `bit_12_16(Weight[adding_cursor][cursor]) & {16{InputData[adding_cursor]}},
-     Temp, Adder_Input_Temp[adder_num-1]);
+            // now, only support adder==1 for Switch
+
+            //exact
+	           ap_adder #(bitlength, Inf) adder_only(
+                            `bit_12_16(Weight[adding_cursor][cursor]) 
+                            & {16{InputData[adding_cursor] & (~Switch[cursor])}},
+                            Temp & {16{~Switch[cursor]}}, 
+                            Adder_Input_Temp_Exact[adder_num-1]);
+
+             i_ap_adder #(bitlength, Inf) iadder_only(
+                            `bit_12_16(Weight[adding_cursor][cursor]) 
+                            & {16{InputData[adding_cursor] & Switch[cursor]}},
+
+                            Temp & {16{Switch[cursor]}},
+                            Adder_Input_Temp_Approximate[adder_num-1]);
+              
+             assign Next_Temp = Adder_Input_Temp_Exact[adder_num-1] | Adder_Input_Temp_Approximate[adder_num-1];
       end
    endgenerate
 
@@ -108,7 +129,7 @@ module RBMLayer 				#(parameter integer bitlength = 16,
                finish = 0;
                if (adding_cursor == input_dim) begin
 		              //  $display("%0d,%0d", id, RandomData); //#important for exporting random number
-		        //      $display("%0d: %0d => %0d >< %0d", id,Temp ,SigmoidOutput, RandomData);
+		            $display("%0d: %0d => %0d >< %0d", id,$signed(Temp) ,SigmoidOutput, RandomData);
 		              `GET_1D(OutputData, 1, cursor) <= SigmoidOutput > RandomData;
                   adding_cursor = 0;
                   mask = 0;
@@ -120,7 +141,7 @@ module RBMLayer 				#(parameter integer bitlength = 16,
                   //   if (id == 1 && cursor == 0) begin
                   //  $display("layer: %0d, inputdata[%0d] = %0d, temp = %0d", id,adding_cursor, InputData[adding_cursor],Temp);
                   //  end
-                     Temp =  Adder_Input_Temp[adder_num-1];
+                     Temp =  Next_Temp;
                   end
                   // if (id == 2 && cursor == 0) begin
                   //   $display("layer: %0d, cursor = %d, inputdata[%0d] = %0d, temp = %0d", id,cursor,adding_cursor, InputData[adding_cursor],Temp);

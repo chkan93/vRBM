@@ -17,9 +17,12 @@ module Main #(parameter integer bitlength = 16,
               parameter h_weight_path = "../build/data/Hweight4x3.txt",
               parameter h_bias_path = "../build/data/Hbias1x3.txt",
               parameter h_seed_path = "../build/data/Hseed1x3.txt",
+              parameter h_ord_path = "",
+
               parameter c_weight_path = "../build/data/Cweight3x2.txt",
               parameter c_bias_path = "../build/data/Cbias1x2.txt",
               parameter c_seed_path = "../build/data/Cseed1x2.txt",
+              parameter c_ord_path = "",
               parameter hidden_adder_group_num = 1,
               parameter cl_adder_group_num = 1,
               parameter iteration_num = 100
@@ -48,11 +51,11 @@ module Main #(parameter integer bitlength = 16,
 
 
    RBMLayer #(bitlength, w_bitlength, sigmoid_bitlength, general_input_dim, sparse_input_dim,
-              hidden_dim, Inf, h_weight_path, h_bias_path, h_seed_path,
+              hidden_dim, Inf, h_weight_path, h_bias_path, h_seed_path, h_ord_path,
               hidden_adder_group_num, 124, 1) hidden_layer(internal_reset, reset,  clock, data_valid, InputData , HiddenData, hidden_finish);
 
    RBMLayer #(bitlength, w_bitlength, sigmoid_bitlength, hidden_dim, hidden_dim,
-              output_dim, Inf, c_weight_path, c_bias_path, c_seed_path,
+              output_dim, Inf, c_weight_path, c_bias_path, c_seed_path, c_ord_path,
               cl_adder_group_num, 63,  2) classify_layer(internal_reset, reset, clock, hidden_finish, HiddenData, OutputDataOneTime, internal_finish);
 
   //  genvar 				  g;
