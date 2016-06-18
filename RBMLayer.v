@@ -7,7 +7,7 @@
 `else
  `include "../sigmoid.v"
  `include "../RandomGenerator.v"
- `include "../ap_adder.v" 
+ `include "../ap_adder.v"
  `include "../i_ap_adder.v"  //approximate adder
 `endif
 
@@ -95,18 +95,18 @@ module RBMLayer 				#(parameter integer bitlength = 16,
 
             //exact
 	           ap_adder #(bitlength, Inf) adder_only(
-                            `bit_12_16(Weight[adding_cursor][cursor]) 
+                            `bit_12_16(Weight[adding_cursor][cursor])
                             & {16{InputData[adding_cursor] & (~Switch[cursor])}},
-                            Temp & {16{~Switch[cursor]}}, 
+                            Temp & {16{~Switch[cursor]}},
                             Adder_Input_Temp_Exact[adder_num-1]);
 
              i_ap_adder #(bitlength, Inf) iadder_only(
-                            `bit_12_16(Weight[adding_cursor][cursor]) 
+                            `bit_12_16(Weight[adding_cursor][cursor])
                             & {16{InputData[adding_cursor] & Switch[cursor]}},
 
                             Temp & {16{Switch[cursor]}},
                             Adder_Input_Temp_Approximate[adder_num-1]);
-              
+
              assign Next_Temp = Adder_Input_Temp_Exact[adder_num-1] | Adder_Input_Temp_Approximate[adder_num-1];
       end
    endgenerate
@@ -129,7 +129,7 @@ module RBMLayer 				#(parameter integer bitlength = 16,
                finish = 0;
                if (adding_cursor == input_dim) begin
 		              //  $display("%0d,%0d", id, RandomData); //#important for exporting random number
-		            $display("%0d: %0d => %0d >< %0d", id,$signed(Temp) ,SigmoidOutput, RandomData);
+		            // $display("%0d: %0d => %0d >< %0d", id,$signed(Temp) ,SigmoidOutput, RandomData);
 		              `GET_1D(OutputData, 1, cursor) <= SigmoidOutput > RandomData;
                   adding_cursor = 0;
                   mask = 0;
