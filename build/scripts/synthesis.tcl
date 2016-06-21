@@ -8,6 +8,9 @@ define_design_lib WORK -path ./WORK
 analyze -f verilog ../ap_adder.v 
 elaborate ap_adder
 
+analyze -f verilog ../i_ap_adder.v
+elaborate i_ap_adder
+
 # RandomGenerator.v is fixed
 #  - use same and one always block
 #  - don't need to change parameter, use default

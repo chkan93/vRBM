@@ -22,9 +22,11 @@ localparam c_weight_path = "../build/data/model/verilog/model_c_weight.txt";  //
 localparam c_bias_path = "../build/data/model/verilog/model_c_bias.txt";
 localparam c_seed_path = "../build/data/Cseed1x10.txt";
 localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata0.txt";
+localparam h_ord_path = "../build/data/order/example/h_adder_ord_example.txt";
+localparam c_ord_path = "../build/data/order/example/c_adder_ord_example.txt";
 localparam hidden_adder_group_num = 1;
 localparam cl_adder_group_num = 1;
-localparam iteration_num = 100;
+localparam iteration_num = 30;
 
 `ifndef SPARSE
 localparam input_dim = general_input_dim;
@@ -43,8 +45,8 @@ reg InputData`DIM_1D(input_dim);
 wire[`PORT_1D(input_dim, 1)] InputDataPort;
 
 initial begin
-  $dumpfile ("./dumpFolder/Main_test_mnist.vcd");
-  $dumpvars;
+  // $dumpfile ("./dumpFolder/Main_test_mnist.vcd");
+  // $dumpvars;
   `ReadMem(input_image_path, InputData);
   clock = 0;
   reset = 0;
@@ -60,8 +62,8 @@ end
 
 Main #(bitlength,w_bitlength, sigmoid_bitlength, general_input_dim,
            sparse_input_dim, hidden_dim, output_dim, Inf,
-           h_weight_path, h_bias_path, h_seed_path, c_weight_path,
-           c_bias_path, c_seed_path,
+           h_weight_path, h_bias_path, h_seed_path, h_ord_path,
+           c_weight_path, c_bias_path, c_seed_path, c_ord_path,
            hidden_adder_group_num, cl_adder_group_num, iteration_num)
            main(reset, clock, data_valid, InputDataPort, OutputDataPort, finish);
 
