@@ -3,6 +3,8 @@
  *  Written by: S. H. Kang                                                *
  *  Last modified: Dec 16, 2010                                           *
  **************************************************************************/
+`ifndef i_ap_adder
+`define i_ap_adder
 
 module i_ap_adder (A, B, SUM);
 
@@ -29,3 +31,5 @@ assign  SUM = {SH[11:4],SL[7:0]};
 
 
 endmodule
+
+`endif

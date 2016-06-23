@@ -6,15 +6,14 @@
 `endif
 
 module sigmoid
-  #(parameter input_bitlength = 16, parameter sigmoid_bitlength = 8)
-  (input [input_bitlength-1:0] sum,
-   output reg[sigmoid_bitlength-1:0] s);
+  (input [15:0] sum,
+   output reg[7:0] s);
 
 
    wire sign;
-   reg [input_bitlength-1:0] abs;
-   assign sign = sum[input_bitlength-1];
-   reg [sigmoid_bitlength:0] tmp;
+   reg [15:0] abs;
+   assign sign = sum[15];
+   reg [8:0] tmp;
 
   always @(sum) begin
     if (sign) begin

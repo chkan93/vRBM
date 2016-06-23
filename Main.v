@@ -16,65 +16,36 @@
 `endif
 
 
-module Main #(parameter integer bitlength = 16,
-              parameter integer w_bitlength = 12,
-              parameter integer sigmoid_bitlength = 8,
-              parameter integer general_input_dim = 784,
-              parameter integer sparse_input_dim = 64,
-              parameter integer hidden_dim = 441,
-              parameter integer output_dim = 10,
-              parameter  Inf = 12'b0111_1111_1111,
-              parameter h_weight_path = "../build/data/Hweight4x3.txt",
-              parameter h_bias_path = "../build/data/Hbias1x3.txt",
-              parameter h_seed_path = "../build/data/Hseed1x3.txt",
-              parameter h_ord_path = "",
+`define iteration_num 100
 
-              parameter c_weight_path = "../build/data/Cweight3x2.txt",
-              parameter c_bias_path = "../build/data/Cbias1x2.txt",
-              parameter c_seed_path = "../build/data/Cseed1x2.txt",
-              parameter c_ord_path = "",
-              parameter hidden_adder_group_num = 1,
-              parameter cl_adder_group_num = 1,
-              parameter iteration_num = 100
-              )
+module Main 
    (input reset,
     input clock,
     input data_valid,
-    input wire [`PORT_2D(general_input_dim, hidden_dim, w_bitlength)] HiddenWeight,
-    input wire [`PORT_1D(hidden_dim, w_bitlength)] HiddenBias,
-    input wire [`PORT_1D(hidden_dim, 1)] HiddenSwitch,
-    input wire [`PORT_2D(hidden_dim, output_dim, w_bitlength)] ClassiWeight,
-    input wire [`PORT_1D(output_dim, w_bitlength)] ClassiBias,
-    input wire [`PORT_1D(output_dim, 1)] ClassiSwitch,
-    input wire [`PORT_1D(general_input_dim, 1)] InputData,
-    output reg [`PORT_1D(output_dim, w_bitlength)] OutputData,
+    input wire [`PORT_2D(784, 441, 12)] HiddenWeight,
+    input wire [`PORT_1D(441, 12)] HiddenBias,
+    input wire [`PORT_1D(441, 1)] HiddenSwitch,
+    input wire [`PORT_2D(441, 10, 12)] ClassiWeight,
+    input wire [`PORT_1D(10, 12)] ClassiBias,
+    input wire [`PORT_1D(10, 1)] ClassiSwitch,
+    input wire [`PORT_1D(784, 1)] InputData,
+    output reg [`PORT_1D(10, 12)] OutputData,
     output reg finish);
 
 
-`ifndef SPARSE
-   localparam input_dim = general_input_dim;
-`else
-   localparam input_dim = sparse_input_dim;
-`endif
 
 
    wire        hidden_finish, internal_finish;
    reg 	       internal_reset;
    reg [9:0]  iteration_counter;
-   wire [`PORT_1D(hidden_dim, 1)] HiddenData;
-   wire [`PORT_1D(output_dim, 1)] OutputDataOneTime;
+   wire [`PORT_1D(441, 1)] HiddenData;
+   wire [`PORT_1D(10, 1)] OutputDataOneTime;
 
 
-   RBMLayer #(bitlength, w_bitlength, sigmoid_bitlength, general_input_dim, sparse_input_dim,
-              hidden_dim, Inf, h_weight_path, h_bias_path, h_seed_path, h_ord_path,
-              hidden_adder_group_num, 124, 1) 
-   hidden_layer(internal_reset, reset,  clock, data_valid, HiddenWeight, HiddenBias, HiddenSwitch, InputData , HiddenData, hidden_finish);
+   RBMLayer hidden_layer(internal_reset, reset,  clock, data_valid, HiddenWeight, HiddenBias, HiddenSwitch, InputData , HiddenData, hidden_finish);
 
 
-   ClassiLayer #(bitlength, w_bitlength, sigmoid_bitlength, hidden_dim, hidden_dim,
-              output_dim, Inf, c_weight_path, c_bias_path, c_seed_path, c_ord_path,
-              cl_adder_group_num, 63,  2) 
-   classify_layer(internal_reset, reset, clock, hidden_finish, ClassiWeight, ClassiBias, ClassiSwitch, HiddenData, OutputDataOneTime, internal_finish);
+   ClassiLayer classify_layer(internal_reset, reset, clock, hidden_finish, ClassiWeight, ClassiBias, ClassiSwitch, HiddenData, OutputDataOneTime, internal_finish);
 
 
    reg[3:0] i;
@@ -85,15 +56,15 @@ module Main #(parameter integer bitlength = 16,
 	 OutputData = 0;
 	 finish = 0;
       end else begin
-	 if (iteration_counter < iteration_num) begin
+	 if (iteration_counter < `iteration_num) begin
 	    if (internal_reset) begin
                internal_reset = 0;
 	    end else begin
                if(internal_finish) begin
 		  // $display("EOT,%0d", iteration_counter);
-		  for(i = 0; i<output_dim; i=i+1) begin
+		  for(i = 0; i<10; i=i+1) begin
         if (`GET_1D(OutputDataOneTime, 1, i) == 1)
-	  `GET_1D(OutputData, w_bitlength, i) = `GET_1D(OutputData, w_bitlength, i) + 1;
+	  `GET_1D(OutputData, 12, i) = `GET_1D(OutputData, 12, i) + 1;
 		  end
 		  iteration_counter = iteration_counter + 1;
 		  internal_reset = 1;
@@ -103,9 +74,9 @@ module Main #(parameter integer bitlength = 16,
 	    if (iteration_counter > 0) begin
 	       finish = 1;
 	    end
-	 end // else: !if(iteration_counter < iteration_num)
-      end // else: !if(reset == 1b'1)
-   end // always @ (posedge clock or posedge reset)
+	 end 
+      end 
+   end 
 endmodule
 
 

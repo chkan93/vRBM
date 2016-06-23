@@ -24,18 +24,6 @@ always @ ( * ) begin
   end
 end
 
-// always @ ( x or y ) begin
-//   // z <= y + x;
-//   // $display("x = %d, y = %d, x + y = %d", x,y,z);
-//   if (x > 0 && y > 0 && (y+x) <= 0) begin
-//         z <= Inf;
-//       end
-//   else if (y < 0 && x < 0 && (y+x) >= 0) begin
-//         z <= $signed(-Inf);
-//       end
-//   else
-//         z <= y + z;
-// end
 endmodule
 
 

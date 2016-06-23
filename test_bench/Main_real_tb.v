@@ -46,25 +46,6 @@ reg InputData`DIM_1D(input_dim);
 wire[`PORT_1D(input_dim, 1)] InputDataPort;
  
 
-// reg[w_bitlength-1:0] HiddenWeight`DIM_2D(general_input_dim, hidden_dim);
-// wire [`PORT_2D(general_input_dim, hidden_dim, w_bitlength)] HiddenWeightPort;
-
-
-// reg[w_bitlength-1:0] HiddenBias`DIM_1D(hidden_dim);
-// wire [`PORT_1D(hidden_dim, w_bitlength)] HiddenBiasPort;
-
-// reg HiddenSwitch`DIM_1D(hidden_dim);
-// wire [`PORT_1D(hidden_dim, 1)] HiddenSwitchPort;
-
-// reg[w_bitlength-1:0] ClassiWeight`DIM_2D(hidden_dim, output_dim);
-// wire [`PORT_2D(hidden_dim, output_dim, w_bitlength)] ClassiWeightPort;
-
-// reg[w_bitlength-1:0] ClassiBias`DIM_1D(output_dim);
-// wire [`PORT_1D(output_dim, w_bitlength)] ClassiBiasPort;
-
-// reg ClassiSwitch`DIM_1D(output_dim);
-// wire [`PORT_1D(output_dim, 1)] ClassiSwitchPort;
-
 reg[w_bitlength-1:0] HiddenWeight`DIM_2D(general_input_dim, hidden_dim);
 reg [`PORT_2D(general_input_dim, hidden_dim, w_bitlength)] HiddenWeightPort;
 
@@ -139,13 +120,7 @@ end
 
 
 
-Main #(bitlength,w_bitlength, sigmoid_bitlength, general_input_dim,
-           sparse_input_dim, hidden_dim, output_dim, Inf,
-           h_weight_path, h_bias_path, h_seed_path, h_ord_path,
-           c_weight_path, c_bias_path, c_seed_path, c_ord_path,
-           hidden_adder_group_num, cl_adder_group_num, iteration_num)
-           
-           main(reset, clock, data_valid,
+Main  main(reset, clock, data_valid,
                 HiddenWeightPort, HiddenBiasPort, HiddenSwitchPort,
                 ClassiWeightPort, ClassiBiasPort, ClassiSwitchPort,
                InputDataPort, OutputDataPort, finish);
