@@ -1,3 +1,8 @@
+
+`ifndef i_ap_adder
+`define i_ap_adder
+
+
 module i_ap_adder #(parameter integer bitlength = 16, parameter Inf=16'b0111_1111_1111_1111)
                 (input signed[bitlength-1:0] x,
                  input signed[bitlength-1:0] y,
@@ -32,3 +37,6 @@ end
 //         z <= y + z;
 // end
 endmodule
+
+
+`endif

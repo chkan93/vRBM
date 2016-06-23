@@ -1,9 +1,9 @@
+`ifndef sigmoid
+`define sigmoid
+
 `ifndef  TEST_BENCH
   `include "config.v"
 `endif
-
-`ifndef sigmoid
-`define sigmoid
 
 module sigmoid
   #(parameter input_bitlength = 16, parameter sigmoid_bitlength = 8)

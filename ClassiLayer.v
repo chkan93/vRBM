@@ -1,30 +1,28 @@
-`ifndef RBMLayer
-`define RBMLayer
+`ifndef ClassiLayer
+`define ClassiLayer
 
 
 `ifndef  TEST_BENCH
  `include "config.v"
-    // synopsys translate_off
+     // synopsys translate_off
  `include "sigmoid.v"
  `include "RandomGenerator.v"
  `include "ap_adder.v"
- `include "i_ap_adder.v"  //approximate adder
-   // synopsys translate_on
+ `include "i_ap_adder.v"  
+     // synopsys translate_on
 `else
     // synopsys translate_off
  `include "../sigmoid.v"
  `include "../RandomGenerator.v"
  `include "../ap_adder.v"
- `include "../i_ap_adder.v"  //approximate adder
-     // synopsys translate_on
+ `include "../i_ap_adder.v"  
+    // synopsys translate_on
 `endif
 
 `define bit_12_16(b) {b[11],b[11],b[11],b[11],b}
 
 
-
-
-module RBMLayer 
+module ClassiLayer 
             #(parameter integer bitlength = 16,
               parameter integer w_bitlength = 12,
 						  parameter integer sigmoid_bitlength = 8,
@@ -130,5 +128,6 @@ module RBMLayer
       end
    end
 endmodule
+
 
 `endif

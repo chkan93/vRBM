@@ -1,8 +1,18 @@
+`ifndef Main
+`define Main
+
+
 `ifndef  TEST_BENCH
  `include "config.v"
+     // synopsys translate_off
  `include "RBMLayer.v"
+ `include "ClassiLayer.v"
+     // synopsys translate_on
 `else
+    // synopsys translate_off
  `include "../RBMLayer.v"
+ `include "../ClassiLayer.v"
+     // synopsys translate_on
 `endif
 
 
@@ -30,6 +40,12 @@ module Main #(parameter integer bitlength = 16,
    (input reset,
     input clock,
     input data_valid,
+    input wire [`PORT_2D(general_input_dim, hidden_dim, w_bitlength)] HiddenWeight,
+    input wire [`PORT_1D(hidden_dim, w_bitlength)] HiddenBias,
+    input wire [`PORT_1D(hidden_dim, 1)] HiddenSwitch,
+    input wire [`PORT_2D(hidden_dim, output_dim, w_bitlength)] ClassiWeight,
+    input wire [`PORT_1D(output_dim, w_bitlength)] ClassiBias,
+    input wire [`PORT_1D(output_dim, 1)] ClassiSwitch,
     input wire [`PORT_1D(general_input_dim, 1)] InputData,
     output reg [`PORT_1D(output_dim, w_bitlength)] OutputData,
     output reg finish);
@@ -47,23 +63,19 @@ module Main #(parameter integer bitlength = 16,
    reg [9:0]  iteration_counter;
    wire [`PORT_1D(hidden_dim, 1)] HiddenData;
    wire [`PORT_1D(output_dim, 1)] OutputDataOneTime;
-  //  wire [bitlength-1:0] 		  SelfAddOutput`DIM_1D(output_dim);
 
 
    RBMLayer #(bitlength, w_bitlength, sigmoid_bitlength, general_input_dim, sparse_input_dim,
               hidden_dim, Inf, h_weight_path, h_bias_path, h_seed_path, h_ord_path,
-              hidden_adder_group_num, 124, 1) hidden_layer(internal_reset, reset,  clock, data_valid, InputData , HiddenData, hidden_finish);
+              hidden_adder_group_num, 124, 1) 
+   hidden_layer(internal_reset, reset,  clock, data_valid, HiddenWeight, HiddenBias, HiddenSwitch, InputData , HiddenData, hidden_finish);
 
-   RBMLayer #(bitlength, w_bitlength, sigmoid_bitlength, hidden_dim, hidden_dim,
+
+   ClassiLayer #(bitlength, w_bitlength, sigmoid_bitlength, hidden_dim, hidden_dim,
               output_dim, Inf, c_weight_path, c_bias_path, c_seed_path, c_ord_path,
-              cl_adder_group_num, 63,  2) classify_layer(internal_reset, reset, clock, hidden_finish, HiddenData, OutputDataOneTime, internal_finish);
+              cl_adder_group_num, 63,  2) 
+   classify_layer(internal_reset, reset, clock, hidden_finish, ClassiWeight, ClassiBias, ClassiSwitch, HiddenData, OutputDataOneTime, internal_finish);
 
-  //  genvar 				  g;
-  //  generate
-  //     for (g = 0; g < output_dim; g=g+1) begin : accumulation_group
-	//  ap_adder #(bitlength, Inf) adder(`GET_1D(OutputDataOneTime, bitlength, g), `GET_1D(OutputData, bitlength, g), SelfAddOutput[g]);
-  //     end
-  //  endgenerate
 
    reg[3:0] i;
    always @ (posedge clock or posedge reset) begin
@@ -95,3 +107,6 @@ module Main #(parameter integer bitlength = 16,
       end // else: !if(reset == 1b'1)
    end // always @ (posedge clock or posedge reset)
 endmodule
+
+
+`endif

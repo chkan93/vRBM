@@ -26,7 +26,7 @@ localparam h_ord_path = "../build/data/order/example/h_adder_ord_example.txt";
 localparam c_ord_path = "../build/data/order/example/c_adder_ord_example.txt";
 localparam hidden_adder_group_num = 1;
 localparam cl_adder_group_num = 1;
-localparam iteration_num = 30;
+localparam iteration_num = 100;
 
 `ifndef SPARSE
 localparam input_dim = general_input_dim;
@@ -36,6 +36,7 @@ localparam input_dim = sparse_input_dim;
 
 
 integer i = 0;
+integer j = 0;
 reg clock, reset, data_valid;
 wire finish;
 wire[w_bitlength-1:0] OutputData`DIM_1D(output_dim);
@@ -43,11 +44,77 @@ wire[`PORT_1D(output_dim, w_bitlength)] OutputDataPort;
 
 reg InputData`DIM_1D(input_dim);
 wire[`PORT_1D(input_dim, 1)] InputDataPort;
+ 
+
+// reg[w_bitlength-1:0] HiddenWeight`DIM_2D(general_input_dim, hidden_dim);
+// wire [`PORT_2D(general_input_dim, hidden_dim, w_bitlength)] HiddenWeightPort;
+
+
+// reg[w_bitlength-1:0] HiddenBias`DIM_1D(hidden_dim);
+// wire [`PORT_1D(hidden_dim, w_bitlength)] HiddenBiasPort;
+
+// reg HiddenSwitch`DIM_1D(hidden_dim);
+// wire [`PORT_1D(hidden_dim, 1)] HiddenSwitchPort;
+
+// reg[w_bitlength-1:0] ClassiWeight`DIM_2D(hidden_dim, output_dim);
+// wire [`PORT_2D(hidden_dim, output_dim, w_bitlength)] ClassiWeightPort;
+
+// reg[w_bitlength-1:0] ClassiBias`DIM_1D(output_dim);
+// wire [`PORT_1D(output_dim, w_bitlength)] ClassiBiasPort;
+
+// reg ClassiSwitch`DIM_1D(output_dim);
+// wire [`PORT_1D(output_dim, 1)] ClassiSwitchPort;
+
+reg[w_bitlength-1:0] HiddenWeight`DIM_2D(general_input_dim, hidden_dim);
+reg [`PORT_2D(general_input_dim, hidden_dim, w_bitlength)] HiddenWeightPort;
+
+
+reg[w_bitlength-1:0] HiddenBias`DIM_1D(hidden_dim);
+reg [`PORT_1D(hidden_dim, w_bitlength)] HiddenBiasPort;
+
+reg HiddenSwitch`DIM_1D(hidden_dim);
+reg [`PORT_1D(hidden_dim, 1)] HiddenSwitchPort;
+
+reg[w_bitlength-1:0] ClassiWeight`DIM_2D(hidden_dim, output_dim);
+reg [`PORT_2D(hidden_dim, output_dim, w_bitlength)] ClassiWeightPort;
+
+reg[w_bitlength-1:0] ClassiBias`DIM_1D(output_dim);
+reg [`PORT_1D(output_dim, w_bitlength)] ClassiBiasPort;
+
+reg ClassiSwitch`DIM_1D(output_dim);
+reg [`PORT_1D(output_dim, 1)] ClassiSwitchPort;
+
 
 initial begin
   // $dumpfile ("./dumpFolder/Main_test_mnist.vcd");
   // $dumpvars;
+  `ReadMem(h_weight_path, HiddenWeight);
+  `ReadMem(h_bias_path, HiddenBias);
+  `ReadMem(h_ord_path, HiddenSwitch);
+  `ReadMem(c_weight_path, ClassiWeight);
+  `ReadMem(c_bias_path, ClassiBias);
+  `ReadMem(c_ord_path, ClassiSwitch);
   `ReadMem(input_image_path, InputData);
+
+  for(i = 0; i < input_dim; i=i+1)  
+    for(j = 0; j < hidden_dim; j=j+1)
+      `GET_2D(HiddenWeightPort, hidden_dim, w_bitlength, i, j) = HiddenWeight[i][j];
+
+  for(i = 0; i < hidden_dim; i=i+1) begin 
+      `GET_1D(HiddenBiasPort, w_bitlength, i) = HiddenBias[i];
+      `GET_1D(HiddenSwitchPort, 1, i) = HiddenSwitch[i];
+  end
+
+  for(i = 0; i < hidden_dim; i=i+1)  
+    for(j = 0; j < output_dim; j=j+1)
+      `GET_2D(ClassiWeightPort, output_dim, w_bitlength, i, j) = ClassiWeight[i][j];
+
+  for(i = 0; i < output_dim; i=i+1) begin 
+      `GET_1D(ClassiBiasPort, w_bitlength, i) = ClassiBias[i];
+      `GET_1D(ClassiSwitchPort, 1, i) = ClassiSwitch[i];
+  end
+
+
   clock = 0;
   reset = 0;
   data_valid = 0;
@@ -58,14 +125,30 @@ end
 
 `DEFINE_PACK_VAR;
 `PACK_1D_ARRAY(input_dim, 1, InputData, InputDataPort)
+
+// `PACK_2D_ARRAY(input_dim, hidden_dim, w_bitlength, HiddenWeight, HiddenWeightPort)
+// `PACK_1D_ARRAY(hidden_dim, w_bitlength, HiddenBias, HiddenBiasPort)
+// `PACK_1D_ARRAY(hidden_dim, 1, HiddenSwitch, HiddenSwitchPort)
+
+// `PACK_2D_ARRAY(hidden_dim, output_dim, w_bitlength, ClassiWeight, ClassiWeightPort)
+// `PACK_1D_ARRAY(output_dim, w_bitlength, ClassiBias, ClassiBiasPort)
+// `PACK_1D_ARRAY(output_dim, 1, ClassiSwitch, ClassiSwitchPort)
+
 `UNPACK_1D_ARRAY(output_dim, w_bitlength, OutputDataPort, OutputData)
+
+
+
 
 Main #(bitlength,w_bitlength, sigmoid_bitlength, general_input_dim,
            sparse_input_dim, hidden_dim, output_dim, Inf,
            h_weight_path, h_bias_path, h_seed_path, h_ord_path,
            c_weight_path, c_bias_path, c_seed_path, c_ord_path,
            hidden_adder_group_num, cl_adder_group_num, iteration_num)
-           main(reset, clock, data_valid, InputDataPort, OutputDataPort, finish);
+           
+           main(reset, clock, data_valid,
+                HiddenWeightPort, HiddenBiasPort, HiddenSwitchPort,
+                ClassiWeightPort, ClassiBiasPort, ClassiSwitchPort,
+               InputDataPort, OutputDataPort, finish);
 
 
 initial begin
@@ -74,7 +157,6 @@ end
 
 always begin
   clock = !clock;
-  //check finish
 #clock_period;
 end
 
@@ -82,7 +164,6 @@ end
 always @ (posedge finish) begin
   $display("FINISH");
   `DISPLAY_1D_ARRAY(output_dim ,"output of RBM = ",  OutputData)
-  // $display("Output of this RBM is %b", OutputDataPort);
   $finish;
 end
 
