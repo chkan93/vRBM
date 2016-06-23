@@ -8,14 +8,16 @@
  `include "sigmoid.v"
  `include "RandomGenerator.v"
  `include "ap_adder.v"
- `include "i_ap_adder.v"  //approximate adder
+ // `include "i_ap_adder.v"  
+ `include "iadder_B16_ETAIIM.v"
    // synopsys translate_on
 `else
     // synopsys translate_off
  `include "../sigmoid.v"
  `include "../RandomGenerator.v"
  `include "../ap_adder.v"
- `include "../i_ap_adder.v"  //approximate adder
+ // `include "../i_ap_adder.v" 
+ `include "../iadder_B16_ETAIIM.v" 
      // synopsys translate_on
 `endif
 
