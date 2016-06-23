@@ -16,7 +16,7 @@
 `endif
 
 
-`define iteration_num 100
+`define iteration_num 30
 
 module Main 
    (input reset,

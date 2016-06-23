@@ -67,8 +67,8 @@ reg [`PORT_1D(output_dim, 1)] ClassiSwitchPort;
 
 
 initial begin
-  // $dumpfile ("./dumpFolder/Main_test_mnist.vcd");
-  // $dumpvars;
+  $dumpfile ("./dumpFolder/Main_test_mnist.vcd");
+  $dumpvars;
   `ReadMem(h_weight_path, HiddenWeight);
   `ReadMem(h_bias_path, HiddenBias);
   `ReadMem(h_ord_path, HiddenSwitch);
