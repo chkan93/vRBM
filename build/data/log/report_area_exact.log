@@ -1,0 +1,30 @@
+ 
+****************************************
+Report : area
+Design : Main
+Version: K-2015.06-SP4
+Date   : Sat Jun 25 11:20:07 2016
+****************************************
+
+Library(s) Used:
+
+    cba_core (File: /software/nonrdist64/dc-2015.06-SP4/libraries/syn/tc6a_cbacore.db)
+
+Number of ports:                          486
+Number of nets:                          1531
+Number of cells:                         1067
+Number of combinational cells:           1007
+Number of sequential cells:                48
+Number of macros/black boxes:               0
+Number of buf/inv:                        206
+Number of references:                       3
+
+Combinational area:               1416.850024
+Buf/Inv area:                      190.850003
+Noncombinational area:             213.920006
+Macro/Black Box area:                0.000000
+Net Interconnect area:            8398.593750
+
+Total cell area:                  1630.770029
+Total area:                      10029.363779
+1

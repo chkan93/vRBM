@@ -20,6 +20,7 @@
 !/build/data/random/*
 /build/.idea/*
 /build/scripts/.idea
+!/build/data/log/*
 /build/dumpFolder
 /build/-p
 *.ace
