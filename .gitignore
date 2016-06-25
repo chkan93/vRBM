@@ -6,6 +6,13 @@
 *.bak
 *.lso
 *.elf
+/build/.*
+/build/WORK/*
+/build/wlf*
+/build/command.log
+/build/all_viol.out
+/build/default.svf
+/build/vsim_stacktrace.vstf
 /build/output/
 /build/.tmp
 /build/*.v
