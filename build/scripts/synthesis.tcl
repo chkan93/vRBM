@@ -21,6 +21,9 @@ elaborate sigmoid
 analyze -f verilog ../RBMLayer.v
 elaborate RBMLayer
 
+analyze -f verilog ../ClassiLayer.v
+elaborate ClassiLayer
+
 read_verilog ../Main.v
 
 #######################################
