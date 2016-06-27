@@ -1,6 +1,6 @@
-load('./mnist_classify.mat'); 
+load('./mat_data/mnist_classify.mat'); 
 % load('./model0307.mat');
-load model0503.mat
+load ./mat_data/model0503.mat
 
 W  = model{1}.W;
 Wc = model{1}.Wc;
@@ -21,21 +21,11 @@ bc = limitbit(bc , 1, scale , data_range);
 
 
 %%% don't change here!!
-export_data('W_h.txt', W', 8);
-export_data('W_c.txt', Wc, 8);
-export_data('b_h.txt', bh, 8);
-export_data('b_c.txt', bc, 8);
+export_data('generated_data/W_h.txt', W', 8);
+export_data('generated_data/W_c.txt', Wc, 8);
+export_data('generated_data/b_h.txt', bh, 8);
+export_data('generated_data/b_c.txt', bc, 8);
 
-h_adder_1 = [1:2:440];
-h_adder_2 = [0:2:440];
 
-c_adder_1 = [1:2:9];
-c_adder_2 = [0:2:9];
-
-h_adder = create_ord({h_adder_1, h_adder_2});
-c_adder = create_ord({c_adder_1,  c_adder_2});
-
-export_data('h_adder_ord_example.txt', h_adder, 0);
-export_data('c_adder_ord_example.txt', c_adder, 0);
 
 

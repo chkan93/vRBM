@@ -5,9 +5,9 @@ iteration_count = 2;
 % hrnd = RandomGenerator(hidden_seed);
 % crnd =  RandomGenerator(classi_seed);
 
-load('./1000_new.mat');
-load('./mnist_classify.mat'); 
-load('./model0503.mat');
+load('./mat_data/1000.mat');
+load('./mat_data/mnist_classify.mat'); 
+load('./mat_data/model0503.mat');
 
 
 testdata = testdata > 0.5;
