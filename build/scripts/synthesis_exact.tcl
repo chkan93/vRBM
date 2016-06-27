@@ -44,4 +44,13 @@ compile
 # read_saif -input ./data/SAIF/EXACT.saif   -instance_name test_Main_Real/main
 read_saif -input ./data/SAIF/EXACT_without_clock_mask.saif   -instance_name test_Main_Real/main
 
+change_names -rules verilog -hierarchy -verbose
+
+write -format verilog -hierarchy  -output ./data/Netlist/EXACT_without_clock_mask.v
+
+write_saif -output  ./data/SAIF/EXACT_without_clock_mask.from_dc.saif
+
 report_power
+
+
+

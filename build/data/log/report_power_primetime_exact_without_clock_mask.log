@@ -1,0 +1,47 @@
+Warning: Some timing arcs have been disabled for breaking timing loops
+	or because of constant propagation. Use the 'report_disable_timing'
+	command to get the list of these disabled timing arcs. (PTE-003)
+Warning: No clock specified. 
+	 PrimeTime PX will derive a default switching activity of (0.1/ns) from the library time unit (1ns), 
+	 because no clock is defined in the design. In order to calculate power accurately,
+	 PrimeTime PX needs to know what frequency your design works on. 
+	 You can specify the frequency by defining one or more clocks. 
+	 For designs without clocks, you can specify a virtual clock 
+	 by using the command 
+	 'create_clock -name virtual_clock_name -period your_design_period'. 
+
+  (PWR-171)
+Information: Running averaged power analysis... (PWR-601)
+Information: Running power calculation with 4 threads. (PWR-602)
+****************************************
+Report : Averaged Power
+Design : Main
+Version: K-2015.06-SP3-1
+Date   : Sun Jun 26 23:09:44 2016
+****************************************
+
+
+
+  Attributes
+  ----------
+      i  -  Including register clock pin internal power
+      u  -  User defined power group
+
+                        Internal  Switching  Leakage    Total
+Power Group             Power     Power      Power      Power   (     %)  Attrs
+--------------------------------------------------------------------------------
+clock_network              0.0000    0.0000    0.0000    0.0000 ( 0.00%)  i
+register                   0.0000    0.0000    0.0000    0.0000 ( 0.00%)  
+combinational              0.0000    0.7021    0.0000    0.7021 (31.59%)  
+sequential                 0.0000    1.5203    0.0000    1.5203 (68.41%)  
+memory                     0.0000    0.0000    0.0000    0.0000 ( 0.00%)  
+io_pad                     0.0000    0.0000    0.0000    0.0000 ( 0.00%)  
+black_box                  0.0000    0.0000    0.0000    0.0000 ( 0.00%)  
+
+  Net Switching Power  =    2.2224  (100.00%)
+  Cell Internal Power  =    0.0000   ( 0.00%)
+  Cell Leakage Power   =    0.0000   ( 0.00%)
+                         ---------
+Total Power            =    2.2224  (100.00%)
+
+1
