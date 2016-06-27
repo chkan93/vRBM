@@ -2,7 +2,7 @@
 (SAIFVERSION "2.0")
 (DIRECTION "backward")
 (DESIGN "Main")
-(DATE "Sun Jun 26 21:46:50 2016")
+(DATE "Sun Jun 26 23:13:01 2016")
 (VENDOR "Synopsys, Inc")
 (PROGRAM_NAME "Power Compiler write_saif")
 (PROGRAM_VERSION "K-2015.06-SP4")

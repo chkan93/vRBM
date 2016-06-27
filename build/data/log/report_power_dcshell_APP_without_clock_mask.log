@@ -1,0 +1,59 @@
+Information: Updating design information... (UID-85)
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: The derived toggle rate value (0.200000) for the clock net 'clock' conflicts with the annotated value (100.000000). Using the annotated value. (PWR-12)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : Main
+Version: K-2015.06-SP4
+Date   : Sun Jun 26 23:13:01 2016
+****************************************
+
+
+Library(s) Used:
+
+    cba_core (File: /software/nonrdist64/dc-2015.06-SP4/libraries/syn/tc6a_cbacore.db)
+
+Information: The cells in your design are not characterized for internal power. (PWR-229)
+
+Operating Conditions: nom_pvt   Library: cba_core
+Wire Load Model Mode: top
+
+Design        Wire Load Model            Library
+------------------------------------------------
+Main                   tc6a120m2         cba_core
+
+
+Global Operating Voltage = 5    
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = Unitless
+
+
+  Cell Internal Power  =   0.0000 mW    (0%)
+  Net Switching Power  =   2.0969  W  (100%)
+                         ---------
+Total Dynamic Power    =   2.0969  W  (100%)
+
+Cell Leakage Power     =   0.0000 
+
+Error: Either dynamic power or leakage power, in the library, is unitless. Unable to display complete power group summary. (PWR-799)
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000               NA   (     N/A)
+memory             0.0000            0.0000            0.0000               NA   (     N/A)
+black_box          0.0000            0.0000            0.0000               NA   (     N/A)
+clock_network      0.0000            0.0000            0.0000               NA   (     N/A)
+register           0.0000        1.5138e+03            0.0000               NA   (     N/A)
+sequential         0.0000            0.0000            0.0000               NA   (     N/A)
+combinational      0.0000          583.1145            0.0000               NA   (     N/A)
+--------------------------------------------------------------------------------------------------
+Total              0.0000 mW     2.0969e+03 mW         0.0000               NA        
+1

@@ -50,6 +50,10 @@ write -format verilog -hierarchy  -output ./data/Netlist/EXACT_without_clock_mas
 
 write_saif -output  ./data/SAIF/EXACT_without_clock_mask.from_dc.saif
 
+report_power > ./data/log/report_power_dcshell_EXACT_without_clock_mask.log
+
+report_area > ./data/log/report_area_EXACT_without_clock_mask.log
+
 report_power
 
 

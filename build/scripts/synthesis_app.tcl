@@ -49,4 +49,8 @@ write -format verilog -hierarchy  -output ./data/Netlist/APP_without_clock_mask.
 
 write_saif -output  ./data/SAIF/APP_without_clock_mask.from_dc.saif
 
+report_power > ./data/log/report_power_dcshell_APP_without_clock_mask.log
+
+report_area > ./data/log/report_area_APP_without_clock_mask.log
+
 report_power
