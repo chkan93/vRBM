@@ -63,8 +63,8 @@ module RBMLayer
           temp = (next_temp & (~zero_mask)) | (zero_mask & Value_after_mask);
           // $display("(%0d) %0d => %0d >< %0d, Value = %d, pixel = %0d",pixel_id, temp, SigmoidOutput, RandomData, Value_after_mask, pixel);
           // if(pixel_id == 784) begin
-            // $display("%0d => %0d >< %0d, pixel = %0d, adder = %0d, Value_after_mask = %0d", $signed(temp),
-            // SigmoidOutput, RandomData, pixel, adder_type, $signed(Value_after_mask));
+          //   $display("%0d => %0d >< %0d => %0d", $signed(temp),
+          //   SigmoidOutput, RandomData, result);
           // end
         end
     end

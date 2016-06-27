@@ -53,7 +53,10 @@ module ClassiLayer
           temp = 0;
         end else begin
           temp = (next_temp & (~zero_mask)) | (zero_mask & Value_after_mask);
-          // $display("(%0d) %0d => %0d >< %0d, Value_after_mask = %0d, hidden_pixel = %0d, result = %0d, next_temp = %0d, Value = %0d",hidden_id, temp, SigmoidOutput, RandomData, Value_after_mask, pixel, result, next_temp, Value);
+          // if(hidden_id == 441) begin
+          // $display("%0d => %0d >< %0d => %0d", $signed(temp),
+          // SigmoidOutput, RandomData, result);
+          // end
         end
     end
 

@@ -36,8 +36,8 @@ module Main
     output  spike, output finish
     );
 
-    RBMLayer  rbm(reset, clock & enable_hidden,Hvalue, pixel_id, pixel, adder_type, hidden, hidden_finish);
-    ClassiLayer classi(reset, clock & enable_classi, Cvalue, hidden_id, hidden_pixel, spike, finish);
+    RBMLayer  rbm(reset, clock,Hvalue, pixel_id, pixel & enable_hidden, adder_type, hidden, hidden_finish);
+    ClassiLayer classi(reset, clock , Cvalue, hidden_id, hidden_pixel & enable_classi, spike, finish);
 
 endmodule
 
