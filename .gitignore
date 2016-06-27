@@ -13,6 +13,7 @@
 /build/all_viol.out
 /build/default.svf
 /build/vsim_stacktrace.vstf
+/build/*.vcd
 /build/output/
 /build/.tmp
 /build/*.v

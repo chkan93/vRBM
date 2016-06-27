@@ -41,7 +41,7 @@ compile
 
 
 
-read_saif -input ./data/SAIF/EXACT.saif   -instance_name test_Main_Real/main
-
+# read_saif -input ./data/SAIF/EXACT.saif   -instance_name test_Main_Real/main
+read_saif -input ./data/SAIF/EXACT_without_clock_mask.saif   -instance_name test_Main_Real/main
 
 report_power

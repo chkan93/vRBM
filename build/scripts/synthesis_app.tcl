@@ -40,7 +40,7 @@ report_clock
 compile
 
 
-read_saif -input ./data/SAIF/APP.saif   -instance_name test_Main_Real/main
-
+# read_saif -input ./data/SAIF/APP.saif   -instance_name test_Main_Real/main
+read_saif -input ./data/SAIF/APP_without_clock_mask.saif   -instance_name test_Main_Real/main
 
 report_power

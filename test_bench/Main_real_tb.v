@@ -13,7 +13,7 @@ localparam c_bias_path = "../build/data/model/verilog/model_c_bias.txt";
 localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata0.txt";
 localparam h_ord_path = "../build/data/order/example/h_adder_ord_example.txt";
 
-integer  iteration_num = 30;
+integer  iteration_num = 100;
 
 
 integer i = 0, j = 0, iteration_id = 0, OutputData[9:0];
