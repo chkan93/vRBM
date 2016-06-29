@@ -11,9 +11,10 @@ localparam h_bias_path = "../build/data/model/verilog/model_h_bias.txt";
 localparam c_weight_path = "../build/data/model/verilog/model_c_weight.txt";
 localparam c_bias_path = "../build/data/model/verilog/model_c_bias.txt";
 localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata0.txt";
-localparam h_ord_path = "../build/data/order/example/h_adder_ord_example.txt";
+localparam h_ord_path = "../build/data/order/.tmp"; //KEY:CRITICALITY_SCHEME
+//localparam h_ord_path = "../build/data/order/example/h_adder_ord_example.txt"; 
 
-integer  iteration_num = 100;
+integer  iteration_num = 2; // KEY:ITERATION_NUM
 
 
 integer i = 0, j = 0, iteration_id = 0, OutputData[9:0];

@@ -5,7 +5,7 @@
  **************************************************************************/
 `ifndef i_ap_adder
 `define i_ap_adder
-module iadder_B16_4B (A, B, SUM);
+module i_ap_adder (A, B, SUM);
 
 
 input   [15:0]  A, B;

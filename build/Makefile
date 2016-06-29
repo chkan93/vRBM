@@ -103,7 +103,8 @@ debug_Main: vlib
 
 
 run_mnist_test:
-	python ./scripts/run_mnist_test.py  1000 100
+	echo "This method is obsolete\n"
+	# python ./scripts/run_mnist_test.py  1000 100
 
 run_synthesis:
 	dc_shell -tcl_mode -f ./scripts/synthesis.tcl

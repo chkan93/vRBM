@@ -5,10 +5,9 @@
  **************************************************************************/
 `ifndef i_ap_adder
 `define i_ap_adder
-module iadder_B16_ZHU (A, B, SUM);
+module i_ap_adder (A, B, SUM);
 
-input          clk;
-input          rst;
+
 input   [15:0]  A, B;
 output  [15:0]  SUM;
 

@@ -9,7 +9,7 @@
  `include "RandomGenerator.v"
  `include "ap_adder.v"
  // `include "i_ap_adder.v"
- `include "iadder_B16_ETAIIM.v"
+`include "iadder_B16_ZHU4.v" //KEY:ADDER_TYPE_CURRENT_FOLDER
    // synopsys translate_on
 `else
     // synopsys translate_off
@@ -17,7 +17,7 @@
  `include "../RandomGenerator.v"
  `include "../ap_adder.v"
  // `include "../i_ap_adder.v"
- `include "../iadder_B16_ETAIIM.v"
+`include "../iadder_B16_ZHU4.v" //KEY:ADDER_TYPE_PARENT_FOLDER
      // synopsys translate_on
 `endif
 
