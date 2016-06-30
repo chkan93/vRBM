@@ -1,0 +1,1 @@
+{"result": [{"detection": 1, "weight": [4, 0, 1, 0, 0, 0, 0, 0, 0, 0], "id": 0, "truth": 1, "result": true}, {"detection": 1, "weight": [30, 0, 0, 0, 0, 0, 0, 0, 0, 0], "id": 1, "truth": 1, "result": true}], "summary": {"Rate": 1.0, "ImageNumber": 2, "CorrectDetection": 2}}

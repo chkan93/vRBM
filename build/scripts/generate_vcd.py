@@ -94,7 +94,7 @@ def generate(critical_setups=[], adder_types=[], iteration_nums=[]):
 def dump_order(od):
     with open(od.path, 'w') as f:
         for i in od.data:
-            if i < od.num:
+            if i <= od.num:
                 print('1', file=f)
             else:
                 print('0', file=f)

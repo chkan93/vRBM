@@ -11,10 +11,10 @@ localparam h_bias_path = "../build/data/model/verilog/model_h_bias.txt";
 localparam c_weight_path = "../build/data/model/verilog/model_c_weight.txt";
 localparam c_bias_path = "../build/data/model/verilog/model_c_bias.txt";
 localparam input_image_path = "../build/data/mnist/selected/image_2.txt";  //KEY:MNIST_IMAGE
-localparam h_ord_path = "../build/data/order/.tmp"; //KEY:CRITICALITY_SCHEME
+localparam h_ord_path = "../build/data/order/real/critorder.5.100.txt"; //KEY:CRITICALITY_SCHEME
 //localparam h_ord_path = "../build/data/order/example/h_adder_ord_example.txt"; 
 
-integer  iteration_num = 30; // KEY:ITERATION_NUM
+integer  iteration_num = 10; // KEY:ITERATION_NUM
 
 
 integer i = 0, j = 0, iteration_id = 0, OutputData[9:0];
@@ -46,8 +46,8 @@ Main main(reset, clock, Hvalue, pixel_id, pixel, HiddenSwitch[hidden_id],
     spike,  finish);
 integer next_state;
 initial begin
-  $dumpfile ("./dumpFolder/Main_test_mnist.vcd");
-  $dumpvars;
+  // $dumpfile ("./dumpFolder/Main_test_mnist.vcd");
+  // $dumpvars;
   `ReadMem(h_weight_path, HiddenWeight);
   `ReadMem(h_bias_path, HiddenBias);
   `ReadMem(h_ord_path, HiddenSwitch);

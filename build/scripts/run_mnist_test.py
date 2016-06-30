@@ -40,7 +40,9 @@ def runCmd():
     file.close()
     return r
 
-def updateContent(id, num):
+
+
+def updateContent(id, num, critical):
     f = fileinput.FileInput('../test_bench/Main_real_tb.v', inplace=True)
     for line in f:
         if KEY.ITERATION_NUM in line:
@@ -48,6 +50,8 @@ def updateContent(id, num):
         elif KEY.MNIST_IMAGE in line:
             print('localparam input_image_path = "{0}{1}.txt";  //{2}\n'
                 .format(IMAGE_PREFIX, id, KEY.MNIST_IMAGE), end='')
+        elif KEY.CRITICALITY_SCHEME in line:
+            print('localparam h_ord_path = "../build/data/order/real/critorder.{0}.{1}.txt"; //{2}\n'.format(critical[0], critical[1], KEY.CRITICALITY_SCHEME), end='')
         else:
             print(line, end='')
     f.close()
@@ -61,15 +65,16 @@ def getDetection(r):
     label = numlist.index(max(numlist))
     return label+1,numlist
 
-def main(N=0,ITER=25):
+def main(N=0,ITER=25,CRITICAL=[1,100]):
     result = []
     print("When testing, please don't edit test_bench/Main_real_tb.v")
     print("Test Begin")
-    print("Total Image Number: {0}, with iteration = {1}".format(N, ITER))
+    print("Total Image Number: {0}, with iteration = {1}, with critical {2}, num of iadder {3}".format(N, ITER, CRITICAL[0], CRITICAL[1]))
     bar = progressbar.ProgressBar()
 
+
     for i in bar(range(N)):
-        updateContent(i+1, ITER)
+        updateContent(i+1, ITER, CRITICAL)
         r = runCmd()
         dt,numlist = getDetection(r)
         with open('{0}{1}.txt'.format(LABEL_PREFIX, i+1), 'r') as f:
@@ -79,18 +84,17 @@ def main(N=0,ITER=25):
     print("Test finished, Image Number: {0}, Correct Detection: {1}, Rate: {2}".format(
           s['ImageNumber'], s['CorrectDetection'], s['Rate']))
     print("Writing Test Result into file")
-    output_json = './data/JSON/mnist_test_result_images{0}_iter{1}.json'.format(N, ITER)
+    output_json = './data/JSON/mnist_test_result_images{0}_iter{1}_crit{2}-{3}.json'.format(N, ITER, CRITICAL[0], CRITICAL[1])
     with open(output_json, 'w') as f:
         json.dump({'summary':s,'result':result}, f)
     print("Test Finished")
 
 
 
-# main(10,1)
-
 import sys
 import time
 if __name__ == "__main__":
     start_time = time.time()
-    main(N=int(sys.argv[1]),ITER=int(sys.argv[2]))
+    main(N=int(sys.argv[1]),ITER=int(sys.argv[2]), 
+         CRITICAL=[int(i) for i in sys.argv[3].split(',')]) ## '1,100'
     print("--------------------- Program Run Time: {0} seconds. ---------------------".format(time.time()-start_time))

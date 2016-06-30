@@ -2,7 +2,7 @@ GEN = python ./scripts/generate_random_data.py
 GEN_MATLAB = python ./scripts/generate_matlab_data.py
 
 prepare:
-	mkdir -p output
+	mkdir -p output dumpFolder
 
 randomSeed:
 	$(GEN) ./data/Hseed 8 441
@@ -72,7 +72,7 @@ Main_test_mnist: prepare
 	vvp ./output/design_Main_test_mnist_TB
 
 
-vlib:
+vlib: prepare
 	vlib work
 
 vsim_ap_adder: vlib
@@ -87,13 +87,18 @@ vsim_random: vlib
 	vlog  ../test_bench/RandomGenerator_tb.v
 	vsim -c -do "run -all" test_RandomGenerator
 
-vsim_Main_test_runnable: vlib
-	vlog  ../test_bench/Main_tb.v
-	vsim -c -do "run -all" test_Main
 
-run_Main: vlib
+run_Main: vlib 
 	vlog  ../test_bench/Main_real_tb.v
 	vsim -c -do "run -all" test_Main_Real
+
+run_Main_dump: vlib
+	vlog  ../test_bench/Main_real_tb.v
+	vsim -c -do "vcd file ./dumpFolder/Main_test_mnist.vcd; vcd add test_Main_Real/main/rbm/temp test_Main_Real/main/rbm/rnd/shiftReg test_Main_Real/main/classi/temp test_Main_Real/main/classi/rnd/shiftReg; run -all;" test_Main_Real
+
+run_Main_dump_all: vlib
+	vlog ../test_bench/Main_real_tb.v
+	vsim -c -do "vcd file ./dumpFolder/Main_test_mnist_all.vcd; vcd add -r *; run -all;" test_Main_Real
 
 
 debug_Main: vlib
@@ -102,9 +107,17 @@ debug_Main: vlib
 
 
 
-run_mnist_test:
+run_mnist_test: prepare
 	# echo "This method is obsolete\n"
-	python ./scripts/run_mnist_test.py  2 30
+	python ./scripts/run_mnist_test.py  2 30  5,100
+
+
+run_mnist_test_all: prepare
+	echo "Simulation Begin"
+
+
+run_generate_vcd: prepare
+	python ./scripts/generate_vcd.py  --iteration 200  --adder_type ETAIIM --critical_scheme 1  --critical_num 200
 
 run_synthesis:
 	dc_shell -tcl_mode -f ./scripts/synthesis.tcl
