@@ -16,6 +16,7 @@
 /build/*.vcd
 /build/output/
 /build/.tmp
+/build/*.json
 /build/*.v
 /build/work/
 !/build/data/random/*

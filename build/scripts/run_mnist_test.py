@@ -6,6 +6,10 @@ import progressbar
 import os
 import fileinput
 import re
+import KEY
+
+IMAGE_PREFIX = '../build/data/mnist/selected/image_'
+LABEL_PREFIX = './data/mnist/selected/label_'
 
 def makeDetectionToken(gt=0,dt=0, id=0, weight=[]):
     return  {
@@ -39,10 +43,11 @@ def runCmd():
 def updateContent(id, num):
     f = fileinput.FileInput('../test_bench/Main_real_tb.v', inplace=True)
     for line in f:
-        if "localparam iteration_num" in line:
-            print('localparam iteration_num = {0};\n'.format(num), end='')
-        elif "mnist_testdata" in line:
-            print('localparam input_image_path = "../build/data/mnist/verilog/mnist_testdata{0}.txt";\n'.format(id), end='')
+        if KEY.ITERATION_NUM in line:
+            print('integer  iteration_num = {0}; // {1}\n'.format(num, KEY.ITERATION_NUM), end='')
+        elif KEY.MNIST_IMAGE in line:
+            print('localparam input_image_path = "{0}{1}.txt";  //{2}\n'
+                .format(IMAGE_PREFIX, id, KEY.MNIST_IMAGE), end='')
         else:
             print(line, end='')
     f.close()
@@ -64,17 +69,17 @@ def main(N=0,ITER=25):
     bar = progressbar.ProgressBar()
 
     for i in bar(range(N)):
-        updateContent(i, ITER)
+        updateContent(i+1, ITER)
         r = runCmd()
         dt,numlist = getDetection(r)
-        with open('./data/mnist/verilog/mnist_testlabels{0}.txt'.format(i), 'r') as f:
+        with open('{0}{1}.txt'.format(LABEL_PREFIX, i+1), 'r') as f:
             result.append(makeDetectionToken(int(f.read()),int(dt),id=i,weight=numlist))
 
     s = summary(result)
     print("Test finished, Image Number: {0}, Correct Detection: {1}, Rate: {2}".format(
           s['ImageNumber'], s['CorrectDetection'], s['Rate']))
     print("Writing Test Result into file")
-    output_json = 'mnist_test_result_{0}.json'.format(N)
+    output_json = './data/JSON/mnist_test_result_images{0}_iter{1}.json'.format(N, ITER)
     with open(output_json, 'w') as f:
         json.dump({'summary':s,'result':result}, f)
     print("Test Finished")

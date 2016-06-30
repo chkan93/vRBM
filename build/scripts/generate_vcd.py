@@ -6,6 +6,7 @@ from os.path import abspath, join
 import fileinput
 from subprocess import call
 import re
+import KEY
 
 ROOT = abspath('../')
 CRITICAL_MAT = join(ROOT, 'build/data/order/criticality.mat')
@@ -61,20 +62,20 @@ def update_content(it, adder, ct):
     dump_order(ct)
     f = fileinput.FileInput('../test_bench/Main_real_tb.v', inplace=True)
     for line in f:
-        if "KEY:CRITICALITY_SCHEME" in line:
-            print('localparam h_ord_path = "../build/data/order/.tmp"; //KEY:CRITICALITY_SCHEME\n', end='')
-        elif "KEY:ITERATION_NUM" in line:
-            print('integer  iteration_num = {0}; // KEY:ITERATION_NUM\n'.format(it), end='')
+        if KEY.CRITICALITY_SCHEME in line:
+            print('localparam h_ord_path = "../build/data/order/.tmp"; //{0}\n'.format(KEY.CRITICALITY_SCHEME), end='')
+        elif KEY.ITERATION_NUM in line:
+            print('integer  iteration_num = {0}; // {1}\n'.format(it, KEY.ITERATION_NUM), end='')
         else:
             print(line, end='')
     f.close()
 
     f = fileinput.FileInput('../RBMLayer.v', inplace=True)
     for line in f:
-        if "KEY:ADDER_TYPE_CURRENT_FOLDER" in line:
-            print('`include "{0}" //KEY:ADDER_TYPE_CURRENT_FOLDER\n'.format(adder), end='')
-        elif "KEY:ADDER_TYPE_PARENT_FOLDER" in line:
-            print('`include "../{0}" //KEY:ADDER_TYPE_PARENT_FOLDER\n'.format(adder), end='')
+        if KEY.ADDER_TYPE_CURRENT_FOLDER in line:
+            print('`include "{0}" //{1}\n'.format(adder, KEY.ADDER_TYPE_CURRENT_FOLDER), end='')
+        elif KEY.ADDER_TYPE_PARENT_FOLDER in line:
+            print('`include "../{0}" //{1}\n'.format(adder, KEY.ADDER_TYPE_PARENT_FOLDER), end='')
         else:
             print(line, end='')
     f.close()
