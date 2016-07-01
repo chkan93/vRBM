@@ -124,9 +124,15 @@ run_mnist_test_all:
 	python ./scripts/run_mnist_test.py 50 100 5,300  ZHU
 
 
+run_generate_saif_all:
+	echo "Not Implemented Yet"
 
-run_generate_vcd:
-	python ./scripts/generate_vcd.py  --iteration 100  --adder_type ETAIIM,ZHU  --critical_scheme 1,5  --critical_num 100,300
+run_generate_saif_test:
+	python ./scripts/generate_saif.py  --iteration 30  --adder_type ETAIIM,ZHU  --critical_scheme 1,5  --critical_num 100,300
+
+run_generate_saif_test2:
+	python ./scripts/generate_saif.py  --iteration 30  --adder_type ETAIIM,ZHU  --critical_scheme 1  --critical_num 100
+
 
 run_synthesis:
 	dc_shell -tcl_mode -f ./scripts/synthesis.tcl
