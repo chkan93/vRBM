@@ -1,4 +1,7 @@
-test_Main_Real/main/rbm/temp
-test_Main_Real/main/rbm/rnd/shiftReg
-test_Main_Real/main/classi/temp
-test_Main_Real/main/classi/rnd/shiftReg
+test_Main_Real/main/rbm/temp test_Main_Real/main/rbm/rnd/shiftReg test_Main_Real/main/classi/temp test_Main_Real/main/classi/rnd/shiftReg
+
+
+reset clock Hvalue[11] Hvalue[10] Hvalue[9] Hvalue[8] Hvalue[7] Hvalue[6] Hvalue[5] Hvalue[4] Hvalue[3] Hvalue[2] Hvalue[1] Hvalue[0] pixel_id[9] pixel_id[8] pixel_id[7] pixel_id[6] pixel_id[5] pixel_id[4] pixel_id[3] pixel_id[2] pixel_id[1] pixel_id[0] pixel adder_type enable_hidden enable_classi Cvalue[11] Cvalue[10] Cvalue[9] Cvalue[8] Cvalue[7] Cvalue[6] Cvalue[5] Cvalue[4] Cvalue[3] Cvalue[2] Cvalue[1] Cvalue[0] hidden_id[8] hidden_id[7] hidden_id[6] hidden_id[5] hidden_id[4] hidden_id[3] hidden_id[2] hidden_id[1] hidden_id[0] hidden_pixel
+
+
+{hidden hidden_finish spike finish}

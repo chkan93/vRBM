@@ -96,6 +96,11 @@ run_Main_dump: vlib
 	vlog  ../test_bench/Main_real_tb.v
 	vsim -c -do "vcd file ./dumpFolder/Main_test_mnist.vcd; vcd add test_Main_Real/main/rbm/temp test_Main_Real/main/rbm/rnd/shiftReg test_Main_Real/main/classi/temp test_Main_Real/main/classi/rnd/shiftReg; run -all;" test_Main_Real
 
+run_Main_dump_2: vlib
+	vlog ../test_bench/Main_real_tb.v
+	vsim -c -do ./scripts/run_vcd_add.do  test_Main_Real
+
+
 run_Main_dump_all: vlib
 	vlog ../test_bench/Main_real_tb.v
 	vsim -c -do "vcd file ./dumpFolder/Main_test_mnist_all.vcd; vcd add -r *; run -all;" test_Main_Real
@@ -114,6 +119,11 @@ run_mnist_test: prepare
 
 run_mnist_test_all: prepare
 	echo "Simulation Begin"
+	python ./scripts/run_mnist_test.py 50 100 5,100  ETAIIM
+	python ./scripts/run_mnist_test.py 50 100 5,300  ETAIIM
+	python ./scripts/run_mnist_test.py 50 100 1,300  ETAIIM
+	python ./scripts/run_mnist_test.py 50 100 5,300  ZHU
+
 
 
 run_generate_vcd: prepare

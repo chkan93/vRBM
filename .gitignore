@@ -9,6 +9,7 @@
 /build/.*
 /build/WORK/*
 /build/wlf*
+/build/vish_stacktrace.vstf
 /build/command.log
 /build/all_viol.out
 /build/default.svf
