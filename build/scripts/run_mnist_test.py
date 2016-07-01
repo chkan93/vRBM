@@ -41,6 +41,16 @@ def runCmd():
     return r
 
 
+def updateRBM(adder):
+    f =  fileinput.FileInput('../RBMLayer.v', inplace=True)
+    for line in f:
+        if KEY.ADDER_TYPE_CURRENT_FOLDER in line:
+            print('`include "{0}" //{1}\n'.format(adder, KEY.ADDER_TYPE_CURRENT_FOLDER), end='')
+        elif KEY.ADDER_TYPE_PARENT_FOLDER in line:
+            print('`include "../{0}" //{1}\n'.format(adder, KEY.ADDER_TYPE_PARENT_FOLDER), end='')
+        else:
+            print(line, end='')
+    f.close()
 
 def updateContent(id, num, critical):
     f = fileinput.FileInput('../test_bench/Main_real_tb.v', inplace=True)
@@ -65,13 +75,13 @@ def getDetection(r):
     label = numlist.index(max(numlist))
     return label+1,numlist
 
-def main(N=0,ITER=25,CRITICAL=[1,100]):
+def main(N=0,ITER=25,CRITICAL=[1,100], ADDER='i_ap_adder.v'):
     result = []
     print("When testing, please don't edit test_bench/Main_real_tb.v")
     print("Test Begin")
-    print("Total Image Number: {0}, with iteration = {1}, with critical {2}, num of iadder {3}".format(N, ITER, CRITICAL[0], CRITICAL[1]))
+    print("Total Image Number: {0}, with iteration = {1}, with critical {2}, num of iadder {3}, adder: {4}".format(N, ITER, CRITICAL[0], CRITICAL[1], ADDER))
     bar = progressbar.ProgressBar()
-
+    updateRBM(ADDER)
 
     for i in bar(range(N)):
         updateContent(i+1, ITER, CRITICAL)
@@ -84,7 +94,7 @@ def main(N=0,ITER=25,CRITICAL=[1,100]):
     print("Test finished, Image Number: {0}, Correct Detection: {1}, Rate: {2}".format(
           s['ImageNumber'], s['CorrectDetection'], s['Rate']))
     print("Writing Test Result into file")
-    output_json = './data/JSON/mnist_test_result_images{0}_iter{1}_crit{2}-{3}.json'.format(N, ITER, CRITICAL[0], CRITICAL[1])
+    output_json = './data/JSON/mnist_test_result_images{0}_iter{1}_crit{2}-{3}_{4}.json'.format(N, ITER, CRITICAL[0], CRITICAL[1], adder)
     with open(output_json, 'w') as f:
         json.dump({'summary':s,'result':result}, f)
     print("Test Finished")
@@ -95,6 +105,8 @@ import sys
 import time
 if __name__ == "__main__":
     start_time = time.time()
+    adder =  sys.argv[4]
     main(N=int(sys.argv[1]),ITER=int(sys.argv[2]), 
-         CRITICAL=[int(i) for i in sys.argv[3].split(',')]) ## '1,100'
+         CRITICAL=[int(i) for i in sys.argv[3].split(',')],
+         ADDER=  ('iadder_B16_'+ adder +'.v') if adder in ['ZHU4','ZHU','ETAIIM','4B','6B','8A'] else 'i_ap_adder.v') ## '1,100'
     print("--------------------- Program Run Time: {0} seconds. ---------------------".format(time.time()-start_time))

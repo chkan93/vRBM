@@ -110,7 +110,7 @@ def create_critical_setup(scheme=[], num=[]):
     def get_single_setup(s, n):
         return edict({
             'path':join(ROOT, 'build/data/order/.tmp'),
-            'data':critical_orders[s],
+            'data':critical_orders[s-1],
             'num':n,
             'id':s
         })

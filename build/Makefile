@@ -72,7 +72,7 @@ Main_test_mnist: prepare
 	vvp ./output/design_Main_test_mnist_TB
 
 
-vlib: prepare
+vlib:
 	vlib work
 
 vsim_ap_adder: vlib
@@ -112,12 +112,11 @@ debug_Main: vlib
 
 
 
-run_mnist_test: prepare
-	# echo "This method is obsolete\n"
+run_mnist_test:
 	python ./scripts/run_mnist_test.py  2 30  5,100  IADDER
 
 
-run_mnist_test_all: prepare
+run_mnist_test_all:
 	echo "Simulation Begin"
 	python ./scripts/run_mnist_test.py 50 100 5,100  ETAIIM
 	python ./scripts/run_mnist_test.py 50 100 5,300  ETAIIM
@@ -126,8 +125,8 @@ run_mnist_test_all: prepare
 
 
 
-run_generate_vcd: prepare
-	python ./scripts/generate_vcd.py  --iteration 200  --adder_type ETAIIM,ZHU  --critical_scheme 1,5  --critical_num 100,300
+run_generate_vcd:
+	python ./scripts/generate_vcd.py  --iteration 100  --adder_type ETAIIM,ZHU  --critical_scheme 1,5  --critical_num 100,300
 
 run_synthesis:
 	dc_shell -tcl_mode -f ./scripts/synthesis.tcl
