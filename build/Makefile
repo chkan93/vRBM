@@ -96,14 +96,14 @@ run_Main_dump: vlib
 	vlog  ../test_bench/Main_real_tb.v
 	vsim -c -do "vcd file ./dumpFolder/Main_test_mnist.vcd; vcd add test_Main_Real/main/rbm/temp test_Main_Real/main/rbm/rnd/shiftReg test_Main_Real/main/classi/temp test_Main_Real/main/classi/rnd/shiftReg; run -all;" test_Main_Real
 
-run_Main_dump_2: vlib
-	vlog ../test_bench/Main_real_tb.v
-	vsim -c -do ./scripts/run_vcd_add.do  test_Main_Real
+# run_Main_dump_2: vlib
+# 	vlog ../test_bench/Main_real_tb.v
+# 	vsim -c -do ./scripts/run_vcd_add.do  test_Main_Real
 
 
 run_Main_dump_all: vlib
 	vlog ../test_bench/Main_real_tb.v
-	vsim -c -do "vcd file ./dumpFolder/Main_test_mnist_all.vcd; vcd add -r *; run -all;" test_Main_Real
+	vsim -c -do "vcd file ./dumpFolder/Main_test_mnist.vcd; vcd add -r *; run -all;" test_Main_Real
 
 
 debug_Main: vlib
@@ -114,7 +114,7 @@ debug_Main: vlib
 
 run_mnist_test: prepare
 	# echo "This method is obsolete\n"
-	python ./scripts/run_mnist_test.py  2 30  5,100
+	python ./scripts/run_mnist_test.py  2 30  5,100  IADDER
 
 
 run_mnist_test_all: prepare
@@ -127,7 +127,7 @@ run_mnist_test_all: prepare
 
 
 run_generate_vcd: prepare
-	python ./scripts/generate_vcd.py  --iteration 200  --adder_type ETAIIM --critical_scheme 1  --critical_num 200
+	python ./scripts/generate_vcd.py  --iteration 200  --adder_type ETAIIM,ZHU  --critical_scheme 1,5  --critical_num 100,300
 
 run_synthesis:
 	dc_shell -tcl_mode -f ./scripts/synthesis.tcl

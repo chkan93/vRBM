@@ -44,7 +44,7 @@ def gzipfile(iname, oname):
 def runCmd(it, adder, ct):
     TMP_FILE='.tmp_python_call'
     file = open(TMP_FILE, 'w')
-    call(["make", "run_Main"], stdout=file)
+    call(["make", "run_Main_dump_all"], stdout=file)
     file.close()
     file = open(TMP_FILE, 'r')
     r = file.read()
