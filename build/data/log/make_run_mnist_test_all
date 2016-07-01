@@ -1,0 +1,39 @@
+make run_mnist_test_all
+echo "Simulation Begin"
+Simulation Begin
+python ./scripts/run_mnist_test.py 50 100 5,100  ETAIIM
+When testing, please don't edit test_bench/Main_real_tb.v
+Test Begin
+Total Image Number: 50, with iteration = 100, with critical 5, num of iadder 100, adder: iadder_B16_ETAIIM.v
+100% |#########################################################################|
+Test finished, Image Number: 50, Correct Detection: 47, Rate: 0.94
+Writing Test Result into file
+Test Finished
+--------------------- Program Run Time: 1425.41733599 seconds. ---------------------
+python ./scripts/run_mnist_test.py 50 100 5,300  ETAIIM
+When testing, please don't edit test_bench/Main_real_tb.v
+Test Begin
+Total Image Number: 50, with iteration = 100, with critical 5, num of iadder 300, adder: iadder_B16_ETAIIM.v
+100% |#########################################################################|
+Test finished, Image Number: 50, Correct Detection: 43, Rate: 0.86
+Writing Test Result into file
+Test Finished
+--------------------- Program Run Time: 1419.00183487 seconds. ---------------------
+python ./scripts/run_mnist_test.py 50 100 1,300  ETAIIM
+When testing, please don't edit test_bench/Main_real_tb.v
+Test Begin
+Total Image Number: 50, with iteration = 100, with critical 1, num of iadder 300, adder: iadder_B16_ETAIIM.v
+100% |#########################################################################|
+Test finished, Image Number: 50, Correct Detection: 42, Rate: 0.84
+Writing Test Result into file
+Test Finished
+--------------------- Program Run Time: 1416.57781696 seconds. ---------------------
+python ./scripts/run_mnist_test.py 50 100 5,300  ZHU
+When testing, please don't edit test_bench/Main_real_tb.v
+Test Begin
+Total Image Number: 50, with iteration = 100, with critical 5, num of iadder 300, adder: iadder_B16_ZHU.v
+100% |#########################################################################|
+Test finished, Image Number: 50, Correct Detection: 39, Rate: 0.78
+Writing Test Result into file
+Test Finished
+--------------------- Program Run Time: 1458.02156591 seconds. ---------------------
