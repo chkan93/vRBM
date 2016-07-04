@@ -41,16 +41,18 @@ function pmain(){
                 break
             fi
         done
-
-        for p in $pids; do
-            if wait $p; then
-                echo "Process $p success"
-            else
-                echo "Process $p fail"
-            fi
-        done
+        # for p in $pids; do
+        #     if wait $p; then
+        #         echo "Process $p success"
+        #     else
+        #         echo "Process $p fail"
+        #     fi
+        # done
+        wait
+        sleep 10
     done
 
 }
 
+rm  -rf ${TMP}/*
 pmain

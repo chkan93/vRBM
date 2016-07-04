@@ -11,22 +11,25 @@ function main(){
     local critical_id=$3
     local critical_num=$4
     local image=$5
-
     local param_id="iteration-$iteration,adder-$adder,cid-$critical_id,cnum-$critical_num,image-$image"
     local saif_file=${param_id}".saif"
     local TO=${TMP}/${param_id}
+    local build=${TO}/build
     cp -rf  ${SOURCE} ${TO}
     echo $1 $2 $3 $4>&2
-    cd ${TO}/build
-    mkdir -p dumpFolder
-    rm -rf ./dumpFolder/*
+    cd $build
+    pwd
+    mkdir -p ${build}/dumpFolder
+    rm -rf ${build}/dumpFolder/*
 
-    python ./pscripts/update_file.py  $iteration  $adder  $critical_id $critical_num  $image
-    vlog ../test_bench/Main_real_tb.v
+    python ${build}/pscripts/update_file.py  $iteration  $adder  $critical_id $critical_num  $image
+    vlog ${TO}/test_bench/Main_real_tb.v
     vsim -c -do "vcd file ./dumpFolder/Main_test_mnist.vcd; vcd add -r *; run -all;" test_Main_Real
-    vcd2saif -input ./dumpFolder/Main_test_mnist.vcd   -output  ./dumpFolder/${saif_file}
-    cp ./dumpFolder/${saif_file} $DEST
+    vcd2saif -input ${build}/dumpFolder/Main_test_mnist.vcd   -output  ${build}/dumpFolder/${saif_file}
+    rm ${build}/dumpFolder/Main_test_mnist.vcd
+    cp ${build}/dumpFolder/${saif_file} $DEST
     cd ${home}
+    # sleep  60
 }
 
 
