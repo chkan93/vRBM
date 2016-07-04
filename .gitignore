@@ -7,6 +7,7 @@
 *.lso
 *.elf
 /build/.*
+/build/pscripts/.*
 /build/WORK/*
 /build/wlf*
 /build/vish_stacktrace.vstf

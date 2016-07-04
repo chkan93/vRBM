@@ -136,3 +136,8 @@ run_generate_saif_test2:
 
 run_synthesis:
 	dc_shell -tcl_mode -f ./scripts/synthesis.tcl
+
+
+run_all:
+	python ./pscripts/Run.py
+	## result in /home/xy0/Workspace/modelsim/tmp, /home/xy0/Workspace/modelsim/dist
