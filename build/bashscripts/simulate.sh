@@ -25,7 +25,7 @@ function main(){
     vlog ../test_bench/Main_real_tb.v
     vsim -c -do "vcd file ./dumpFolder/Main_test_mnist.vcd; vcd add -r *; run -all;" test_Main_Real
     vcd2saif -input ./dumpFolder/Main_test_mnist.vcd   -output  ./dumpFolder/${saif_file}
-    cp ${saif_file} $DEST
+    cp ./dumpFolder/${saif_file} $DEST
     cd ${home}
 }
 
