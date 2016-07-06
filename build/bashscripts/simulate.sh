@@ -16,7 +16,7 @@ function main(){
     local TO=${TMP}/${param_id}
     local build=${TO}/build
     cp -rf  ${SOURCE} ${TO}
-    echo $1 $2 $3 $4>&2
+    echo $1 $2 $3 $4 $5 >&2
     cd $build
     pwd
     mkdir -p ${build}/dumpFolder
@@ -29,12 +29,13 @@ function main(){
     rm ${build}/dumpFolder/Main_test_mnist.vcd
     cp ${build}/dumpFolder/${saif_file} $DEST
     cd ${home}
+    rm -rf ${TO}
     # sleep  60
 }
 
 
 
-function clear(){
+function clear_cache(){
     rm -rf ${TMP}/*
 }
 
