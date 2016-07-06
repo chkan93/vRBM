@@ -1,30 +1,37 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sign_bit = 1;
+before_decimal = 3;
+after_decimal = 60; %% 8
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 load('./mat_data/mnist_classify.mat'); 
 % load('./model0307.mat');
 load ./mat_data/model0503.mat
 
-W  = model{1}.W;
-Wc = model{1}.Wc;
-bh = model{1}.b;
-bc = model{1}.cc;
+W_u  = model{1}.W;
+Wc_u = model{1}.Wc;
+bh_u = model{1}.b;
+bc_u = model{1}.cc;
 
-data_range = 8;
-data_rangei = 8; 
-bitlength = 12;
 
-numexperiments = 40;
-scale = 2 * data_range / (2^bitlength);
-scaley = 1/(2^data_range);
-W  = limitbit(W  , 1, scale , data_range);
-Wc = limitbit(Wc , 1, scale , data_range);
-bh  = limitbit(bh  , 1, scale , data_range);
-bc = limitbit(bc , 1, scale , data_range);
+bitlength = sign_bit + before_decimal + after_decimal; % 1 sign bit, 3 bit, decimal, 8 bit
+% bitlenght = 
+
+
+tmp = 2^before_decimal;
+scale = 2 * tmp / (2^bitlength);
+W  = limitbit(W_u  , 1, scale , tmp);
+Wc = limitbit(Wc_u , 1, scale , tmp);
+bh  = limitbit(bh_u  , 1, scale , tmp);
+bc = limitbit(bc_u , 1, scale , tmp);
 
 
 %%% don't change here!!
-export_data('generated_data/W_h.txt', W', 8);
-export_data('generated_data/W_c.txt', Wc, 8);
-export_data('generated_data/b_h.txt', bh, 8);
-export_data('generated_data/b_c.txt', bc, 8);
+export_data(sprintf('generated_data/W_h.%d.txt', bitlength), W', after_decimal);
+export_data(sprintf('generated_data/W_c.%d.txt', bitlength), Wc, after_decimal);
+export_data(sprintf('generated_data/b_h.%d.txt', bitlength), bh, after_decimal);
+export_data(sprintf('generated_data/b_c.%d.txt', bitlength), bc, after_decimal);
 
 
 
