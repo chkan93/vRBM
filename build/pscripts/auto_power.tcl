@@ -7,7 +7,7 @@ analyze -f verilog ../ap_adder.v
 elaborate ap_adder
 
 
-analyze -f verilog ../iadder_B16_ZHU4.v   # KEY:ANALYZE_IADDER
+analyze -f verilog ../iadder_B16_ZHU4.v   ;# KEY:ANALYZE_IADDER
 elaborate i_ap_adder
 
 
@@ -33,7 +33,7 @@ saif_map -start
 report_clock
 compile
 #######################################
-set saiffiles [glob ../../adder/*.saif] # KEY:IADDER_FOLDER
+set saiffiles [glob ../../adder/*.saif] ;# KEY:IADDER_FOLDER
 reset_switching_activity
 
 foreach f $saiffiles {
