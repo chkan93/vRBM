@@ -11,16 +11,17 @@ function timestamp(){
 	echo $(date +"%Y%m%d_%H%M%S")
 }
 
+ZIPSAIF_NAME=""
 function zipsaif(){
-	local output=all_saif_$(timestamp).zip
-	zip $output  $DEST/*
-	cp $output .
-	echo $output
+	ZIPSAIF_NAME=all_saif_$(timestamp).zip
+	zip $ZIPSAIF_NAME  $DEST/*
+	cp $ZIPSAIF_NAME .
 }
 
 function submitsaif(){
-	local f=$(zipsaif)
-	scp $f  $ACMS_TARGET
+	zipsaif
+	scp $ZIPSAIF_NAME  $ACMS_TARGET
+	echo "SAIFs are transfered to $ACMS_TARGET"
 }
 
 
