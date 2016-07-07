@@ -1,4 +1,4 @@
-N = 5;
+N = 10;
 
 load ./mat_data/mnist_classify.mat
 image_num = N*max(testlabels);
