@@ -6,6 +6,19 @@ source "setup.sh"
 
 setups=()
 function make_setups(){
+echo "USE_ADVANCED = $USE_ADVANCED"
+if [ "$USE_ADVANCED" = true ] ; then 
+     for i1 in "${ITERATIONS[@]}"
+     do
+        for i2 in "${ADVANCED_SETUPS[@]}" 
+        do
+            for i3 in $(seq ${IMAGE_NUM})
+            do
+                setups+=("$i1 $i2 $i3")
+            done
+        done
+    done
+else
  for i1 in "${ITERATIONS[@]}"
   do
     for i2 in "${ADDERS[@]}"
@@ -22,6 +35,9 @@ function make_setups(){
                 done
         done
   done
+fi
+echo "Run Setups: $setups" >&2 
+echo "In total, ${#setups[@]} simulations." >&2
 }
 
 
@@ -50,8 +66,15 @@ function pmain(){
 
 
 function run_simulate(){
+
+    start=$(date +%s.%N)
     org_home=$(pwd)
+    printf "Clearing Cache..."
     clear_cache
+    printf "Finished"
+    printf "Start simulations: "
     pmain
     cd $org_home
+    dur=$(echo "$(date +%s.%N) - $start" | bc)
+    printf "Execution time: %.6f seconds" $dur
 }
