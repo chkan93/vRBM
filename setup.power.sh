@@ -7,7 +7,7 @@ DEST="/home/linux/ieng6/oce/6i/xiz368/home/xy0/Workspace/modelsim/dist"
 ITERATIONS=(5)
 
 ##(ETAIIM ZHU ZHU4 8A 4B 6B)
-ADDERS=(ZHU ETAIIM)
+ADDERS=(ZHU ETAIIM 8A)
 ##(1 2 3 4 5 6)
 CRITICAL_ID=(5)
 

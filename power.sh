@@ -15,6 +15,7 @@ function make_tmp_workspace(){
 	mkdir -p $REPORTS
 	mkdir -p $POWER_NUMERS
 	mkdir -p $SUMMARY_DIR
+	mkdir -p $TMP_SOURCE
 	rm -rf $TMP_SOURCE/*
 	rm -rf $SUMMARY_DIR/*
 	cp -rf $SOURCE/* $TMP_SOURCE
