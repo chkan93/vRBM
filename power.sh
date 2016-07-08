@@ -25,8 +25,8 @@ function make_tmp_workspace(){
 	  do
 	  	adder_folder=$(make_adder_folder $ad)
 	  	mkdir -p $adder_folder
-	  	rm -rf adder_folder/*
-	  	cp ./*$ad*  $adder_folder/
+	  	rm -rf $adder_folder/*
+	  	cp ./*adder-$ad,cid-*  $adder_folder/
 	  done
 
 }
@@ -60,6 +60,7 @@ function generate_reports(){
 	  	cd $TMP_SOURCE/build
 	  	python  ./pscripts/update_file_for_power.py  $ad $adder_folder 
 	  	dc_shell -tcl_mode -f ./pscripts/auto_power.tcl
+	  	# sleep 10
 	  done
 	cd $DEST
 }
