@@ -18,6 +18,8 @@ function make_tmp_workspace(){
 	mkdir -p $TMP_SOURCE
 	rm -rf $TMP_SOURCE/*
 	rm -rf $SUMMARY_DIR/*
+	rm -rf $POWER_NUMERS/*
+	rm -rf $REPORTS/*
 	cp -rf $SOURCE/* $TMP_SOURCE
 	for ad in "${ADDERS[@]}"
 	  do
@@ -68,4 +70,5 @@ function measure_power(){
 	make_tmp_workspace
 	generate_reports
 	generate_power_numbers
+	make_power_summary
 }

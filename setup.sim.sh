@@ -7,7 +7,7 @@ DEST="/home/xy0/Workspace/modelsim/dist"
 ITERATIONS=(5)
 
 ##(ETAIIM ZHU ZHU4 8A 4B 6B)
-ADDERS=(8A)
+ADDERS=(ZHU)
 ##(1 2 3 4 5 6)
 CRITICAL_ID=(5)
 
