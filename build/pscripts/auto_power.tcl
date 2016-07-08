@@ -1,3 +1,5 @@
+
+
 set link_library {"*"}
 set target_library  {"tc6a_cbacore.db"}
 define_design_lib WORK -path ./WORK
@@ -9,6 +11,9 @@ elaborate ap_adder
 
 analyze -f verilog ../iadder_B16_ZHU4.v   ;# KEY:ANALYZE_IADDER
 elaborate i_ap_adder
+
+
+set tcl_interactive false
 
 
 analyze -f verilog ../RandomGenerator.v
@@ -34,10 +39,11 @@ report_clock
 compile
 #######################################
 set saiffiles [glob ../../adder/*.saif] ;# KEY:IADDER_FOLDER
-reset_switching_activity
+
 
 foreach f $saiffiles {
-   puts -nonewline "Analyzing $f ... " 
+   reset_switching_activity
+   puts -nonewline "# Analyzing $f ... " 
    read_saif -input  $f  -instance_name test_Main_Real/main 
    set fbasename [file rootname [file tail $f]]
    report_power > ../../reports/$fbasename.txt 
