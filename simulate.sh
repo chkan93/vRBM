@@ -22,7 +22,7 @@ function main(){
     mkdir -p ${build}/dumpFolder
     rm -rf ${build}/dumpFolder/*
 
-    python ${build}/pscripts/update_file.py  $iteration  $adder  $critical_id $critical_num  $image
+    $PYTHON_PATH/python ${build}/pscripts/update_file.py  $iteration  $adder  $critical_id $critical_num  $image
     vlog ${TO}/test_bench/Main_real_tb.v
     vsim -c -do "vcd file ./dumpFolder/Main_test_mnist.vcd; vcd add -r *; run -all;" test_Main_Real
     vcd2saif -input ${build}/dumpFolder/Main_test_mnist.vcd   -output  ${build}/dumpFolder/${saif_file}

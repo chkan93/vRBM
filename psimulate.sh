@@ -18,7 +18,10 @@ if [ "$USE_ADVANCED" = true ] ; then
             done
         done
     done
-else
+fi
+
+
+if [ "$USE_ADVANCED" = false ] || [ "$COMBINE_SETUP" = true ]; then 
  for i1 in "${ITERATIONS[@]}"
   do
     for i2 in "${ADDERS[@]}"

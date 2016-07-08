@@ -41,7 +41,7 @@ function make_power_summary(){
 		filename=$(just_filename $nf)
 		echo "$filename,$n" >> $SUMMARY
 	done
-	python  $SOURCE_ROOT/generate_summary.py $SUMMARY $SUMMARY_DIR/summary.12.txt
+	python  $SOURCE_ROOT/generate_summary.py $SUMMARY $SUMMARY_DIR/summary.short.txt
 }
 
 function generate_power_numbers(){

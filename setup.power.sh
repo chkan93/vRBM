@@ -8,6 +8,7 @@ ITERATIONS=(5)
 
 ##(ETAIIM ZHU ZHU4 8A 4B 6B)
 ADDERS=(ETAIIM ZHU ZHU4 8A 4B 6B)
+
 ##(1 2 3 4 5 6)
 CRITICAL_ID=(5)
 
@@ -20,3 +21,5 @@ IMAGE_NUM=50
 
 ACMS_TARGET='xiz368@ieng6-641.ucsd.edu:/home/linux/ieng6/oce/6i/xiz368/'
 SOURCE_ROOT='/home/linux/ieng6/oce/6i/xiz368/psimulate'
+
+
