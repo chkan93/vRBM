@@ -15,7 +15,7 @@ def update(adder, adder_path):
 			print('analyze -f verilog ../{0}   ;# {1}\n'.format(adder, KEY.ANALYZE_IADDER), end='')
 		elif KEY.IADDER_FOLDER in line:
 		#	pass ## add more when needed
-			print('set saiffiles [glob ../../{0}/*.saif] ;# {1}'.format(adder_path, KEY.IADDER_FOLDER), end='')
+			print('set saiffiles [glob ../../{0}/*.saif] ;# {1}\n'.format(adder_path, KEY.IADDER_FOLDER), end='')
 		else:
 			print(line, end='')
 	f.close()
