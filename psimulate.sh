@@ -70,7 +70,7 @@ function pmain(){
 
 function run_simulate(){
 
-    start=$(date +%s.%N)
+    local start=$(date +%s.%N)
     org_home=$(pwd)
     printf "Clearing Cache..."
     clear_cache
@@ -78,6 +78,7 @@ function run_simulate(){
     printf "Start simulations: "
     pmain
     cd $org_home
-    dur=$(echo "$(date +%s.%N) - $start" | bc)
+    local dur=$(echo "$(date +%s.%N) - $start" | bc)
     printf "Execution time: %.6f seconds" $dur
+
 }
