@@ -46,7 +46,7 @@ foreach f $saiffiles {
    puts -nonewline "# Analyzing $f ... " 
    read_saif -input  $f  -instance_name test_Main_Real/main 
    set fbasename [file rootname [file tail $f]]
-   report_power > ../../reports/$fbasename.txt 
+   report_power > ../../reports/$fbasename.txt ; #KEY:REPORT_FOLDER
    puts "Finished"
 }
 
