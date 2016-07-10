@@ -9,7 +9,7 @@ analyze -f verilog ../ap_adder.v
 elaborate ap_adder
 
 
-analyze -f verilog ../iadder_B16_ZHU4.v   ;# KEY:ANALYZE_IADDER
+analyze -f verilog ../iadder_B16_1.v   ;# KEY:ANALYZE_IADDER
 elaborate i_ap_adder
 
 
@@ -38,7 +38,7 @@ saif_map -start
 report_clock
 compile
 #######################################
-set saiffiles [glob ../../adder/*.saif] ;# KEY:IADDER_FOLDER
+set saiffiles [glob 2/*.saif] ;# KEY:IADDER_FOLDER
 
 
 foreach f $saiffiles {
@@ -46,7 +46,7 @@ foreach f $saiffiles {
    puts -nonewline "# Analyzing $f ... " 
    read_saif -input  $f  -instance_name test_Main_Real/main 
    set fbasename [file rootname [file tail $f]]
-   report_power > ../../reports/$fbasename.txt ; #KEY:REPORT_FOLDER
+report_power > 3/$fbasename.txt ; # KEY:REPORT_POWER
    puts "Finished"
 }
 

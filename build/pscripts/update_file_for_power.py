@@ -14,7 +14,6 @@ def update(adder, adder_path, report_path):
 		if KEY.ANALYZE_IADDER in line:
 			print('analyze -f verilog ../{0}   ;# {1}\n'.format(adder, KEY.ANALYZE_IADDER), end='')
 		elif KEY.IADDER_FOLDER in line:
-		#	pass ## add more when needed
 			print('set saiffiles [glob {0}/*.saif] ;# {1}\n'.format(adder_path, KEY.IADDER_FOLDER), end='')
 		elif KEY.REPORT_POWER in line:
 			print("report_power > {0}/$fbasename.txt ; # {1}\n".format(report_path, KEY.REPORT_POWER),end='')
