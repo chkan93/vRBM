@@ -7,6 +7,7 @@
 *.bak
 *.lso
 *.elf
+/SAIFS/*
 /build/.*
 /build/pscripts/.*
 /build/WORK/*
