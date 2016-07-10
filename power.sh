@@ -78,16 +78,26 @@ TMP_SOURCE=$DEST/tmp_source
 
 function measure_power(){
 	local start=$(date +%s.%N)
+	loadALL
 	cd $DEST
-	mkdir -p summary
+	mkdir -p summary $TMP_SOURCE
+	rm -rf $TMP_SOURCE/*
+	cp -rf $SOURCE/* $TMP_SOURCE
 	local tst=$(timestamp)
 	local SUMMARY_ALL_FULL=$DEST/summary/summary.${tst}.txt
 	local SUMMARY_SHORT_FULL=$DEST/summary/summary.short.${tst}.txt
 	local SUMMARY_CSV_FULL=$DEST/summary/summary.${tst}.csv
 	touch $SUMMARY_ALL_FULL $SUMMARY_SHORT_FULL $SUMMARY_CSV_FULL
-	echo $'Iteration,Adder, Approximate_Adder_Num, Criticality_ID, Image_ID, Register_Power, Combinational_Power, Total_Power\n' > $SUMMARY_CSV_FULL
+	echo $'Iteration,Adder, Approximate_Adder_Num, Criticality_ID, Image_ID, Register_Power, Combinational_Power, Total_Power' > $SUMMARY_CSV_FULL
+	# for ad in "${ADDERS[@]}"
+	# do
+	# 	zip -r $ad.zip $ad/*
+	# 	rm -rf $ad 
+	# done
+
 	for ad in "${ADDERS[@]}"
 	  do
+	  	# unzip $ad.zip
 	  	cd $ad
 		local REPORTS=$DEST/$ad/reports
 		local POWER_NUMERS=$DEST/$ad/power_numbers
@@ -122,6 +132,9 @@ function measure_power(){
 		cat $SUMMARY_SHORT >> $SUMMARY_SHORT_FULL
 		tail -n +2 $SUMMARY_CSV >> $SUMMARY_CSV_FULL
 		cd $DEST
+		# rm -rf $ad.zip
+		# zip -r $ad.zip $ad/*
+		# rm -rf $ad
 	  done
 
 	cd $DEST
