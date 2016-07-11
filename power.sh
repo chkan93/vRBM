@@ -77,6 +77,7 @@ TMP_SOURCE=$DEST/tmp_source
 
 
 function measure_power(){
+	local org_home=$(pwd)
 	local start=$(date +%s.%N)
 	loadALL
 	cd $DEST
@@ -87,6 +88,7 @@ function measure_power(){
 	local SUMMARY_ALL_FULL=$DEST/summary/summary.${tst}.txt
 	local SUMMARY_SHORT_FULL=$DEST/summary/summary.short.${tst}.txt
 	local SUMMARY_CSV_FULL=$DEST/summary/summary.${tst}.csv
+	local SUMMARY_SHORT_CSV=$DEST/summary/summary.short.${tst}.csv
 	touch $SUMMARY_ALL_FULL $SUMMARY_SHORT_FULL $SUMMARY_CSV_FULL
 	echo $'Iteration,Adder, Approximate_Adder_Num, Criticality_ID, Image_ID, Register_Power, Combinational_Power, Total_Power' > $SUMMARY_CSV_FULL
 	# for ad in "${ADDERS[@]}"
@@ -125,7 +127,9 @@ function measure_power(){
 		done
 
 		python  $SOURCE_ROOT/generate_summary.py  $SUMMARY_FULL  $SUMMARY_SHORT
+
 		python  $SOURCE_ROOT/generate_csv.py  $SUMMARY_FULL  $SUMMARY_CSV
+		python  $SOURCE_ROOT/generate_csv.py  $SUMMARY_SHORT_FULL  $SUMMARY_SHORT_CSV
 		## FINISH
 		rm -rf $REPORTS/* $POWER_NUMERS/* 
 		cat $SUMMARY_FULL >>  $SUMMARY_ALL_FULL
@@ -140,4 +144,6 @@ function measure_power(){
 	cd $DEST
 	local dur=$(echo "$(date +%s.%N) - $start" | bc)
     printf "Power Measurement finished, Execution time: %.6f seconds" $dur
+
+    cd $org_home
 }
