@@ -1,4 +1,4 @@
-N = 300;
+N = 100;
 load ./mat_data/criticality.mat
 
 for i = 1:length(critorder)

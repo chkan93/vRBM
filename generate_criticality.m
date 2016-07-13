@@ -4,6 +4,6 @@ function [ distr ] = generate_criticality( arr, num )
 %   iadder => 1, adder => 0
 distr = zeros(1, length(arr)+1);
 distr(arr <= num) = 1;
-distr(end) = 1;
+distr(end) = 0;
 end
 
