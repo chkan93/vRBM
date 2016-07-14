@@ -31,7 +31,7 @@ def toCSV(in_file, out_file, short):
 		d[key]['num'] += 1
 		d[key]['regP'] += regP
 		d[key]['comP'] += comP
-		d[key]['total'] += float(data[-1])
+		d[key]['total'] += float(line[-1])
 		writer.writerow([
 			params['iteration'],
 			params['adder'], 
@@ -44,7 +44,7 @@ def toCSV(in_file, out_file, short):
 			])
 	for k,v in d.iteritems():
 		i = parseKey(k)
-		swriter.writerow(i['iter'], i['adder'], i['cnum'], i['cid'], v['regP']/v['num'],v['comP']/v['num'], v['total']/v['num'])
+		swriter.writerow([i['iter'], i['adder'], i['cnum'], i['cid'], v['regP']/v['num'],v['comP']/v['num'], v['total']/v['num']])
 
 
 if __name__ == "__main__":
