@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sign_bit = 1;
-before_decimal = 1;
+before_decimal = 2;
 after_decimal = 2; %% 8
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,10 +28,10 @@ bc = limitbit(bc_u , 1, scale , tmp);
 
 
 %%% don't change here!!
-export_data(sprintf('generated_data/W_h.%d.txt', bitlength), W', after_decimal);
-export_data(sprintf('generated_data/W_c.%d.txt', bitlength), Wc, after_decimal);
-export_data(sprintf('generated_data/b_h.%d.txt', bitlength), bh, after_decimal);
-export_data(sprintf('generated_data/b_c.%d.txt', bitlength), bc, after_decimal);
+export_data(sprintf('generated_data/W_h.%d.txt', bitlength), W', after_decimal, bitlength);
+export_data(sprintf('generated_data/W_c.%d.txt', bitlength), Wc, after_decimal, bitlength);
+export_data(sprintf('generated_data/b_h.%d.txt', bitlength), bh, after_decimal, bitlength);
+export_data(sprintf('generated_data/b_c.%d.txt', bitlength), bc, after_decimal, bitlength);
 
 
 
