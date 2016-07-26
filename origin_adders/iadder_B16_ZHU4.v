@@ -3,16 +3,15 @@
  *  Written by: S. H. Kang                                                *
  *  Last modified: Dec 16, 2010                                           *
  **************************************************************************/
+`ifndef i_ap_adder
+`define i_ap_adder
+module i_ap_adder (A, B, SUM);
 
-module iadder_B16_ZHU4 (clk, rst, A, B, SUM);
-
-input          clk;
-input          rst;
 input   [15:0]  A, B;
-output  [16:0]  SUM;
-reg 	[16:0]  SUM;
+output  [15:0]  SUM;
 
-wire    [4:0]  ASUM = A[15:12] + B[15:12];
+
+wire    [3:0]  ASUM = A[15:12] + B[15:12];
 wire    [11:0]  ISUM;
 
 wire    [11:0]  G, P;
@@ -56,13 +55,6 @@ assign ISUM[2] = P[11] || P[10] || P[9] || P[8] || P[7] || P[6] || P[5] || P[4] 
 assign ISUM[1] = P[11] || P[10] || P[9] || P[8] || P[7] || P[6] || P[5] || P[4] || P[3] || P[2] || P[1] ? 1'b1 : G[1];
 assign ISUM[0] = P[11] || P[10] || P[9] || P[8] || P[7] || P[6] || P[5] || P[4] || P[3] || P[2] || P[1] || P[0] ? 1'b1 : G[0];
 
-always @(posedge clk or posedge rst) begin
-    if (rst) begin
-        SUM    	<= 17'b0;
-    end 
-    else begin
-        SUM    	<= {ASUM, ISUM};
-    end
-end
-
+assign SUM    = {ASUM, ISUM};
 endmodule
+`endif
