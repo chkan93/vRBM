@@ -8,6 +8,8 @@ source "setup.sh"
 # 3. in primetime read sdc, foreach to read saif
 # 4. analyze report_power result. 
 
+# wait to integrate Jonas' part. 
+
 function pt_measure_power {
     echo "TO DO"
 }
