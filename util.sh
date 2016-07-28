@@ -38,11 +38,6 @@ function split_zip_saif(){
 	cd ..
 	zip -r $ZIPSAIF_NAME  SAIFS/*
 	cp $ZIPSAIF_NAME .
-	ssh $ACMS_IP 'rm -rf ./*saif*.zip'
-	ssh $ACMS_IP 'rm -rf ./*SAIF*.zip'
-	scp $ZIPSAIF_NAME  $ACMS_TARGET
-	scp $ZIPSAIF_NAME  'g1@dfm.ucsd.edu:/home/g1/'
-	echo "SAIFs are transfered to $ACMS_TARGET"
 }
 
 
