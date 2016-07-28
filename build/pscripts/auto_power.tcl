@@ -4,6 +4,7 @@ set link_library {"*"}
 set target_library  {"tc6a_cbacore.db"}
 define_design_lib WORK -path ./WORK
 
+saif_map -start
 
 analyze -f verilog ../ap_adder.v
 elaborate ap_adder
@@ -44,7 +45,7 @@ set saiffiles [glob 2/*.saif] ;# KEY:IADDER_FOLDER
 foreach f $saiffiles {
    reset_switching_activity
    puts -nonewline "# Analyzing $f ... " 
-   read_saif -input  $f  -instance_name test_Main_Real/main 
+   read_saif -input  $f  -instance_name test_Main_Real/main  -auto_map_names
    set fbasename [file rootname [file tail $f]]
 report_power > 3/$fbasename.txt ; # KEY:REPORT_POWER
    puts "Finished"
