@@ -198,10 +198,10 @@ Bash scripts are hard to read, there are three files you could read in order: [p
 
 ### Important Notes on Primetime Power measurement
 
-1. use correct `change_names -rules` in dc
+1. use correct `change_names -rules` in dc <[reference](https://github.com/BenBBear/vRBM/blob/master/Power%20Measurement%20Notes/use%20correct%20change_names%20-rules%20in%20dc.png)>
 
-2. use `-propagated` in `write_saif` (output gate level saif from dc to primetime)
+2. use `-propagated` in `write_saif` (output gate level saif from dc to primetime) <[reference](https://github.com/BenBBear/vRBM/blob/master/Power%20Measurement%20Notes/use%20-propagated%20in%20write_saif%20(output%20from%20dc%20to%20primetime).png)>
 
-3. use `-auto_map_names` in `read_saif` (read rtl level saif from dc)
+3. use `-auto_map_names` in `read_saif` (read rtl level saif from dc) <[reference](https://github.com/BenBBear/vRBM/blob/master/Power%20Measurement%20Notes/use%20-auto_map_names%20in%20read_saif%20(dc).png)>
 
-4. `instance_name/strip_path` is the path of top module from testbench (for example `test_real_main/main`)
+4. `instance_name/strip_path` is the path of top module from testbench (for example `test_real_main/main`) <[reference](https://github.com/BenBBear/vRBM/blob/master/Power%20Measurement%20Notes/instance_name:strip_path%20%3D%3Epath%20of%20top%20module%20from%20testbench%20(for%20example%20test_real_main:main).png)>
