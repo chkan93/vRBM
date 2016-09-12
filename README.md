@@ -6,12 +6,12 @@ This is a verilog implementation of a two-layered Spiking [Restrictive Boltzmann
 
 - Verilog Test Bench
 - Matlab Code to verify results
-- Shell Scripts to run [modelsim](https://www.mentor.com/products/fpga/model/) simulation in parallel and measure power in [Synopsys DC Compiler](http://www.synopsys.com/Tools/Implementation/RTLSynthesis/DesignCompiler/Pages/default.aspx) and [Primetime](https://www.synopsys.com/apps/support/training/primetime1_fcd.html).
+- Shell Scripts to run [modelsim](https://www.altera.com/products/design-software/model---simulation/modelsim-altera-software.highResolutionDisplay.html) simulation in parallel and measure power in [Synopsys DC Compiler](http://www.synopsys.com/Tools/Implementation/RTLSynthesis/DesignCompiler/Pages/default.aspx) and [Primetime](https://www.synopsys.com/apps/support/training/primetime1_fcd.html).
 
 ## Prerequisite Softwares
 
 1. Linux OS(tested on [Centos 6.8](https://www.centos.org/)).
-2. Modelsim from <https://www.mentor.com/products/fpga/model/>, student edition is ok.
+2. Modelsim from <https://www.altera.com/products/design-software/model---simulation/modelsim-altera-software.highResolutionDisplay.html>, student edition is ok.
 3. Python 2.7
 4. Git
 5. DC Compiler (`dc_shell`)
