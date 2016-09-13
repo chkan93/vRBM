@@ -36,7 +36,7 @@ function dc_measure_power(){
 
 		for rpt in ${REPORTS}/*.txt; do
 			echo "Processing $rpt"  >&2
-			python ${DC_SOURCE_ROOT}/analyze_report.py  ${rpt} > ${POWER_NUMERS}/$(basename ${rpt})
+			${DC_PYTHON_PATH}/python ${DC_SOURCE_ROOT}/analyze_report.py  ${rpt} > ${POWER_NUMERS}/$(basename ${rpt})
 		done
 		
 		for nf in ${POWER_NUMERS}/*.txt; do
@@ -46,8 +46,8 @@ function dc_measure_power(){
 			echo "$filename,$n" >> ${SUMMARY_FULL}
 		done
 
-		python  ${DC_SOURCE_ROOT}/generate_summary.py  ${SUMMARY_FULL}  ${SUMMARY_SHORT}
-		python  ${DC_SOURCE_ROOT}/generate_csv.py  ${SUMMARY_FULL}  ${SUMMARY_CSV}
+		${DC_PYTHON_PATH}/python  ${DC_SOURCE_ROOT}/generate_summary.py  ${SUMMARY_FULL}  ${SUMMARY_SHORT}
+		${DC_PYTHON_PATH}/python  ${DC_SOURCE_ROOT}/generate_csv.py  ${SUMMARY_FULL}  ${SUMMARY_CSV}
 		## FINISH
 		rm -rf ${REPORTS}/* ${POWER_NUMERS}/*
 		cat ${SUMMARY_FULL} >>  ${SUMMARY_ALL_FULL}
