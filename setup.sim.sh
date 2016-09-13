@@ -1,29 +1,51 @@
-#!/bin/bash
+## the source directory (specially used by modelsim)
+SIM_SOURCE="/home/xy0/RBM_Workspace/vRBM"
+## the temporary directory
+SIM_TMP="/home/xy0/RBM_Workspace/tmp"
+## the saif output
+SIM_DEST="/home/xy0/RBM_Workspace/saif_output"
 
-SIM_SOURCE="/home/xy0/Workspace/modelsim/vRBM"
-SIM_TMP="/home/xy0/Workspace/modelsim/tmp"
-SIM_DEST="/home/xy0/Workspace/modelsim/dist"
-SIM_SOURCE_ROOT='/home/xy0/Workspace/psimulate'
-SIM_PYTHON_PATH='/usr/local/bin'
-SIM_VCD2SAIF_PATH='/usr/local/bin'
+## where is the bash script directory
+SIM_SOURCE_ROOT='/home/xy0/RBM_Workspace/parallel_script'
 
-SIM_USE_ADVANCED=true
-SIM_COMBINE_SETUP=false # combine common setup and advanced setups.
+## where is python2.7 installed
+SIM_PYTHON_PATH='/home/xy0/Applications/Python'
 
+## where is the vcd2saif installed
+SIM_VCD2SAIF_PATH='/home/xy0/Applications/bin'
+
+
+## how many iterations you want to run
 SIM_ITERATIONS=(5)
-SIM_IMAGE_NUM=50
-SIM_THREADS=5
+
+## how many images you want to use
+SIM_IMAGE_NUM=5
+
+## how many threads you want to use
+SIM_THREADS=10
 
 
-## Common Setup
-##(ETAIIM ZHU ZHU4 8A 4B 6B)
-SIM_ADDERS=(ZHU)
-SIM_CRITICAL_ID=(1 2 3 4 5 6)
-SIM_CRITICAL_NUM=(1 41 81 121 161 201 241 281 321 361 401 441)
+############### Basic Parameter Setup ###############
 
-## Advance Setup
-SIM_ADVANCED_SETUPS=("4B 2 1" "4B 4 41" "4B 4 81" "4B 4 121" "4B 2 161" "4B 2 201" "4B 2 241" "4B 2 281" "4B 1 321" "4B 2 361" "4B 6 401" "4B 6 441" "6B 5 1" "6B 4 41" "6B 4 81" "6B 4 121" "6B 2 161" "6B 2 201" "6B 4 241" "6B 4 281" "6B 4 321" "6B 4 361" "6B 4 401" "6B 1 441" "8A 5 1" "8A 4 41" "8A 4 81" "8A 2 121" "8A 2 161" "8A 2 201" "8A 5 241" "8A 5 281" "8A 1 321" "8A 5 361" "8A 5 401" "8A 1 441" "ETAIIM 1 1" "ETAIIM 1 41" "ETAIIM 2 81" "ETAIIM 2 121" "ETAIIM 1 161" "ETAIIM 1 201" "ETAIIM 1 241" "ETAIIM 4 281" "ETAIIM 2 321" "ETAIIM 1 361" "ETAIIM 2 401" "ETAIIM 6 441" "ZHU 1 1" "ZHU 1 41" "ZHU 1 81" "ZHU 1 121" "ZHU 1 161" "ZHU 1 201" "ZHU 1 241" "ZHU 1 281" "ZHU 1 321" "ZHU 1 361" "ZHU 1 401" "ZHU 1 441" "ZHU 2 1" "ZHU 2 41" "ZHU 2 81" "ZHU 2 121" "ZHU 2 161" "ZHU 2 201" "ZHU 2 241" "ZHU 2 281" "ZHU 2 321" "ZHU 2 361" "ZHU 2 401" "ZHU 2 441" "ZHU 3 1" "ZHU 3 41" "ZHU 3 81" "ZHU 3 121" "ZHU 3 161" "ZHU 3 201" "ZHU 3 241" "ZHU 3 281" "ZHU 3 321" "ZHU 3 361" "ZHU 3 401" "ZHU 3 441" "ZHU 4 1" "ZHU 4 41" "ZHU 4 81" "ZHU 4 121" "ZHU 4 161" "ZHU 4 201" "ZHU 4 241" "ZHU 4 281" "ZHU 4 321" "ZHU 4 361" "ZHU 4 401" "ZHU 4 441" "ZHU 5 1" "ZHU 5 41" "ZHU 5 81" "ZHU 5 121" "ZHU 5 161" "ZHU 5 201" "ZHU 5 241" "ZHU 5 281" "ZHU 5 321" "ZHU 5 361" "ZHU 5 401" "ZHU 5 441" "ZHU 6 1" "ZHU 6 41" "ZHU 6 81" "ZHU 6 121" "ZHU 6 161" "ZHU 6 201" "ZHU 6 241" "ZHU 6 281" "ZHU 6 321" "ZHU 6 361" "ZHU 6 401" "ZHU 6 441" "ZHU4 2 1" "ZHU4 2 1" "ZHU4 4 41" "ZHU4 4 81" "ZHU4 4 121" "ZHU4 2 161" "ZHU4 4 201" "ZHU4 4 241" "ZHU4 1 281" "ZHU4 1 321" "ZHU4 1 361" "ZHU4 1 401" "ZHU4 6 441" "ZHU4 1 1" "ZHU4 2 41" "ZHU4 3 41"  "ZHU4 5 41"  "4B 1 41" "4B 2 41" "4B 3 41"  "4B 5 41" "4B 6 41" "6B 1 41" "6B 2 41" "6B 3 41"  "6B 5 41" "6B 6 41" "8A 1 41" "8A 2 41" "8A 3 41"   "8A 5 41" "8A 6 41")
+## which adders to simulate
+SIM_ADDERS=(ZHU) ## (ETAIIM ZHU ZHU4 8A 4B 6B) available
+
+## which criticality to use
+SIM_CRITICAL_ID=(6)
+
+## how many critical neuron for each criticality
+SIM_CRITICAL_NUM=(1 441)
+
+############### Advance Parameter Setup ###############
+
+## specify all parameters by hand
+SIM_ADVANCED_SETUPS=("4B 2 1" "4B 4 41")
 
 
+############### Conclusion ###############
 
+## use the advanced parameter or the basic parameter setup
+SIM_USE_ADVANCED=true
 
+## whether combine the two setup
+SIM_COMBINE_SETUP=false
