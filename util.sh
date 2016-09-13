@@ -59,6 +59,9 @@ function send_file_to_g1(){
 	scp $1 g1@dfm.ucsd.edu:/home/g1/
 }
 
+function login_to_g1(){
+	ssh -X g1@dfm.ucsd.edu
+}
 
 
 
