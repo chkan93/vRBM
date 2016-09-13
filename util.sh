@@ -13,8 +13,11 @@ function timestamp(){
 
 ZIPSAIF_NAME=""
 function zipsaif(){
-	ZIPSAIF_NAME=all_saif_$(timestamp).zip
-	zip $ZIPSAIF_NAME  $SIM_DEST/*
+	local PWD=`pwd`
+	ZIPSAIF_NAME=$PWD/all_saif_$(timestamp).zip
+	cd $SIM_DEST
+	zip $ZIPSAIF_NAME  ./*.saif
+	cd $PWD
 	cp $ZIPSAIF_NAME .
 }
 
