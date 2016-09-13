@@ -14,6 +14,7 @@ function dc_measure_power(){
 	local SUMMARY_ALL_FULL=${DC_DEST}/summary/summary.${tst}.txt
 	local SUMMARY_SHORT_FULL=${DC_DEST}/summary/summary.short.${tst}.txt
 	local SUMMARY_CSV_FULL=${DC_DEST}/summary/summary.${tst}.csv
+	local SUMMARY_CSV_SHORT=${DC_DEST}/summary/summary.${tst}.short.csv
 	touch ${SUMMARY_ALL_FULL} ${SUMMARY_SHORT_FULL} ${SUMMARY_CSV_FULL}
 	echo $'Iteration,Adder, Approximate_Adder_Num, Criticality_ID, Image_ID, Register_Power, Combinational_Power, Total_Power' > ${SUMMARY_CSV_FULL}
 
@@ -36,7 +37,7 @@ function dc_measure_power(){
 
 		for rpt in ${REPORTS}/*.txt; do
 			echo "Processing $rpt"  >&2
-			${DC_PYTHON_PATH}/python ${DC_SOURCE_ROOT}/analyze_report.py  ${rpt} > ${POWER_NUMERS}/$(basename ${rpt})
+			python ${DC_SOURCE_ROOT}/analyze_report.py  ${rpt} > ${POWER_NUMERS}/$(basename ${rpt})
 		done
 		
 		for nf in ${POWER_NUMERS}/*.txt; do
@@ -57,6 +58,7 @@ function dc_measure_power(){
 
 	  done
 
+	${DC_PYTHON_PATH}/python  ${DC_SOURCE_ROOT}/primetime_power_to_csv.py  ${SUMMARY_CSV_FULL} ${SUMMARY_CSV_SHORT}
 	cd ${DC_DEST}
 	local dur=$(echo "$(date +%s.%N) - $start" | bc)
     printf "Power Measurement finished, Execution time: %.6f seconds" ${dur}
