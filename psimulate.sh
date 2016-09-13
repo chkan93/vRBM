@@ -52,7 +52,7 @@ function pmain(){
             echo "${SIM_setups[$current_setup]}" >&2
             ( main  ${SIM_setups[$current_setup]}) &
             ((current_setup++))
-            if [ "$current_setup" -gt "$setup_num" ]; then
+            if [ "$current_setup" -ge "$setup_num" ]; then
                 break
             fi
         done
