@@ -12,7 +12,7 @@ This is a verilog implementation of a two-layered Spiking [Restrictive Boltzmann
 
 1. Linux OS(tested on [Centos 6.8](https://www.centos.org/)).
 2. Modelsim from <https://www.altera.com/products/design-software/model---simulation/modelsim-altera-software.highResolutionDisplay.html>, student edition is ok.
-3. Python 2.7
+3. Python 2.7 and scipy, numpy
 4. Git
 5. DC Compiler (`dc_shell`)
 6. DC Primetime (`pt_shell`)
