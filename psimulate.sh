@@ -50,11 +50,11 @@ function pmain(){
     while [ "$current_setup" -le "$setup_num" ]; do
         for i in $(seq ${SIM_THREADS}); do
             echo "${SIM_setups[$current_setup]}" >&2
-            ( main  ${SIM_setups[$current_setup]}) &
-            ((current_setup++))
             if [ "$current_setup" -ge "$setup_num" ]; then
                 break
             fi
+            ( main  ${SIM_setups[$current_setup]}) >/dev/null &  
+            ((current_setup++))
         done
         wait
     done
