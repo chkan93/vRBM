@@ -55,14 +55,14 @@ edit ./setup.power.sh
 
 ```shell
 ## the source directory (specially used by modelsim)
-SIM_SOURCE="~/RBM_Workspace/vRBM"
+SIM_SOURCE="/home/xy0/RBM_Workspace/vRBM"
 ## the temporary directory
-SIM_TMP="~/RBM_Workspace/tmp"
+SIM_TMP="/home/xy0/RBM_Workspace/tmp"
 ## the saif output
-SIM_DEST="~/RBM_Workspace/saif_output"
+SIM_DEST="/home/xy0/RBM_Workspace/saif_output"
 
 ## where is the bash script directory
-SIM_SOURCE_ROOT='~/RBM_Workspace/parallel_script'
+SIM_SOURCE_ROOT='/home/xy0/RBM_Workspace/parallel_script'
 
 ## where is python2.7 installed
 SIM_PYTHON_PATH='/usr/local/bin'
@@ -113,13 +113,13 @@ Some variables are similar to those in simulation.
 
 ```shell
 ## the source directory (specially used by dc_shell)
-DC_SOURCE="~/RBM_Workspace/vRBM"
+DC_SOURCE="/home/xy0/RBM_Workspace/vRBM"
 ## where the saif file located (needed by power measurements, generated from modelsim)
-DC_DEST="~/RBM_Workspace/saif_output"
+DC_DEST="/home/xy0/RBM_Workspace/saif_output"
 ## which adders you want to measure power at
 DC_ADDERS=(ZHU4 ETAIIM)
 ## where the bash script located
-DC_SOURCE_ROOT='~/RBM_Workspace/parallel_script'
+DC_SOURCE_ROOT='/home/xy0/RBM_Workspace/parallel_script'
 ## where the python 2.7 locate
 DC_PYTHON_PATH='/home/g1/python27'
 ## where is dc compiler located
