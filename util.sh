@@ -54,3 +54,12 @@ function just_filename(){
 function kill_all_background(){
     kill $(jobs -p)
 }
+
+function send_file_to_g1(){
+	scp $1 g1@dfm.ucsd.edu:/home/g1/
+}
+
+
+
+
+
