@@ -18,6 +18,7 @@ function main(){
     cp -rf  ${SIM_SOURCE} ${TO}
     echo $1 $2 $3 $4 $5 >&2
     cd $build
+    vlib
     pwd
     mkdir -p ${build}/dumpFolder
     rm -rf ${build}/dumpFolder/*
