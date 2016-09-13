@@ -16,7 +16,7 @@ function main(){
     local TO=${SIM_TMP}/${param_id}
     local build=${TO}/build
     cp -rf  ${SIM_SOURCE} ${TO}
-    echo $1 $2 $3 $4 $5 >&2
+    # echo $1 $2 $3 $4 $5 >&2
     cd $build
     vlib work
     pwd
