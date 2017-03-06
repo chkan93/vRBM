@@ -69,7 +69,7 @@ module RBMLayer
           //   SigmoidOutput, RandomData, result);
 
 
-           $display("RBM: %0d", RandomData);
+           // $display("RBM: %0d", RandomData);  // #important, random number dumping!
           end
 
         end
