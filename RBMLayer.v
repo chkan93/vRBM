@@ -46,26 +46,29 @@ module RBMLayer
     assign zero_mask = {16{pixel_id == 0}};
     assign activate_temp = next_temp & {16{pixel_id > 780}} ;
     assign result = SigmoidOutput > RandomData;
-    assign next_temp = temp_exact | temp_approximate;
+    // assign next_temp = temp_exact | temp_approximate;
     assign use_iadder = {16{adder_type}};
     assign pixel_mask = {16{pixel}};
     assign Value_after_mask = `bit_12_16(Value) & pixel_mask;
-    ap_adder  adder_only(temp & (~use_iadder), (~use_iadder) & Value_after_mask, temp_exact);
-    i_ap_adder iadder_only(temp & use_iadder,use_iadder & Value_after_mask, temp_approximate);
+    ap_adder  adder_only(temp , Value_after_mask, next_temp);
+    // i_ap_adder iadder_only(temp & use_iadder,use_iadder & Value_after_mask, temp_approximate);
 
     always @(posedge clock or posedge reset) begin
-      if (reset)
+      if (reset) begin 
+        // $display("FINISH, set temp to zero");
         temp = 0;
-      else
+      end else
         if (finish) begin
+          // $display("FINISH, set temp to zero");
           temp = 0;
         end else begin
           temp = (next_temp & (~zero_mask)) | (zero_mask & Value_after_mask);
-          // $display("(%0d) %0d => %0d >< %0d, Value = %d, pixel = %0d",pixel_id, temp, SigmoidOutput, RandomData, Value_after_mask, pixel);
+
           // if(pixel_id == 784) begin
-          //   $display("%0d => %0d >< %0d => %0d", $signed(temp),
+          //   $display("784: %0d => %0d >< %0d => %0d", $signed(temp),
           //   SigmoidOutput, RandomData, result);
           // end
+
         end
     end
 

@@ -72,6 +72,8 @@ Main_test_mnist: prepare
 	vvp ./output/design_Main_test_mnist_TB
 
 
+# 15725, 47128, 204425
+
 vlib:
 	vlib work
 
