@@ -1,8 +1,10 @@
 iteration_count = 1;
 
 sign_bit = 1;
-before_decimal = 2;
-after_decimal = 2; %% 8
+before_decimal = 3;
+after_decimal = 8; %% 8
+
+consider_adder_saturation = 0;
 
 % hidden_seed = 248; %% 242
 % classi_seed= 182; %% 98
@@ -21,7 +23,7 @@ fclose(fid);
 data_range_int = 2^before_decimal;
 data_range_float = after_decimal;
 bitlength = sign_bit + before_decimal + after_decimal;
-test_data_id = test_data_id + 1;
+% test_data_id = test_data_id + 1;
 scalei = 2 * data_range_int / (2^bitlength);
 scaley = 1/(2^bitlength);
 
@@ -51,14 +53,13 @@ for i = 1:iteration_count
     for j = 1:length(bh)
         TempHidden = bh(j);
         for k = 1:length(input_data)
-            TempHidden = limitbit(TempHidden + input_data(k) * Wh(k, j), 1, scalei, data_range_int);
-%               if j == 3
-%                  fprintf('layer 1, inputdata[%d] = %d, temp = %d\n', k-1, input_data(k), TempHidden*2^data_range_float)
-%              end
-
+            TempHidden = TempHidden + input_data(k) * Wh(k, j);
+            if consider_adder_saturation
+                TempHidden = limitbit(TempHidden, 1, scalei, data_range_int);
+            end
         end
-%         hidden_data(j) = logisticXX(TempHidden,'PLAN') > (hrnd.get()/(2^data_range_float));
-          fprintf('1: %d => %d >< %d\n',TempHidden*2^data_range_float,(limitbit(logisticXX(TempHidden,'PLAN'),0,1/2^data_range_float)*(2^data_range_float)), hidden_random(i,j))
+        
+          fprintf('1: (b=%d) %d => %d >< %d\n',bh(j)*2^data_range_float,  TempHidden*2^data_range_float,    (limitbit(logisticXX(TempHidden,'PLAN'),0,  1/2^data_range_float)*(2^data_range_float)), hidden_random(i,j))
         hidden_data(j) = (limitbit(logisticXX(TempHidden,'PLAN'), 0, 1/256)*(2^data_range_float)) > hidden_random(i,j);
     end
     

@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-before_decimal = 2; %% bit number for whole number
-after_decimal = 2; %% bit number for decimal
+before_decimal = 3; %% bit number for whole number
+after_decimal = 8; %% bit number for decimal
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sign_bit = 1;
