@@ -1,11 +1,12 @@
 ### 1\. Run Simulation
 1. Create RBM_Workspace directory. Download parallel_script and vRBM branch.
-2. Go to directory vRBM/build
-3. To generate sigmoid input/output, random number, enter command: make run_Main
-4. Check for matching with matlab.
-5. load source code: source ~/RBM_Workspace/parallel_script/index.sh
-6. To generate saif files, command: run_simulations
-7. zip all saif files: split_zip_saif
+2. Create folder "saif_output" in RBM_Workspace.
+3. Go to directory vRBM/build
+4. To generate sigmoid input/output, random number, enter command: make run_Main
+5. Check for matching with matlab.
+6. load source code: source ~/RBM_Workspace/parallel_script/index.sh
+7. To generate saif files, command: run_simulations
+8. zip all saif files: split_zip_saif
 
 * commands are in vRBM/build/Makefile
 * in vRBM: Main.v, RBMLayer.v, ClassiLayer.v, RandomGenerator.v, sigmoid.v, ap_adder.v
