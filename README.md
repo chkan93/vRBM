@@ -5,4 +5,5 @@
 4. load source code: source ~/RBM_Workspace/parallel_script/index.sh
 4. To generate saif files, command: run_simulations
 
-## commands are in vRBM/build/Makefile
+* commands are in vRBM/build/Makefile
+* in vRBM: Main.v, RBMLayer.v, ClassiLayer.v, RandomGenerator.v, sigmoid.v, ap_adder.v
