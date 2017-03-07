@@ -3,23 +3,23 @@ iteration_count = 1;
 
 
 sign_bit = 1;
-before_decimal = 3;
-after_decimal = 8; %% 8
+before_decimal = 7;
+after_decimal = 56; %% 8
 
 consider_adder_saturation = 0;
 
 
-
+bitlength = sign_bit + before_decimal + after_decimal;
 load('./mat_data/mnist_classify.mat'); 
 load('./mat_data/model0503.mat');
 input_data = read_file('./generated_data/selected_mnist/image_2.txt');
-classi_random = read_file('./mat_data/random/bit_8/10.txt');
-hidden_random = read_file('./mat_data/random/bit_8/441.txt');
+classi_random = read_file(strcat('./mat_data/random/bit_', num2str(bitlength), '/10.txt'));
+hidden_random = read_file(strcat('./mat_data/random/bit_', num2str(bitlength), '/441.txt'));
 
 
 data_range_int = 2^before_decimal;
 data_range_float = after_decimal;
-bitlength = sign_bit + before_decimal + after_decimal;
+
 % test_data_id = test_data_id + 1;
 scalei = 2 * data_range_int / (2^bitlength);
 scaley = 1/(2^bitlength);
@@ -56,8 +56,10 @@ for i = 1:iteration_count
             end
         end
         
-          fprintf('RBM: %d => %d >< %d\n', TempHidden*2^data_range_float,    (limitbit(logisticXX(TempHidden,'PLAN'),0,  1/2^data_range_float)*(2^data_range_float)), hidden_random(j))
-        hidden_data(j) = (limitbit(logisticXX(TempHidden,'PLAN'), 0, 1/256)*(2^data_range_float)) > hidden_random(j);
+           activation = (limitbit(logisticXX(TempHidden,'PLAN'),0,  1/2^(bitlength-4))*(2^(bitlength-4)));
+        
+          fprintf('RBM: %d => %d >< %d\n', TempHidden*2^data_range_float,    activation, hidden_random(j))
+        hidden_data(j) = activation > hidden_random(j);
     end
     
     
@@ -71,9 +73,10 @@ for i = 1:iteration_count
                 TempClassi = limitbit(TempClassi, 1, scalei, data_range_int);
             end
        end
-%        classi_data(j) = logisticXX(TempClassi,'PLAN') > (crnd.get()/(2^data_range_float));
-        fprintf('CLASS: %d => %d >< %d\n', TempClassi*2^data_range_float,(limitbit(logisticXX(TempClassi,'PLAN'),0,1/2^data_range_float)*(2^data_range_float)), classi_random(j))
-       classi_data(j) = (limitbit(logisticXX(TempClassi,'PLAN'), 0, 1/256)*(2^data_range_float)) > classi_random(j);
+
+        activation = (limitbit(logisticXX(TempClassi,'PLAN'),0,1/2^(bitlength-4))*(2^(bitlength-4)));
+        fprintf('CLASS: %d => %d >< %d\n', TempClassi*2^data_range_float, activation, classi_random(j))
+       classi_data(j) = activation > classi_random(j);
     end
     spikes = classi_data + spikes;
 end
