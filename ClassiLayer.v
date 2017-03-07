@@ -35,7 +35,7 @@ module ClassiLayer
     wire [59:0] SigmoidOutput, RandomData;  // #BIT_CHANGE
     assign zero_mask = {68{hidden_id == 0}};  // #BIT_CHANGE
     // wire result;
-    RandomGenerator   rnd(reset, clock,  `SEED_CLASSI , RandomData);
+    RandomGenerator   rnd(reset, hidden_id > 430,  `SEED_CLASSI , RandomData);
     sigmoid   sg(activate_temp, SigmoidOutput);
  
     assign finish = (hidden_id == 442); 
@@ -56,8 +56,8 @@ module ClassiLayer
         end else begin
           temp = (next_temp & (~zero_mask)) | (zero_mask & Value_after_mask);
           if(hidden_id == 441) begin
-          $display("CLASS: %0d => %0d >< %0d => %0d", $signed(temp), SigmoidOutput, RandomData, result);
-           // $display("CLASS: %0d", RandomData);  // #important, random number dumping!
+          // $display("CLASS: %0d => %0d >< %0d => %0d", $signed(temp), SigmoidOutput, RandomData, result);
+           $display("CLASS: %0d", RandomData);  // #important, random number dumping!
           end
 
         end

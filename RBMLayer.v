@@ -41,7 +41,7 @@ module RBMLayer
     wire [59:0] SigmoidOutput, RandomData;  // #BIT_CHANGE
 
     // wire result;
-    RandomGenerator   rnd(reset, clock, `SEED_RBM, RandomData);
+    RandomGenerator   rnd(reset, pixel_id > 780, `SEED_RBM, RandomData);
     sigmoid   sg(activate_temp, SigmoidOutput);
 
     assign finish = (pixel_id == 785);
@@ -65,10 +65,10 @@ module RBMLayer
           temp = (next_temp & (~zero_mask)) | (zero_mask & Value_after_mask);
 
           if(pixel_id == 784) begin
-            $display("RBM: 784: %0d => %0d >< %0d => %0d", $signed(temp), SigmoidOutput, RandomData, result);
+            // $display("RBM: 784: %0d => %0d >< %0d => %0d", $signed(temp), SigmoidOutput, RandomData, result);
 
 
-           // $display("RBM: %0d", RandomData);  // #important, random number dumping!
+           $display("RBM: %0d", RandomData);  // #important, random number dumping!
           end
 
         end
