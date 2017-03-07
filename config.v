@@ -25,10 +25,10 @@ For new version
 ## Problem
 - not fully configurable, number of xor is hard coded
 */
-`define R_1 8-1
-`define R_2 6-1
-`define R_3 5-1
-`define R_4 4-1
+`define R_1 60-1  // #BIT_CHANGE 
+`define R_2 59-1  // #BIT_CHANGE
+`define SEED_CLASSI 60'b111000110111111100000001111100101110011100100100101011000000  // #BIT_CHANGE
+`define SEED_RBM    60'b001000001000001110011101001001111110110010110010111000111010  // #BIT_CHANGE
 `define TB_SEED 4
 `define TB_RG_DUMPFILE "./dumpFolder/RG.vcd"
 
@@ -126,4 +126,4 @@ $display("\n");
         end                     \
         $display("\n====");
 
-`endif
+`endif

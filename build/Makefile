@@ -19,15 +19,15 @@ randomRBMData:
 
 
 generate_matlab_data_mnist:
-	rm -rf ./data/nmist/verilog/* $@
+	rm -rf ./data/mnist/verilog/* $@
 	rm -rf ./data/model/verilog/* $@
 	echo "Generating Mnist Test Data to verilog format." $@
 	$(GEN_MATLAB)  ./data/mnist/matlab/data.mat mnist  ./data/mnist/verilog/ 8  12 && echo "Finished" || echo "Error Occured" $@
 
 generate_matlab_data_model:
-	rm -rf ./data/nmist/verilog/* $@
+	rm -rf ./data/mnist/verilog/* $@
 	rm -rf ./data/model/verilog/* $@
-	python ./scripts/generate_matlab_data_new.py  ./data/model/matlab/   ./data/model/verilog/   12
+	python ./scripts/generate_matlab_data_new.py  ./data/model/matlab/   ./data/model/verilog/   64
 
 
 generate_matlab_data: generate_matlab_data_model generate_matlab_data_mnist

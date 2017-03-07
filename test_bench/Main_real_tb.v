@@ -21,16 +21,16 @@ integer i = 0, j = 0, iteration_id = 0, OutputData[9:0];
 
 reg InputData`DIM_1D(784);
 reg HiddenData`DIM_1D(441);
-reg[11:0] HiddenWeight`DIM_2D(784, 441);
-reg[11:0] HiddenBias`DIM_1D(441);
+reg[63:0] HiddenWeight`DIM_2D(784, 441);
+reg[63:0] HiddenBias`DIM_1D(441);
 reg HiddenSwitch`DIM_1D(442);
-reg[11:0] ClassiWeight`DIM_2D(441, 10);
-reg[11:0] ClassiBias`DIM_1D(10);
+reg[63:0] ClassiWeight`DIM_2D(441, 10);
+reg[63:0] ClassiBias`DIM_1D(10);
 
 
 reg [9:0] pixel_id = 0;
 reg [8:0] hidden_id = 0, spike_id = 0;
-reg [11:0] Hvalue, Cvalue;
+reg [63:0] Hvalue, Cvalue;
 reg  clock, my_clock, reset, enable_classi = 0, enable_hidden = 0, pixel, hidden_pixel;
 wire hidden, hidden_finish, spike, finish;
 //  HiddenWeight[pixel_id][hidden_id], HiddenBias[hidden_id]

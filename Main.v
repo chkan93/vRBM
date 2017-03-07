@@ -21,7 +21,7 @@ module Main
    (input reset,
     input clock,
     // input [11:0] Hbias,
-    input [11:0] Hvalue,
+    input [63:0] Hvalue,
     input [9:0] pixel_id,
     input pixel,
     input adder_type,
@@ -29,7 +29,7 @@ module Main
     input enable_classi,
 
     // input [11:0] Cbias,
-    input [11:0] Cvalue,
+    input [63:0] Cvalue,
     input [8:0] hidden_id,
     input hidden_pixel,
     output hidden, output  hidden_finish,
