@@ -56,11 +56,10 @@ module ClassiLayer
         end else begin
           temp = (next_temp & (~zero_mask)) | (zero_mask & Value_after_mask);
           if(hidden_id == 441) begin
-          // $display("%0d => %0d >< %0d => %0d", $signed(temp),
-          // SigmoidOutput, RandomData, result);
-           $display("CLASS: %0d", RandomData);  // #important, random number dumping!
+          $display("CLASS: %0d => %0d >< %0d => %0d", $signed(temp), SigmoidOutput, RandomData, result);
+           // $display("CLASS: %0d", RandomData);  // #important, random number dumping!
           end
-          
+
         end
     end
 
