@@ -9,13 +9,11 @@
 * commands are in vRBM/build/Makefile
 * in vRBM: Main.v, RBMLayer.v, ClassiLayer.v, RandomGenerator.v, sigmoid.v, ap_adder.v
 
-** if the power measurement and simulation happens in different servers. **
+*** if the power measurement and simulation happens in different servers. ***
 1. transfer the saif to another server
 scp ./all_saif_[$timestamp].zip  ${a remote server:~/RBM_Workspace/}
-
 2. go to the another server
 ssh  ${a remote server}
-
 3. go to where the saif files located at
 cd ~/RBM_Workspace/ && unzip ./all_saif_[$timestamp].zip
 
